@@ -5,7 +5,7 @@
 根据[关于vue项目多页面的配置](http://www.jianshu.com/p/acbff04b4096)实行了webpack的魔改以实现多页面。现在各个页面放在`src/pages`下，webpack会自动检测各js并生成目录。  
 
 注意：
-- `pages/`下的vue组件import不能自动补全后缀
+- `pages/`下同一文件夹的vue和js文件名不建议相同
 - `pages/`下的组件样式不建议用`scoped`属性
 ## Build Setup
 

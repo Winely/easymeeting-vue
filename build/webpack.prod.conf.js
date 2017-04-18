@@ -7,7 +7,7 @@ var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var env = config.build.env
-
+var glob = require('glob')
 
 var plugins = [
   new webpack.DefinePlugin({

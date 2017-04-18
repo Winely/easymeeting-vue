@@ -7,6 +7,7 @@
 </template>
 cd .
 <script>
+  require('../../assets/global.css')
   import header from 'components/header'
   import footer from 'components/footer'
   export default {
@@ -19,12 +20,5 @@ cd .
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  body
-    margin 0
-  a
-    text-decoration none
-    color inherit
-  ul
-    list-style none
-    padding 0
+
 </style>

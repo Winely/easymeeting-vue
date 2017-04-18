@@ -33,8 +33,13 @@
     padding 30px
     display flex
     color #fff
-    .project
+    .main-title
       flex 2
+    .project
+      flex 1
+    .details
+      flex 1
+
 
   .footer-icon
     width 150px

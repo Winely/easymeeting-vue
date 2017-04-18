@@ -3,6 +3,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  require('../../assets/global.css')
   import header from 'components/header'
   export default {
     components: {
@@ -12,6 +13,4 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  body
-    margin 0
 </style>

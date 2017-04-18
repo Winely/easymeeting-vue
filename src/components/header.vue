@@ -1,9 +1,9 @@
 <template>
-  <header>
+  <nav>
     <a aria-label="会易首页" href="/" class="header-icon">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.26 28.89">
         <title>easymeeting</title>
-        <g>
+        <g id="icon">
           <rect class="icon" x="10.29" y="1.73" width="8.35" height="8.35"
                 transform="translate(8.41 -8.5) rotate(45)"></rect>
           <rect class="icon" x="18.81" y="10.25" width="8.35" height="8.35"
@@ -19,37 +19,38 @@
         </g>
       </svg>
     </a>
-    <div v-if="isLogin" class="user-operation">
-
-    </div>
-    <div v-else class="user-operation">
-      <a href="/login.html">登录</a>
-      <a href="/signup.html">注册</a>
-    </div>
-  </header>
+    <ul v-if="user!=null" class="user-operation">
+      <li><a href="person.html">{{user.username}}</a></li>
+      <li><a>注销</a></li>
+    </ul>
+    <ul v-else class="user-operation">
+      <li><a href="/login.html">登录</a></li>
+      <li><a href="/signup.html">注册</a></li>
+    </ul>
+  </nav>
 </template>
 
 <script type="text/ecmascript-6">
   export default {
     data () {
       return {
-        isLogin: false
+        user: null
       }
     },
     created () {
-//      this.$http.get('login').then((resp) => {
-//        this.isLogin = resp.body
-//      })
+      if (localStorage.user){
+        this.user = localStorage.user
+      }
     }
   }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   theme-color = #a7c158
-  header
+  nav
     height 50px
     background #333
-    position fixed
+    /*position fixed*/
     top 0
     width 100%
 
@@ -62,21 +63,24 @@
   .icon
     fill theme-color
 
-  .user-operation
+  ul
     justify-self marker-end
     float right
-    margin-right 30px
+    margin 0 30px
     display inline-flex
-    /*width 20%*/
-    a
-      text-decoration none
-      color #fff
+    list-style none
+    li
       line-height 50px
       text-align center
       vertical-align middle
       height 50px
       width 100px
       transition-duration .3s
+      a
+        display inline-block
+        text-decoration none
+        width 100%
+        color #fff
       &:hover
         background #444
 

@@ -53,6 +53,7 @@
     /*position fixed*/
     top 0
     width 100%
+    min-width 450px
 
   .header-icon
     display inline-block
@@ -69,6 +70,7 @@
     margin 0 30px
     display inline-flex
     list-style none
+    line-height 50px
     li
       line-height 50px
       text-align center

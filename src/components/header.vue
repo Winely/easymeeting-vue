@@ -38,7 +38,7 @@
       }
     },
     created () {
-      if (localStorage.user){
+      if (localStorage.user) {
         this.user = localStorage.user
       }
     }

@@ -6,14 +6,10 @@
       <input name="userPassword1" type="password" placeholder="密码">
       <input name="userPassword2" type="password" placeholder="确认密码">
       <div class="radio-form">
-        <label class="gender-label">
-          <input id="male" class="gender-radio" type="radio" name="gender" value="1">
-          男
-        </label>
-        <label class="gender-label">
-          <input id="female" class="gender-radio" type="radio" name="gender" value="0">
-          女
-        </label>
+        <input id="male" class="gender-radio" type="radio" name="gender" value="1">
+        <label for="male" class="gender-label">男</label>
+        <input id="female" class="gender-radio" type="radio" name="gender" value="0">
+        <label for="female" class="gender-label">女</label>
       </div>
       <textarea placeholder="自我介绍"></textarea>
       <button class="submit-button" type="submit">注 册</button>
@@ -43,14 +39,13 @@
   }
 
   .gender-label {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 0;
+    margin-right: 30px;
     vertical-align: middle;
   }
 
   .gender-radio {
     vertical-align: middle;
-    margin-top: -2px;
   }
 
   textarea {

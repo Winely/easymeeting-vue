@@ -75,6 +75,8 @@
       margin-right 18px
       margin-left 20px
       transition-duration .3s
+      &:hover
+        background rgba(138, 181, 55, 0.4)
     input:checked + label
       background theme-color
     .gender-label

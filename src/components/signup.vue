@@ -1,10 +1,10 @@
 <template>
   <div class="signPageWrap">
     <form class="signup-box">
-      <input id="userId" type="text" placeholder="登录名/邮箱名">
-      <input id="userNickname" type="text" placeholder="昵称">
-      <input id="userPassword1" type="password" placeholder="密码">
-      <input id="userPassword2" type="password" placeholder="确认密码">
+      <input name="userId" type="text" placeholder="登录名/邮箱名">
+      <input name="userNickname" type="text" placeholder="昵称">
+      <input name="userPassword1" type="password" placeholder="密码">
+      <input name="userPassword2" type="password" placeholder="确认密码">
       <div class="radio-form">
         <label class="gender-label">
           <input id="male" class="gender-radio" type="radio" name="gender" value="1">

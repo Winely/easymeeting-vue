@@ -2,7 +2,7 @@
   <div class="loginPageWrap">
     <form class="login-box">
       <input name="userId" type="text" placeholder="登录名/邮箱名">
-      <input name="userPassword" type="password" placeholder="请输入密码">
+      <input id="userPassword" type="password" placeholder="请输入密码">
       <button class="submit-button" type="submit">登 录</button>
     </form>
   </div>
@@ -32,7 +32,7 @@
     height: 100%;
     width: 30%;
     min-width: 300px;
-    background-color: rgb(241, 244, 228);
+    background-color: #f1f4e4;
     display: flex
     align-items: center;
     justify-content: center;

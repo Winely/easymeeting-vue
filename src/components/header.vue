@@ -20,7 +20,7 @@
       </svg>
     </a>
     <ul v-if="user!=null" class="user-operation">
-      <li><a href="person.html">{{user.username}}</a></li>
+      <li><a href="/person.html">{{user.username}}</a></li>
       <li><a>注销</a></li>
     </ul>
     <ul v-else class="user-operation">
@@ -50,11 +50,11 @@
   nav
     height 50px
     background #333
-    /*position fixed*/
     top 0
     width 100%
     min-width 450px
-
+    position fixed
+    z-index 3
   .header-icon
     display inline-block
     margin 10px 30px

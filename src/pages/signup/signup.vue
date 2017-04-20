@@ -71,6 +71,7 @@
     width: 100%;
     min-width: 300px;
     height: 560px;
+    margin-top 50px
   }
 
   .signup-box {

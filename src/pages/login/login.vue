@@ -38,6 +38,7 @@
     width: 100%;
     min-width: 450px;
     height: 560px;
+    margin-top 50px
   }
 
   .login-box {

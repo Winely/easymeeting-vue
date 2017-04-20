@@ -42,7 +42,9 @@ cd .
 .home-wrap
   width 100%
   height 100%
+  margin-top 50px
 .router-view
   width 80%
   margin-left 20%
+  max-height 100% !important
 </style>

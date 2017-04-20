@@ -26,12 +26,12 @@ npm run build --report
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 ## 接口
-### login
+### login 用户登录
 ```
 /api/login?email=xxxxxxxxxxxxxx&password=xxxxxxxxxxxxxxxxxx
 ```
-type: GET  
-return:
+- type: GET  
+- return:
 ```json
 {
   "status": 0,
@@ -56,3 +56,35 @@ return:
   - avatar：头像图片地址
   - description：用户自我介绍
   - token：登录状态密钥，浏览器本地保存
+  
+### userinfo 获取用户信息
+```
+  /api/userinfo?token=xxxxxxxxxxxxxxxxxxxxxxx
+```
+- type: GET  
+- return:
+```json
+{
+  "status": 0,
+  "user": {
+      "username": "王大锤",
+      "email": "fewjiofa@rrjgeor.cn",
+      "gender": true,
+      "avatar": "dfaeiwofe.png",
+      "description": "dfwahefneklmd",
+      "token": "faweirhoiewnkdksl"
+   }
+}
+```
+- status
+  - 0：token有效，返回用户信息
+  - 1：token已失效，需要重新登录
+  - 2：token是假的
+  
+### logout 注销登录
+```
+  /api/logout?token=xxxxxxxxxxxxxxxxxxxxxx
+```
+- type: GET  
+- return:  
+`true`: 注销完成

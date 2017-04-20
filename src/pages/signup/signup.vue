@@ -3,22 +3,21 @@
     <v-header></v-header>
     <div class="signPageWrap">
       <form class="signup-box">
-        <input name="userId" type="text" required="required" title="hi" placeholder="登录名/邮箱名">
-        <input name="userNickname" required="required" type="text" placeholder="昵称">
-        <input name="userPassword1" required="required" type="password" @change.prevent='checkPasswords'
+        <input name="email" type="email" required placeholder="登录名/邮箱名">
+        <input name="username" required type="text" placeholder="昵称">
+        <input id="userPassword1" name="password" required type="password" @change.prevent='checkPasswords'
                placeholder="密码">
-        <input name="userPassword2" required="required" type="password" @change.prevent='checkPasswords'
+        <input id="userPassword2" name="password2" required type="password" @change.prevent='checkPasswords'
                placeholder="确认密码">
         <div class="radio-form">
           <input id="male" type="radio" name="gender" value="1">
           <label for="male"></label>
           <label class="gender-label" for="male">男</label>
-
           <input id="female" type="radio" name="gender" value="0">
           <label for="female"></label>
           <label class="gender-label" for="female">女</label>
         </div>
-        <textarea placeholder="自我介绍" maxLength="150"></textarea>
+        <textarea placeholder="自我介绍" name="description" maxlength="100"></textarea>
         <button class="submit-button" type="submit">注 册</button>
       </form>
     </div>
@@ -39,8 +38,8 @@
     },
     methods: {
       checkPasswords: function () {
-        var pass1 = document.getElementById('password1')
-        var pass2 = document.getElementById('password2')
+        var pass1 = document.getElementById('userPassword1')
+        var pass2 = document.getElementById('userPassword2')
         if (pass1.value !== pass2.value) {
           pass1.setCustomValidity('两次输入的密码不匹配')
         }

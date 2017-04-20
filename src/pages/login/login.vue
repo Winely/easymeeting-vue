@@ -3,8 +3,8 @@
     <v-header></v-header>
     <div class="loginPageWrap">
       <form class="login-box">
-        <input name="userId" type="text" placeholder="登录名/邮箱名">
-        <input id="userPassword" type="password" placeholder="请输入密码">
+        <input name="email" type="text" placeholder="登录名/邮箱名">
+        <input id="userPassword" name="password" type="password" placeholder="请输入密码">
         <button class="submit-button" type="submit">登 录</button>
       </form>
     </div>

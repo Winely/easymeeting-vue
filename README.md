@@ -26,6 +26,38 @@ npm run build --report
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 ## 接口
+### userExist 用户邮箱查重
+```html
+/api/userexist?email=xxxxxxxxxxxxxxxx
+```
+- type: GET  
+- return:
+  - `true` 该邮箱已注册
+  - `false`邮箱未注册
+  
+### signup 用户注册
+```
+/api/signup
+```
+- type: POST
+- data: 
+  - email: 登录邮箱
+  - username: 用户昵称
+  - password: 密码
+  - gender: 1为男性, 0为女性
+  - description: 自我介绍
+- return:
+```json
+{
+  "status": 0,
+  "description": "注册成功。"
+}
+```
+- status
+  - 0：注册成功
+  - 1：邮箱已注册
+  - 2：某项必填信息缺失
+  
 ### login 用户登录
 ```
 /api/login?email=xxxxxxxxxxxxxx&password=xxxxxxxxxxxxxxxxxx

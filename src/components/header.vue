@@ -21,7 +21,9 @@
     </a>
     <ul v-if="user!=null" class="user-operation">
       <li><a href="/person.html">{{user.username}}</a></li>
-      <li><a>注销</a></li>
+      <li>
+        <a @click.prevent="logout">注销</a>
+      </li>
     </ul>
     <ul v-else class="user-operation">
       <li><a href="/login.html">登录</a></li>
@@ -34,7 +36,21 @@
   export default {
     data () {
       return {
-        user: null
+        user: {
+          username: '王大锤',
+          token: 'dfjweiower'
+        }
+      }
+    },
+    methods: {
+      logout () {
+        console.log('logout')
+        this.$http.get('/api/logout?token=' + this.user.token).then(resp => {
+          if (resp.code === 200 && resp.body === true) {
+            localStorage.removeItem('user')
+            location.href('/')
+          }
+        })
       }
     },
     created () {
@@ -55,6 +71,7 @@
     min-width 450px
     position fixed
     z-index 3
+
   .header-icon
     display inline-block
     margin 10px 30px
@@ -83,6 +100,7 @@
         text-decoration none
         width 100%
         color #fff
+        cursor pointer
       &:hover
         background #444
 

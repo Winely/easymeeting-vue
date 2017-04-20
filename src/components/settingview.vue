@@ -1,5 +1,5 @@
 <template>
-  <p>Setting</p>
+  <div>Setting</div>
 </template>
 
 <script type="text/ecmascript-6">

@@ -1,4 +1,5 @@
 theme-color = #8ab537
+bg-color = #F1F4E4
 
 body
   margin 0
@@ -26,7 +27,12 @@ input, textarea {
   font-family 'Noto Sans', 'Noto Sans S Chinese DemiLight', '微软雅黑', sans-serif
 }
 
-input:focus {
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill
+  -webkit-box-shadow: 0 0 0px 1000px bg-color inset
+  -webkit-text-fill-color #858585
+
+input:focus
+{
   background-color: #a7c158;
   color: white;
 }

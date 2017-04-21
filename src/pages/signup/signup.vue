@@ -2,28 +2,29 @@
   <div id="signupPage">
     <v-header :user="user"></v-header>
     <div class="signPageWrap">
-      <form class="signup-box">
-        <input name="email" type="email" required placeholder="登录名/邮箱名">
-        <input name="username" required type="text" placeholder="昵称">
-        <input id="userPassword1" name="password" required type="password" @change.prevent='checkPasswords'
+      <form class="signup-box" method="post" action="">
+        <input v-model="email" @change="checkEmail($event)" name="email" id="email" type="email" required
+               placeholder="登录名/邮箱名">
+        <input v-model="username" name="username" required type="text" placeholder="昵称">
+        <input v-model="password" id="userPassword1" name="password" required type="password"
+               @change.prevent='checkPasswords'
                placeholder="密码">
         <input id="userPassword2" name="password2" required type="password" @change.prevent='checkPasswords'
                placeholder="确认密码">
         <div class="radio-form">
-          <input id="male" type="radio" name="gender" value="1">
+          <input v-model="gender" id="male" type="radio" name="gender" value="1">
           <label for="male"></label>
           <label class="gender-label" for="male">男</label>
-          <input id="female" type="radio" name="gender" value="0">
+          <input v-model="gender" id="female" type="radio" name="gender" value="0">
           <label for="female"></label>
           <label class="gender-label" for="female">女</label>
         </div>
-        <textarea placeholder="自我介绍" name="description" maxlength="100"></textarea>
+        <textarea v-model="description" placeholder="自我介绍" name="description" maxlength="100"></textarea>
         <button class="submit-button" type="submit">注 册</button>
       </form>
     </div>
     <v-footer></v-footer>
   </div>
-
 </template>
 
 <script type="text/ecmascript-6">
@@ -38,10 +39,21 @@
     },
     data () {
       return {
-        user: null
+        user: null,
+        email: '',
+        username: '',
+        password: '',
+        gender: '',
+        description: ''
       }
     },
     methods: {
+      fun: function () {
+        return false
+      },
+      fun2: function () {
+        alert("hi")
+      },
       checkPasswords: function () {
         var pass1 = document.getElementById('userPassword1')
         var pass2 = document.getElementById('userPassword2')
@@ -51,6 +63,18 @@
         else {
           pass1.setCustomValidity('')
         }
+      },
+      checkEmail: function (e) {
+        if (!e.target.checkValidity()) {
+          e.target.setCustomValidity('邮箱格式错误')
+        }
+//        this.$http.get('/api/userexist?email=' + email.value).then(resp => {
+//          if (resp.code === 200) {
+//            if (resp.body === true) {
+//              e.target.setCustomValidity('该邮箱已被注册！')
+//            }
+//          }
+//        })
       }
     }
   }

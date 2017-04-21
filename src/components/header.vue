@@ -20,7 +20,7 @@
       </svg>
     </a>
     <ul v-if="user!=null" class="user-operation">
-      <li><a href="/person.html">{{user.username}}</a></li>
+      <li><a href="/home.html">{{user.username}}</a></li>
       <li>
         <a @click.prevent="logout">注销</a>
       </li>
@@ -36,28 +36,22 @@
   export default {
     data () {
       return {
-        user: {
-          username: '王大锤',
-          token: 'dfjweiower'
-        }
       }
     },
     methods: {
       logout () {
-        console.log('logout')
         this.$http.get('/api/logout?token=' + this.user.token).then(resp => {
           if (resp.code === 200 && resp.body === true) {
             localStorage.removeItem('user')
+            sessionStorage.removeItem('user')
             location.href('/')
+            this.user = null
           }
         })
+        this.user = null
       }
     },
-    created () {
-      if (localStorage.user) {
-        this.user = localStorage.user
-      }
-    }
+    props: ['user']
   }
 </script>
 

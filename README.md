@@ -33,7 +33,7 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 |存储位置|特性|
 |:---:|:---:|  
 | vue对象中的`data`|各页面内部存取，用于数据绑定|
-|`SessionStorage.user`|会话存储，跨页面，伴随会话失效|
+|`SessionStorage`|会话存储，跨页面，伴随会话失效|
 | `LocalStorage`|本地存储，长期|
 
 用户初次次登录时，获取到的用户登录信息后，依次将信息存储到这三级中去：
@@ -41,7 +41,7 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 |存储位置|信息|
 |:---:|:---:|  
 | vue对象中的`data`|`user`里的所有信息|
-|`SessionStorage.user`|`user`内的所有信息|
+|`SessionStorage`|`user`内的所有信息|
 | `LocalStorage`|仅存储`user.token`和`user.username`|
 
 当用户新打开一个网页时，按以下顺序检查和恢复数据：  

@@ -1,6 +1,6 @@
 <template>
   <div id="signupPage">
-    <v-header></v-header>
+    <v-header :user="user"></v-header>
     <div class="signPageWrap">
       <form class="signup-box">
         <input name="email" type="email" required placeholder="登录名/邮箱名">
@@ -35,6 +35,11 @@
     components: {
       'v-header': header,
       'v-footer': footer
+    },
+    data () {
+      return {
+        user: null
+      }
     },
     methods: {
       checkPasswords: function () {

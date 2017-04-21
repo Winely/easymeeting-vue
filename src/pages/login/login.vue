@@ -1,6 +1,6 @@
 <template>
   <div id="loginPage">
-    <v-header></v-header>
+    <v-header :user="user"></v-header>
     <div class="loginPageWrap">
       <form class="login-box">
         <input name="email" type="text" placeholder="登录名/邮箱名">
@@ -21,12 +21,24 @@
     components: {
       'v-header': header,
       'v-footer': footer
+    },
+    data () {
+      return {
+        user: null
+      }
+    },
+    created () {
+      //如果还在登录状态就直接跳转到个人主页
+      if (sessionStorage.user) {
+        this.user = sessionStorage.user
+        location.href = '/home.html'
+      }
     }
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-    input {
+  input {
     border-radius: 18px;
     height: 28px;
     width: 200px;

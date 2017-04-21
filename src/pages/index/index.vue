@@ -27,6 +27,7 @@ cd .
     },
     data () {
       return {
+//        测试用，等api弄好了就应该是null
 //        user: null
         user: {
           username: '王大锤',

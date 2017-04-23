@@ -1,0 +1,28 @@
+<template>
+  <div class="thumbnail" :style="styleObj">
+    <img :src="imgSrc" :alt="alt" :style="'border-radius:' + radius"/>
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+  export default {
+    props: ['imgSrc', 'alt', 'width', 'height', 'radius'],
+    data () {
+      return {
+        styleObj: {
+          width: this.width,
+          height: this.height
+        }
+      }
+    }
+  }
+</script>
+
+<style lang="stylus" rel="stylesheet/stylus">
+  .thumbnail
+    text-align center
+
+  .thumbnail img
+    max-width 100%
+    max-height 100%
+</style>

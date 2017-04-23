@@ -1,0 +1,51 @@
+@import "font.css";
+body {
+  margin: 0;
+  font-family: 'Noto Sans', 'Noto Sans S Chinese DemiLight', '微软雅黑', sans-serif;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+div {
+  margin: 0;
+  padding: 0;
+}
+input,
+textarea {
+  background-color: transparent;
+  border: solid 2px #8ab537;
+  color: #858585;
+  font-size: 15px;
+  font-weight: 500;
+  outline: none;
+  font-family: 'Noto Sans', 'Noto Sans S Chinese DemiLight', '微软雅黑', sans-serif;
+}
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #f1f4e4 inset;
+  -webkit-text-fill-color: #858585;
+}
+input:focus {
+  background-color: #a7c158;
+  color: #fff;
+}
+.submit-button {
+  background-color: #8ab537;
+  border: solid 2px #8ab537;
+  border-radius: 4px;
+  height: 28px;
+  width: 240px;
+  margin: 12px;
+  padding: 0;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+}

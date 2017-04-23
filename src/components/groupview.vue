@@ -19,18 +19,25 @@
     </header>
     <div class="groups">
       <section v-for="group in groups">
-        <img :src="group.avatar" :alt="group.name">
-        <h3><a href="/">{{group.name}}</a></h3>
-        <p>{{group.description}}</p>
-        <ul class="btn-list">
-          <li><a>进入会议</a></li>
-        </ul>
+        <div class="col">
+          <thumbnail :img-src="group.avatar" width="72px" height="72px" radius="999em" :alt="group.name"></thumbnail>
+        </div>
+        <div class="col">
+          <h3><a href="/">{{group.name}}</a></h3>
+          <p>{{group.description}}</p>
+          <ul class="btn-list">
+            <li><a><i class="icon-play"></i>进入会议</a></li>
+            <li><a><i class="icon-conf"></i>小组管理</a></li>
+            <li><a><i class="icon-add"></i>新建预约</a></li>
+          </ul>
+        </div>
       </section>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import thumbnail from 'components/thumbnail'
   export default {
     props: ['token'],
     data () {
@@ -40,41 +47,87 @@
             name: '滚滚长江东逝水',
             description: '是非成败转头空，青山依旧在，惯看秋月春风。',
             isLeader: false,
-            avatar: 'http://donggu.me/img/avatar.png'
+            avatar: 'http://donggu.me/img/avatar.jpg'
           }
         ]
       }
+    },
+    components: {
+      thumbnail
     }
   }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-.groupview
-  padding 0 30px
+  .groupview
+    padding 0 30px
 
-.router-icon-s
-  width 30px
-  height 30px
-  .icon-s
-    fill #a7c158
-header
-  display flex
-  align-items center
-  svg
-    margin-right 20px
-  button
-    color #fff
-    background #FFCA4C
-    border-radius 9px
-    border none
-    font-size 16px
-    width 125px
-    height 34px
-    line-height 34px
-    margin-left 50px
-    cursor pointer
-    transition-duration .3s
-    &:hover
-      box-shadow 0 2px 6px rgba(0,0,0,0.16)
+  .router-icon-s
+    width 30px
+    height 30px
+    .icon-s
+      fill #a7c158
+
+  header
+    display flex
+    align-items center
+    svg
+      margin-right 20px
+    button
+      color #fff
+      background #FFCA4C
+      border-radius 9px
+      border none
+      font-size 16px
+      width 125px
+      height 34px
+      line-height 34px
+      margin-left 50px
+      cursor pointer
+      transition-duration .3s
+      &:hover
+        box-shadow 0 2px 6px rgba(0, 0, 0, 0.16)
+
+  .groups
+    section
+      display flex
+      align-items center
+      background #F2F2F2
+      width 42%
+      .col
+        display flex
+        flex-direction column
+        justify-content space-around
+        padding 0 20px
+        &:first-child
+          height 120px
+          border-right solid .5px #A7C158
+      .thumbnail
+        width 72px
+        height 72px
+        background #fff
+      h3
+        font-size 16px
+        margin-bottom 0
+      p
+        font-size 14px
+        font-weight 200
+        color #939880
+        margin 6px auto
+      ul
+        display flex
+        justify-content space-between
+        font-size 12px
+        font-weight 200
+        li
+          transition-duration .3s
+          padding 4px 8px
+          border-radius 4px
+          cursor pointer
+          &:hover
+            background #fff
+        i
+          color #A7C158
+          margin-right 4px
 
 </style>

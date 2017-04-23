@@ -35,19 +35,13 @@
 <script type="text/ecmascript-6">
   export default {
     data () {
-      return {
-      }
+      return {}
     },
     methods: {
       logout () {
-        this.$http.get('/api/logout?token=' + this.user.token).then(resp => {
-          if (resp.code === 200 && resp.body === true) {
-            localStorage.removeItem('user')
-            sessionStorage.removeItem('user')
-            location.href('/')
-            this.user = null
-          }
-        })
+        localStorage.removeItem('user')
+        sessionStorage.removeItem('user')
+        location.href('/')
         this.user = null
       }
     },

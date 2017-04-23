@@ -1,6 +1,6 @@
 <template>
   <div id="loginPage">
-    <v-header :user="user"></v-header>
+    <v-header :user="user" @logout="logout"></v-header>
     <div class="loginPageWrap">
       <form class="login-box">
         <input name="email" type="text" placeholder="登录名/邮箱名">
@@ -25,6 +25,14 @@
     data () {
       return {
         user: null
+      }
+    },
+    methods: {
+      logout () {
+        this.user = null
+        localStorage.removeItem('user')
+        sessionStorage.removeItem('user')
+        location.href = '/login.html'
       }
     },
     created () {

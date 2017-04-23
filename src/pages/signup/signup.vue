@@ -75,6 +75,12 @@
 //            }
 //          }
 //        })
+      },
+      logout () {
+        this.user = null
+        localStorage.removeItem('user')
+        sessionStorage.removeItem('user')
+        location.href = '/login.html'
       }
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-header :user="user"></v-header>
+    <v-header :user="user" @logout="logout"></v-header>
     <div class="index-wrapper">
       <h2>我是首页</h2>
       <h2>我是广告</h2>
@@ -33,6 +33,14 @@ cd .
           username: '王大锤',
           token: 'dfjweiower'
         }
+      }
+    },
+    methods: {
+      logout () {
+        this.user = null
+        localStorage.removeItem('user')
+        sessionStorage.removeItem('user')
+        location.href='/login.html'
       }
     },
     created () {

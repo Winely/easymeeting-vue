@@ -24,7 +24,7 @@
         </div>
         <div class="col">
           <h3><a href="/">{{group.name}}</a></h3>
-          <p>{{group.description}}</p>
+          <p>{{group.description.length>100?group.description:group.description.substr(0,99)+'…'}}</p>
           <ul class="btn-list">
             <li><a><i class="icon-play"></i>进入会议</a></li>
             <li><a><i class="icon-conf"></i>小组管理</a></li>

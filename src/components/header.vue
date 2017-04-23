@@ -22,7 +22,7 @@
     <ul v-if="user!=null" class="user-operation">
       <li><a href="/home.html">{{user.username}}</a></li>
       <li>
-        <a @click.prevent="logout">注销</a>
+        <a @click.prevent="$emit('logout')">注销</a>
       </li>
     </ul>
     <ul v-else class="user-operation">
@@ -35,14 +35,8 @@
 <script type="text/ecmascript-6">
   export default {
     data () {
-      return {}
-    },
-    methods: {
-      logout () {
-        localStorage.removeItem('user')
-        sessionStorage.removeItem('user')
-        location.href('/')
-        this.user = null
+      return {
+        userinfo: {}
       }
     },
     props: ['user']

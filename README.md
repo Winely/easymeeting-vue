@@ -29,7 +29,7 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 > 参考了淘宝的思路
 
 本地保存的信息有三个级别： 
- 
+
 |存储位置|特性|
 |:---:|:---:|  
 | vue对象中的`data`|各页面内部存取，用于数据绑定|
@@ -61,73 +61,76 @@ _注：对于header，无需登录就能看见用户名，即仅需要localstora
 /api/userexist?email=xxxxxxxxxxxxxxxx
 ```
 - type: GET  
-- return:
-  - `true` 该邮箱已注册
-  - `false`邮箱未注册
+- return code:   
+  - `200` 该邮箱已注册  
+  - `404` 邮箱未注册  
   
 ### signup 用户注册
 ```
-/api/signup
+/api/user
 ```
-- type: POST
-- data: 
-  - email: 登录邮箱
-  - username: 用户昵称
-  - password: 密码
-  - gender: 1为男性, 0为女性
-  - description: 自我介绍
+- type: POST  
+- data:   
+  - email: 登录邮箱  
+  - username: 用户昵称  
+  - password: 密码  
+  - gender: 1为男性, 0为女性  
+  - description: 自我介绍  
 - return:
-```json
-{
-  "status": 0,
+```javascript
+code: 201,
+body: {
   "description": "注册成功。"
 }
 ```
-- status
-  - 0：注册成功
-  - 1：邮箱已注册
-  - 2：某项必填信息缺失
+- code  
+  - 201：注册成功  
+  - 401：邮箱已注册（后端数据检查）  
+  - 400：某项必填信息缺失  
   
 ### login 用户登录
 ```
-/api/login?email=xxxxxxxxxxxxxx&password=xxxxxxxxxxxxxxxxxx
+/api/session
 ```
-- type: GET  
-- return:
-```json
-{
-  "status": 0,
+- type: POST  
+- data:  
+  - email: 登录邮箱  
+  - password 登录密码  
+- return:  
+```javascript
+code: 200,
+body: {
   "user": {
     "username": "王大锤",
     "email": "fewjiofa@rrjgeor.cn",
-    "gender": true,
+    "gender": 1,
     "avatar": "dfaeiwofe.png",
     "description": "dfwahefneklmd",
     "token": "faweirhoiewnkdksl"
  }
 }
 ```
-- status
-  - 0: 登录成功，并返回user信息
-  - 1：密码错误
-  - 2：账号不存在
-- user
-  - username：用户昵称
-  - email：用户邮箱
-  - gender：用户性别（true为男，false为女）
-  - avatar：头像图片地址
-  - description：用户自我介绍
-  - token：登录状态密钥，浏览器本地保存
+- code  
+  - 200: 登录成功，并返回user信息  
+  - 401：密码错误  
+  - 404: 账号不存在  
+- user  
+  - username：用户昵称  
+  - email：用户邮箱  
+  - gender：用户性别（1为男，0为女）  
+  - avatar：头像图片地址  
+  - description：用户自我介绍  
+  - token：登录状态密钥，浏览器本地保存  
   
 ### userinfo 获取用户信息
 ```
   /api/userinfo?token=xxxxxxxxxxxxxxxxxxxxxxx
 ```
-- type: GET  
-- return:
+- type: GET   
+- return:   
 ```json
-{
-  "status": 0,
+code: 200,
+body: {
   "user": {
       "username": "王大锤",
       "email": "fewjiofa@rrjgeor.cn",
@@ -138,15 +141,6 @@ _注：对于header，无需登录就能看见用户名，即仅需要localstora
    }
 }
 ```
-- status
-  - 0：token有效，返回用户信息
-  - 1：token已失效，需要重新登录
-  - 2：token是假的
-  
-### logout 注销登录
-```
-  /api/logout?token=xxxxxxxxxxxxxxxxxxxxxx
-```
-- type: GET  
-- return:  
-`true`: 注销完成
+- code  
+  - 200：token有效，返回用户信息  
+  - 404：不存在token对应用户  

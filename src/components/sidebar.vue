@@ -32,12 +32,13 @@
   description-color = #939880
   link-color = #6E794A
   bg-color = #F1F4E4
+
   .sidebar
+    background bg-color
+    text-align center
     width 20%
     position fixed
     height 100%
-    background bg-color
-    text-align center
     img
       border-radius 999em
       margin-top 30px
@@ -64,4 +65,5 @@
     .router-link-active, a:active
       background btn-bg!important
       color #fff
+
 </style>

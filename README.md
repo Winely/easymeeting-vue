@@ -69,8 +69,8 @@ _注：对于header，无需登录就能看见用户名，即仅需要localstora
 ```
 /api/user
 ```
-- type: POST
-- data: 
+- type: POST  
+- data:   
   - email: 登录邮箱  
   - username: 用户昵称  
   - password: 密码  
@@ -83,10 +83,10 @@ body: {
   "description": "注册成功。"
 }
 ```
-- code
-  - 201：注册成功
-  - 401：邮箱已注册（后端数据检查） 
-  - 400：某项必填信息缺失
+- code  
+  - 201：注册成功  
+  - 401：邮箱已注册（后端数据检查）  
+  - 400：某项必填信息缺失  
   
 ### login 用户登录
 ```
@@ -96,7 +96,7 @@ body: {
 - data:  
   - email: 登录邮箱  
   - password 登录密码  
-- return:
+- return:  
 ```javascript
 code: 200,
 body: {
@@ -110,24 +110,24 @@ body: {
  }
 }
 ```
-- code
-  - 200: 登录成功，并返回user信息
-  - 401：密码错误
-  - 404: 账号不存在
-- user
-  - username：用户昵称
-  - email：用户邮箱
-  - gender：用户性别（1为男，0为女）
-  - avatar：头像图片地址
-  - description：用户自我介绍
-  - token：登录状态密钥，浏览器本地保存
+- code  
+  - 200: 登录成功，并返回user信息  
+  - 401：密码错误  
+  - 404: 账号不存在  
+- user  
+  - username：用户昵称  
+  - email：用户邮箱  
+  - gender：用户性别（1为男，0为女）  
+  - avatar：头像图片地址  
+  - description：用户自我介绍  
+  - token：登录状态密钥，浏览器本地保存  
   
 ### userinfo 获取用户信息
 ```
   /api/userinfo?token=xxxxxxxxxxxxxxxxxxxxxxx
 ```
-- type: GET  
-- return:  
+- type: GET   
+- return:   
 ```json
 code: 200,
 body: {
@@ -141,6 +141,6 @@ body: {
    }
 }
 ```
-- code
-  - 200：token有效，返回用户信息
-  - 404：不存在token对应用户
+- code  
+  - 200：token有效，返回用户信息  
+  - 404：不存在token对应用户  

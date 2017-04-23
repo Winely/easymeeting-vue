@@ -1,7 +1,9 @@
 <template>
   <div id="signupPage">
     <v-header :user="user"></v-header>
+
     <div class="signPageWrap">
+      <div class="bgWrap"></div>
       <form class="signup-box" method="post" action="">
         <input v-model="email" @change="checkEmail($event)" name="email" id="email" type="email" required
                placeholder="登录名/邮箱名">
@@ -82,20 +84,12 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   theme-color = #8ab537
-  bg-color = #F1F4E4
-  input, textarea {
-    border-radius: 8px;
-    height: 28px;
-    width: 200px;
-    margin: 6px;
-    padding: 2px 18px;
-  }
-
-  textarea
-    height 150px
-    padding-top 8px
+  bg-color = rgba(255, 255, 255, 0.8)
 
   .signPageWrap {
+    background-image: url("../../images/bg0.jpg");
+    background-repeat no-repeat
+    background-position: 0 0;
     width: 100%;
     min-width: 300px;
     height: 560px;
@@ -113,6 +107,18 @@
     justify-content: center;
     flex-direction: column;
   }
+
+  input, textarea {
+    border-radius: 8px;
+    height: 28px;
+    width: 200px;
+    margin: 6px;
+    padding: 2px 18px;
+  }
+
+  textarea
+    height 150px
+    padding-top 8px
 
   .radio-form
     display flex

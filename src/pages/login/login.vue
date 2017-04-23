@@ -2,6 +2,7 @@
   <div id="loginPage">
     <v-header :user="user"></v-header>
     <div class="loginPageWrap">
+      <div class="bgWrap"></div>
       <form class="login-box">
         <input name="email" type="text" placeholder="登录名/邮箱名">
         <input id="userPassword" name="password" type="password" placeholder="请输入密码">
@@ -38,6 +39,9 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  theme-color = #8ab537
+  bg-color = rgba(255, 255, 255, 0.8)
+
   input {
     border-radius: 18px;
     height: 28px;
@@ -47,8 +51,11 @@
   }
 
   .loginPageWrap {
+    background-image: url("../../images/bg0.jpg");
+    background-repeat no-repeat
+    background-position: 0 0;
     width: 100%;
-    min-width: 450px;
+    min-width: 300px;
     height: 560px;
     margin-top 50px
   }
@@ -58,7 +65,7 @@
     height: 100%;
     width: 30%;
     min-width: 300px;
-    background-color: #f1f4e4;
+    background-color: bg-color;
     display: flex
     align-items: center;
     justify-content: center;

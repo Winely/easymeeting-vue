@@ -1,7 +1,8 @@
 <template>
   <div class="sidebar">
     <div class="user-info">
-      <img class="avatar" :src="user.avatar" alt="user avatar" width="128px" height="128px"/>
+      <thumbnail class="avatar" :img-src="user.avatar" radius="999em"
+                 alt="user avatar" width="128px" height="128px"></thumbnail>
       <h4>{{user.username}}</h4>
       <p>{{user.description}}</p>
     </div>
@@ -12,6 +13,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import thumbnail from './thumbnail'
   export default {
     props: ['user'],
     data () {
@@ -22,6 +24,9 @@
           {path: '/setting', title: '个人设置'}
         ]
       }
+    },
+    components: {
+      thumbnail
     }
   }
 </script>
@@ -39,8 +44,9 @@
     width 20%
     position fixed
     height 100%
-    img
+    .avatar
       border-radius 999em
+      margin auto
       margin-top 30px
     h4
       font-size 20px

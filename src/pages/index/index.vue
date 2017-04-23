@@ -17,6 +17,7 @@
 cd .
 <script>
   require('../../assets/global.css')
+  import urlconf from '/src/assets/url.conf'
   import header from 'components/header'
   import footer from 'components/footer'
   export default {
@@ -50,7 +51,7 @@ cd .
       else {
         if (localStorage.user) {
           this.user = localStorage.user
-          this.$http.get('/api/userinfo?token=' + this.user.token).then(resp => {
+          this.$http.get(urlconf.userinfo(this.user.token)).then(resp => {
             if (resp.code === 200) {
               if (resp.body.status === 0) {
                 this.user = resp.body.user

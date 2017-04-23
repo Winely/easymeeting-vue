@@ -24,6 +24,26 @@ npm run build --report
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## URL配置管理
+为了方便调试和修改，将所有的 API url 放入到`/src/assets/url.conf.js`中进行统一管理。用法如下：  
+```javascript
+// 首先import
+import urlconf from '/src/assets/url.conf'
+
+// 然后随意调用，注意无论是否带参，都是函数
+this.$http.get(urlconf.exist(token)).then(resp=>{
+    if(resp.ok){
+        // do something
+    }
+})
+
+this.$http.post(urlconf.signup(),data).then(resp=>{
+    if(resp.ok){
+        // do something
+    }
+})
+```
+这样当更换后端服务器地址和api时只需更改一个文件即可。  
 
 ## 登录机制
 > 参考了淘宝的思路

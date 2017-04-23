@@ -34,11 +34,6 @@
 
 <script type="text/ecmascript-6">
   export default {
-    data () {
-      return {
-        userinfo: {}
-      }
-    },
     props: ['user']
   }
 </script>

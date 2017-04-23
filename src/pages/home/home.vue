@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <v-header></v-header>
+    <v-header :user="user"></v-header>
     <div class="home-wrap">
       <sidebar :user="user"></sidebar>
-      <router-view class="router-view"></router-view>
+      <router-view class="router-view" :token="user.token"></router-view>
     </div>
   </div>
 </template>
@@ -30,10 +30,29 @@ cd .
       }
     },
     created () {
-//      if (!localStorage.user) {
-//        location.href = '/login.html'
-//      }
-//      this.user = localStorage.user;
+      if (sessionStorage.user) {
+        this.user = user
+      }
+      else {
+        if (localStorage.user) {
+          this.user = localStorage.user
+          this.$http.get('/api/userinfo?token=' + this.user.token).then(resp => {
+            if (resp.code === 200) {
+              if (resp.body.status === 0) {
+                this.user = resp.body.user
+                sessionStorage.user = resp.body.user
+              }
+              else if (resp.body.status === 1) {
+                //do nothing
+              }
+              else {
+                this.user = null
+                localStorage.removeItem('user')
+              }
+            }
+          })
+        }
+      }
     }
   }
 </script>

@@ -77,7 +77,7 @@ _注：对于header，无需登录就能看见用户名，即仅需要localstora
   - gender: 1为男性, 0为女性  
   - description: 自我介绍  
 - return:
-```javascript
+```json
 code: 201,
 body: {
   "description": "注册成功。"
@@ -97,7 +97,7 @@ body: {
   - email: 登录邮箱  
   - password 登录密码  
 - return:  
-```javascript
+```json
 code: 200,
 body: {
   "user": {
@@ -143,4 +143,44 @@ body: {
 ```
 - code  
   - 200：token有效，返回用户信息  
-  - 404：不存在token对应用户  
+  - 404：不存在token对应用户 
+   
+### group 获取小组信息
+```
+  /api/group?token=xxxxxxxxxxxxxxxxxxxxxxx
+```
+- type: GET
+- return:
+```json
+code: 200,
+body: {
+  "groups": [
+    {
+      "id": 12321,
+      "name": "滚滚长江东逝水",
+      "description": "xxxxxxxxxxxxxxx",
+      "isLeader": true,
+      "status": "开会中"
+    },
+    {
+      "id": 121,
+      "name": "浪花淘尽英雄",
+      "description": "xxxxxxxxxxxxxxx",
+      "isLeader": false,
+      "status": "59min"
+    }
+  ]
+}
+```
+- code
+  - 200：token有效，返回用户的项目组信息
+  - 404：token无效
+- groups：用户所有小组的信息
+  - id：项目组键值
+  - name：项目组名称
+  - description：项目组描述
+  - isLeader：用户是否改项目组组长
+  - status：项目组状态
+    - `false` 啥会都没有
+    - `"开会中"` 开会中
+    - `"59min"` 距离下一次会议的时间

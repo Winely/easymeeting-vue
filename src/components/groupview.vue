@@ -31,6 +31,7 @@
             <li><a><i class="icon-add"></i>新建预约</a></li>
           </ul>
         </div>
+        <corner v-if="group.corner" :content="group.corner"></corner>
       </section>
     </div>
   </div>
@@ -38,30 +39,51 @@
 
 <script type="text/ecmascript-6">
   import thumbnail from 'components/thumbnail'
+  import corner from 'components/corner'
   export default {
     props: ['token'],
     data () {
       return {
         groups: [
           {
-            name: '滚滚长江东逝水',
+            name: '滚滚长江东逝水1',
             description: '是非成败转头空，青山依旧在，惯看秋月春风。',
             isLeader: false,
-            avatar: 'http://donggu.me/img/avatar.jpg'
+            avatar: 'http://donggu.me/img/avatar.jpg',
+            corner: false
+          },
+          {
+            name: '滚滚长江东逝水2',
+            description: '是非成败转头空，青山依旧在，惯看秋月春风。',
+            isLeader: false,
+            avatar: 'http://donggu.me/img/avatar.jpg',
+            corner: '开会中'
+          },
+          {
+            name: '滚滚长江东逝水3',
+            description: '是非成败转头空，青山依旧在，惯看秋月春风。',
+            isLeader: false,
+            avatar: 'http://donggu.me/img/avatar.jpg',
+            corner: '59"'
+          },
+          {
+            name: '滚滚长江东逝水4',
+            description: '是非成败转头空，青山依旧在，惯看秋月春风。',
+            isLeader: false,
+            avatar: 'http://donggu.me/img/avatar.jpg',
+            corner: '23h'
           }
-        ]
+        ],
       }
     },
     components: {
-      thumbnail
+      thumbnail,
+      corner
     }
   }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  .groupview
-    padding 0 30px
-
   .router-icon-s
     width 30px
     height 30px
@@ -71,6 +93,7 @@
   header
     display flex
     align-items center
+    padding-left 30px
     svg
       margin-right 20px
     button
@@ -89,11 +112,18 @@
         box-shadow 0 2px 6px rgba(0, 0, 0, 0.16)
 
   .groups
+    display flex
+    flex-wrap wrap
+    padding-left 24px
     section
       display flex
       align-items center
       background #F2F2F2
-      width 42%
+      width 400px
+      margin 0 30px 30px 30px
+      transition-duration .3s
+      &:hover
+        box-shadow 0 0 10px #aaa
       .col
         display flex
         flex-direction column
@@ -116,6 +146,7 @@
         margin 6px auto
       ul
         display flex
+        flex-wrap wrap
         justify-content space-between
         font-size 12px
         font-weight 200
@@ -124,10 +155,12 @@
           padding 4px 8px
           border-radius 4px
           cursor pointer
-          &:hover
+          &:hover, &:active
             background #fff
         i
           color #A7C158
           margin-right 4px
-
+@media (max-width:600px)
+  section
+    width 90%
 </style>

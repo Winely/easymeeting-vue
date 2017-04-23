@@ -17,7 +17,7 @@
 cd .
 <script>
   require('../../assets/global.css')
-  import urlconf from '/src/assets/url.conf'
+  import urlconf from 'assets/url.conf.js'
   import header from 'components/header'
   import footer from 'components/footer'
   export default {

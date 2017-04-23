@@ -38,7 +38,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import urlconf from '/src/assets/url.conf'
+  import urlconf from 'assets/url.conf'
   import thumbnail from './thumbnail'
   import corner from './corner'
   export default {

@@ -27,8 +27,8 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 ## URL配置管理
 为了方便调试和修改，将所有的 API url 放入到`/src/assets/url.conf.js`中进行统一管理。用法如下：  
 ```javascript
-// 首先import
-import urlconf from '/src/assets/url.conf'
+// 首先import，不用管相对路径，直接填写assets开头即可，系统找得到的
+import urlconf from 'assets/url.conf'
 
 // 然后随意调用，注意无论是否带参，都是函数
 this.$http.get(urlconf.exist(token)).then(resp=>{

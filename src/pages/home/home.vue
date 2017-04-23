@@ -11,7 +11,7 @@ cd .
 <script>
   require('../../assets/global.css')
 
-  import urlconf from '/src/assets/url.conf'
+  import urlconf from 'assets/url.conf'
   import header from 'components/header'
   import sidebar from 'components/sidebar'
 

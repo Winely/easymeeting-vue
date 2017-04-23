@@ -58,7 +58,7 @@ _注：对于header，无需登录就能看见用户名，即仅需要localstora
 ## 接口
 ### userExist 用户邮箱查重
 ```html
-/api/userexist?email=xxxxxxxxxxxxxxxx
+/api/user/exists?email=xxxxxxxxxxxxxxxx
 ```
 - type: GET  
 - return code:   
@@ -124,7 +124,7 @@ body: {
   
 ### userinfo 获取用户信息
 ```
-  /api/userinfo?token=xxxxxxxxxxxxxxxxxxxxxxx
+  /api/user?token=xxxxxxxxxxxxxxxxxxxxxxx
 ```
 - type: GET   
 - return:   

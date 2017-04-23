@@ -29,7 +29,7 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 > 参考了淘宝的思路
 
 本地保存的信息有三个级别： 
- z
+
 |存储位置|特性|
 |:---:|:---:|  
 | vue对象中的`data`|各页面内部存取，用于数据绑定|
@@ -61,9 +61,9 @@ _注：对于header，无需登录就能看见用户名，即仅需要localstora
 /api/userexist?email=xxxxxxxxxxxxxxxx
 ```
 - type: GET  
-- return Status: 
-  - `200` 该邮箱已注册
-  - `404` 邮箱未注册
+- return code:   
+  - `200` 该邮箱已注册  
+  - `404` 邮箱未注册  
   
 ### signup 用户注册
 ```
@@ -71,35 +71,35 @@ _注：对于header，无需登录就能看见用户名，即仅需要localstora
 ```
 - type: POST
 - data: 
-  - email: 登录邮箱
-  - username: 用户昵称
-  - password: 密码
-  - gender: 1为男性, 0为女性
-  - description: 自我介绍
+  - email: 登录邮箱  
+  - username: 用户昵称  
+  - password: 密码  
+  - gender: 1为男性, 0为女性  
+  - description: 自我介绍  
 - return:
-```json
-{
-  "status":201,
+```javascript
+code: 201,
+body: {
   "description": "注册成功。"
 }
 ```
-- status
+- code
   - 201：注册成功
-  - 401：邮箱已注册（那你要上面那个api干嘛） 
+  - 401：邮箱已注册（后端数据检查） 
   - 400：某项必填信息缺失
   
 ### login 用户登录
 ```
 /api/session
 ```
-- type: POST
-- data:
-  - email: 登录邮箱
-  - password 登录密码
+- type: POST  
+- data:  
+  - email: 登录邮箱  
+  - password 登录密码  
 - return:
-```json
-{
-  "status": 200,
+```javascript
+code: 200,
+body: {
   "user": {
     "username": "王大锤",
     "email": "fewjiofa@rrjgeor.cn",
@@ -110,7 +110,7 @@ _注：对于header，无需登录就能看见用户名，即仅需要localstora
  }
 }
 ```
-- status
+- code
   - 200: 登录成功，并返回user信息
   - 401：密码错误
   - 404: 账号不存在
@@ -127,10 +127,10 @@ _注：对于header，无需登录就能看见用户名，即仅需要localstora
   /api/userinfo?token=xxxxxxxxxxxxxxxxxxxxxxx
 ```
 - type: GET  
-- return:
+- return:  
 ```json
-{
-  "status": 0,
+code: 200,
+body: {
   "user": {
       "username": "王大锤",
       "email": "fewjiofa@rrjgeor.cn",
@@ -141,6 +141,6 @@ _注：对于header，无需登录就能看见用户名，即仅需要localstora
    }
 }
 ```
-- status
+- code
   - 200：token有效，返回用户信息
   - 404：不存在token对应用户

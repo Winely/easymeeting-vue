@@ -1,13 +1,6 @@
 /**
  * Created by dongg on 2017/4/24.
  */
-import Resource from 'vue-resource'
-import Vue from 'vue'
-
-Vue.use(Resource)
-Vue.http.option={
-  root: '/api/'
-}
 export default {
   // api的根目录地址
   root: '/api/',

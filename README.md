@@ -69,12 +69,23 @@ this.$http.post(urlconf.signup(),data).then(resp=>{
 2. 若无，则检查`LocalStorage`是否有`user`
     1. 无：首页则header显示登录按钮；个人页则跳转到登录页
     2. 有：将`LocalStorage`存储到内存；  
-      若是个人页，则通过`/api/userinfo`提交token，获取完整信息并存到`SessionStorage`和内存；如果`token`已失效，则清除信息并跳转到登录页。  
+      若是个人页，则通过`/api/user`提交token，获取完整信息并存到`SessionStorage`和内存；如果`token`已失效，则清除信息并跳转到登录页。  
       
-_注：对于header，无需登录就能看见用户名，即仅需要localstorage的user信息就可以显示。但进入个人中心则需要登录_  
-
-注销时应依次清除这三级保存的信息。
-
+### 调试与开发事项
+- 对于header，无需登录就能看见用户名，即仅需要`localStorage`的user信息就可以显示。但进入个人中心则需要登录  
+  注销时应依次清除这三级保存的信息。
+- `SessionStorage`和`LocalStorage`中值不能存储对象，需要配合`JSON.stringify()`和`JSON.parse()`方法使用
+- 由于暂时注册登录接口不能使用，调试时在控制台直接输入以下命令来伪造登录信息：
+```javascript
+sessionStorage.user = JSON.stringify({
+          token: 'fweifjowiefeiowr',
+          username: '王大锤',
+          email: '3243423@qq.com',
+          gender: true,
+          avatar: 'http://donggu.me/img/avatar.jpg',
+          description: '是非成败转头空，青山依旧在，惯看秋月春风。一壶浊酒喜相逢，古今多少事，滚滚长江东逝水，浪花淘尽英雄。 几度夕阳红。白发渔樵江渚上，都付笑谈中。'
+})
+```
 ## 接口
 ### userExist 用户邮箱查重
 ```html

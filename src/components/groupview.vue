@@ -24,9 +24,9 @@
         </div>
         <div class="col">
           <h3><a href="/">{{group.name}}</a></h3>
-          <p>{{group.description.length>100?group.description:group.description.substr(0,99)+'…'}}</p>
+          <p>{{group.description.length > 100 ? group.description : group.description.substr(0, 99) + '…'}}</p>
           <ul class="btn-list">
-            <li><a><i class="icon-play"></i>进入会议</a>{</li>
+            <li><a><i class="icon-play"></i>进入会议</a></li>
             <li><a><i class="icon-conf"></i>小组管理</a></li>
             <li><a><i class="icon-add"></i>新建预约</a></li>
           </ul>
@@ -82,10 +82,8 @@
       corner
     },
     created () {
-      this.$http.get(urlconf.group(this.user.token)).then(resp=>{
-        if(resp.ok){
-            this.groups=resp.body.groups
-        }
+      this.$http.get(urlconf.group(this.token)).then(resp => {
+        this.groups = resp.body.groups
       })
     }
   }
@@ -167,7 +165,5 @@
         i
           color #A7C158
           margin-right 4px
-@media (max-width:600px)
-  section
-    width 90%
+
 </style>

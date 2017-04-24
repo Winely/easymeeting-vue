@@ -24,6 +24,7 @@ cd .
     data () {
       return {
         user: {
+          token: 'fweifjowiefeiowr',
           username: '王大锤',
           email: '3243423@qq.com',
           gender: true,
@@ -42,23 +43,23 @@ cd .
     },
     created () {
       if (sessionStorage.user) {
-        this.user = user
+        this.user = JSON.parse(sessionStorage.user)
       }
       else {
         if (localStorage.user) {
-          this.user = localStorage.user
+          this.user = JSON.parse(localStorage.user)
           this.$http.get(urlconf.userinfo(this.user.token)).then(resp => {
-            if (resp.ok) {
-              if (resp.body.status === 0) {
-                this.user = resp.body.user
-                sessionStorage.user = resp.body.user
-              }
-              else {
-                this.user = null
-                localStorage.removeItem('user')
-              }
-            }
-          })
+              this.user = resp.body.user
+              sessionStorage.user = resp.body.user
+            },
+            resp => {
+              this.user = null
+              localStorage.removeItem('user')
+              location.href = '/login.html'
+            })
+        }
+        else {
+          location.href = '/login.html'
         }
       }
     }

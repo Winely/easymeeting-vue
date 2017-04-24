@@ -41,31 +41,16 @@ cd .
         this.user = null
         localStorage.removeItem('user')
         sessionStorage.removeItem('user')
-        location.href='/login.html'
+        location.href = '/login.html'
       }
     },
     created () {
       if (sessionStorage.user) {
-        this.user = user
+        this.user = JSON.parse(sessionStorage.user)
       }
       else {
         if (localStorage.user) {
-          this.user = localStorage.user
-          this.$http.get(urlconf.userinfo(this.user.token)).then(resp => {
-            if (resp.code === 200) {
-              if (resp.body.status === 0) {
-                this.user = resp.body.user
-                sessionStorage.user = resp.body.user
-              }
-              else if (resp.body.status === 1) {
-                //do nothing
-              }
-              else {
-                this.user = null
-                localStorage.removeItem('user')
-              }
-            }
-          })
+          this.user = JSON.parse(localStorage.user)
         }
       }
     }

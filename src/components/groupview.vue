@@ -24,7 +24,7 @@
         </div>
         <div class="col">
           <h3><a href="/">{{group.name}}</a></h3>
-          <p>{{group.description.length > 100 ? group.description : group.description.substr(0, 99) + '…'}}</p>
+          <p>{{group.description.length < 45 ? group.description : (group.description.substr(0, 44) + '……')}}</p>
           <ul class="btn-list">
             <li><a><i class="icon-play"></i>进入会议</a></li>
             <li><a><i class="icon-conf"></i>小组管理</a></li>
@@ -52,13 +52,13 @@
           {
             id: '1111111111qrqer',
             name: '滚滚长江东逝水1',
-            description: '是非成败转头空，青山依旧在，惯看秋月春风。',
+            description: '是非成败转头空，青山依旧在，惯看秋月春风。是非成败转头空，青山依旧在，惯看秋月春风。是非成败转头空，青山依旧在，惯看秋月春风。',
             isLeader: false,
             avatar: 'http://donggu.me/img/avatar.jpg',
             corner: false
           },
           {
-            id: 'dfrewqr3432qrqer',
+            id: 'dfrew9qr3432qer',
             name: '滚滚长江东逝水2',
             description: '是非成败转头空，青山依旧在，惯看秋月春风。',
             isLeader: false,

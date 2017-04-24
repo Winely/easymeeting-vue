@@ -3,12 +3,12 @@
  */
 export default {
   // api的根目录地址
-  root: '/api/',
+  root: '//123.206.123.213:3000/api/',
 
   // 各种请求的api统一为函数，返回字符串
   // get方法则带参
   exist(email){
-    return this.root + 'exists?email=' + email
+    return this.root + 'user/exists?email=' + email
   },
   signup () {
     return this.root + 'user'

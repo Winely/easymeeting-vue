@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-header :user="user" @logout="logout"></v-header>
-    <div class="index-wrapper">
+    <div class="index-wrapper" @click="test">
       <h2>我是首页</h2>
       <h2>我是广告</h2>
       <h2>我是首页</h2>
@@ -17,9 +17,11 @@
 cd .
 <script>
   require('../../assets/global.css')
-  import urlconf from 'assets/url.conf.js'
+  import urlconf from 'assets/url.conf'
   import header from 'components/header'
   import footer from 'components/footer'
+  import Identicon from 'identicon.js'
+  import md5 from 'blueimp-md5'
   export default {
     name: 'app',
     components: {
@@ -28,15 +30,19 @@ cd .
     },
     data () {
       return {
-//        测试用，等api弄好了就应该是null
-//        user: null
-        user: {
-          username: '王大锤',
-          token: 'dfjweiower'
-        }
+        user: null
       }
     },
     methods: {
+      test () {
+          var opt = {
+            format: 'svg',
+            size: 128
+          }
+          var data = new Identicon(md5(this.user.email),opt).toString()
+        console.log(data.length)
+        document.write('<img width=128 height=128 src="data:image/svg+xml;base64,' + data + '">');
+      },
       logout () {
         this.user = null
         localStorage.removeItem('user')

@@ -20,7 +20,7 @@
     <div class="groups">
       <section v-for="group in groups">
         <div class="col">
-          <thumbnail :img-src="group.avatar" width="72px" height="72px" radius="999em" :alt="group.name"></thumbnail>
+          <thumbnail :img-src="group.id" width="72px" height="72px" radius="999em" :alt="group.name"></thumbnail>
         </div>
         <div class="col">
           <h3><a href="/">{{group.name}}</a></h3>
@@ -32,6 +32,9 @@
           </ul>
         </div>
         <corner v-if="group.corner" :content="group.corner"></corner>
+      </section>
+      <section class="no-groups" v-if="!groups || groups.length===0">
+        <p>你还没有小组~　创建或加入一个小组吧！</p>
       </section>
     </div>
   </div>
@@ -47,6 +50,7 @@
       return {
         groups: [
           {
+            id: 'dfewrewqrqer',
             name: '滚滚长江东逝水1',
             description: '是非成败转头空，青山依旧在，惯看秋月春风。',
             isLeader: false,
@@ -54,6 +58,7 @@
             corner: false
           },
           {
+            id: 'dfrewqr3432qrqer',
             name: '滚滚长江东逝水2',
             description: '是非成败转头空，青山依旧在，惯看秋月春风。',
             isLeader: false,
@@ -61,6 +66,7 @@
             corner: '开会中'
           },
           {
+            id: 'vrjytjqer',
             name: '滚滚长江东逝水3',
             description: '是非成败转头空，青山依旧在，惯看秋月春风。',
             isLeader: false,
@@ -68,6 +74,7 @@
             corner: '59"'
           },
           {
+            id: 'rt9823u4henfe',
             name: '滚滚长江东逝水4',
             description: '是非成败转头空，青山依旧在，惯看秋月春风。',
             isLeader: false,
@@ -116,7 +123,6 @@
       transition-duration .3s
       &:hover
         box-shadow 0 2px 6px rgba(0, 0, 0, 0.16)
-
   .groups
     display flex
     flex-wrap wrap
@@ -165,5 +171,11 @@
         i
           color #A7C158
           margin-right 4px
-
+  section.no-groups
+    width 100%
+    height 500px
+    &:hover
+      box-shadow none
+    p
+      font-size 24px
 </style>

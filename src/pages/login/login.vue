@@ -3,7 +3,7 @@
     <v-header :user="user" @logout="logout"></v-header>
     <div class="loginPageWrap">
       <div class="bgWrap"></div>
-      <form class="login-box">
+      <form class="login-box" @submit.prevent="login">
         <input name="email" v-model="loginEmail" type="text" placeholder="登录名/邮箱名">
         <input id="userPassword" v-model="loginPassword" name="password" type="password" placeholder="请输入密码">
         <p v-if="wrong">用户名或密码错误，请重试</p>
@@ -41,14 +41,14 @@
         location.href = '/login.html'
       },
       login () {
-        this.$http.post(urlconf.login(), {email: this.loginEmail, password: this.loginPassword}).then(resp => {
+        this.$http.post(urlconf.login(),{email: this.loginEmail, password: this.loginPassword}).then(resp => {
           this.user = resp.body.user
           sessionStorage.user = JSON.stringify(this.user)
           localStorage.user = JSON.stringify({
             username: this.user.username,
             token: this.user.token
           })
-          localtion.href = '/home.html'
+          location.href = '/home.html'
         }, resp => {
           this.loginPassword = ''
           this.wrong = true

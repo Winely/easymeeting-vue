@@ -1,8 +1,8 @@
 <template>
   <div class="sidebar">
     <div class="user-info">
-      <thumbnail class="avatar" :img-src="user.avatar" radius="999em"
-                 alt="user avatar" width="128px" height="128px"></thumbnail>
+      <thumbnail class="avatar" :seed="user.email" radius="0"
+                 alt="user avatar" width="128" height="128"></thumbnail>
       <h4>{{user.username}}</h4>
       <p>{{user.description}}</p>
     </div>

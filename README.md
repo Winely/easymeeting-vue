@@ -24,6 +24,11 @@ npm run build --report
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## 头像自动生成
+使用了`blueimp-md5`和`identicon.js`两个库完成。封装在`thumbnail`组件中，使用时只需传入用户的id/小组的id即可。
+```xml
+<thumbnail seed="userid" width="128" height="128" alt="avatar" radius="10em"></thumbnail>
+```
 ## URL配置管理
 为了方便调试和修改，将所有的 API url 放入到`/src/assets/url.conf.js`中进行统一管理。用法如下：  
 ```javascript

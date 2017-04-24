@@ -6,7 +6,7 @@
       <form class="login-box">
         <input name="email" v-model="loginEmail" type="text" placeholder="登录名/邮箱名">
         <input id="userPassword" v-model="loginPassword" name="password" type="password" placeholder="请输入密码">
-        <p v-if="wrong">用户名或密码错误，请查询</p>
+        <p v-if="wrong">用户名或密码错误，请重试</p>
         <button class="submit-button" type="submit" @click.prevent="login">登 录</button>
       </form>
     </div>

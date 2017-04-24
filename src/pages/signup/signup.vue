@@ -4,7 +4,7 @@
 
     <div class="signPageWrap">
       <div class="bgWrap"></div>
-      <form class="signup-box" method="post" action="">
+      <form class="signup-box" method="post" @submit.prevent="submit">
         <input v-model="email" @change="checkEmail($event)" name="email" id="email" type="email" required
                placeholder="登录名/邮箱名">
         <input v-model="username" name="username" required type="text" placeholder="昵称">
@@ -23,6 +23,7 @@
         </div>
         <textarea v-model="description" placeholder="自我介绍" name="description" maxlength="100"></textarea>
         <button class="submit-button" type="submit">注 册</button>
+        <p>{{$data}}</p>
       </form>
     </div>
     <v-footer></v-footer>
@@ -33,6 +34,7 @@
   require('../../assets/global.css')
   import header from 'components/header'
   import footer from 'components/footer'
+  import urlconf from 'assets/url.conf'
   export default {
     name: 'signupPage',
     components: {
@@ -50,12 +52,6 @@
       }
     },
     methods: {
-      fun: function () {
-        return false
-      },
-      fun2: function () {
-        alert("hi")
-      },
       checkPasswords: function () {
         var pass1 = document.getElementById('userPassword1')
         var pass2 = document.getElementById('userPassword2')
@@ -70,19 +66,60 @@
         if (!e.target.checkValidity()) {
           e.target.setCustomValidity('邮箱格式错误')
         }
-//        this.$http.get('/api/userexist?email=' + email.value).then(resp => {
-//          if (resp.code === 200) {
-//            if (resp.body === true) {
-//              e.target.setCustomValidity('该邮箱已被注册！')
-//            }
-//          }
-//        })
+        this.$http.get(urlconf.exist(this.email)).then(resp => {
+          if (resp.code === 200) {
+            e.target.setCustomValidity('该邮箱已被注册！')
+          }
+          else if(resp.code == 404){
+            //do nothing
+            console.log("ok,邮箱未被注册")
+          }
+        })
       },
       logout () {
         this.user = null
         localStorage.removeItem('user')
         sessionStorage.removeItem('user')
         location.href = '/login.html'
+      },
+      submit: function () {
+        var formData = {
+          email: this.email,
+          username: this.username,
+          password: this.password,
+          gender: this.gender,
+          description: this.description
+        }
+        console.log("formdata:" + formData)
+        this.$http.post(urlconf.signup(), formData).then((response) => {
+          if (response.code == 201) {
+//            注册成功
+            this.$http.get(urlconf.userinfo(token)).then((resp) =>{
+              if(resp.code == 200){
+//                token有效，返回用户信息
+                this.user = resp.body.user
+              }
+              else if(resp.code == 404){
+//                不存在token对应用户
+                alert("不存在token对应用户")
+              }
+
+            },(resp) =>{
+
+            })
+          }
+          else if (response.code == 401) {
+//            邮箱已注册（后端数据检查）
+            alert("邮箱已注册");
+          }
+          else if (response.code == 400) {
+//            某项必填信息缺失
+            alert("某项必填信息缺失");
+          }
+        }, (response) => {
+          // error callback
+          alert("error!!!");
+        });
       }
     }
   }

@@ -116,7 +116,14 @@ sessionStorage.user = JSON.stringify({
 ```json
 code: 201,
 body: {
-  "description": "注册成功。"
+   "user": {
+      "username": "王大锤",
+      "email": "fewjiofa@rrjgeor.cn",
+      "gender": true,
+      "avatar": "dfaeiwofe.png",
+      "description": "dfwahefneklmd",
+      "token": "faweirhoiewnkdksl"
+   }
 }
 ```
 - code  

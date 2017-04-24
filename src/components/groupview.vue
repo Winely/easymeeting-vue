@@ -20,7 +20,7 @@
     <div class="groups">
       <section v-for="group in groups">
         <div class="col">
-          <thumbnail :img-src="group.id" width="72px" height="72px" radius="999em" :alt="group.name"></thumbnail>
+          <thumbnail :seed="group.id" width="72px" height="72px" radius="999em" :alt="group.name"></thumbnail>
         </div>
         <div class="col">
           <h3><a href="/">{{group.name}}</a></h3>
@@ -50,7 +50,7 @@
       return {
         groups: [
           {
-            id: 'dfewrewqrqer',
+            id: '1111111111qrqer',
             name: '滚滚长江东逝水1',
             description: '是非成败转头空，青山依旧在，惯看秋月春风。',
             isLeader: false,
@@ -89,9 +89,11 @@
       corner
     },
     created () {
-      this.$http.get(urlconf.group(this.token)).then(resp => {
-        this.groups = resp.body.groups
-      })
+//      this.$http.get(urlconf.group(this.token)).then(resp => {
+//        this.groups = resp.body.groups
+//      },resp=>{
+//
+//      })
     }
   }
 </script>

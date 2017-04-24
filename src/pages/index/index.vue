@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-header :user="user" @logout="logout"></v-header>
-    <div class="index-wrapper" @click="test">
+    <div id="index-wrapper" @click="test">
       <h2>我是首页</h2>
       <h2>我是广告</h2>
       <h2>我是首页</h2>
@@ -37,11 +37,12 @@ cd .
       test () {
           var opt = {
             format: 'svg',
-            size: 128
+            size: 420
           }
-          var data = new Identicon(md5(this.user.email),opt).toString()
+          var data = new Identicon(md5(new Date().getTime()),opt).toString()
         console.log(data.length)
-        document.write('<img width=128 height=128 src="data:image/svg+xml;base64,' + data + '">');
+        document.getElementById('index-wrapper')
+          .innerHTML='<img width=420 height=420 src="data:image/svg+xml;base64,' + data + '">';
       },
       logout () {
         this.user = null
@@ -64,7 +65,7 @@ cd .
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  .index-wrapper
+  #index-wrapper
     margin-top 50px
     text-align center
 </style>

@@ -23,7 +23,6 @@
         </div>
         <textarea v-model="description" placeholder="自我介绍" name="description" maxlength="100"></textarea>
         <button class="submit-button" type="submit">注 册</button>
-        <p>{{$data}}</p>
       </form>
     </div>
     <v-footer></v-footer>
@@ -70,7 +69,7 @@
           if (resp.code === 200) {
             e.target.setCustomValidity('该邮箱已被注册！')
           }
-          else if(resp.code == 404){
+          else if (resp.code == 404) {
             //do nothing
             console.log("ok,邮箱未被注册")
           }
@@ -94,17 +93,17 @@
         this.$http.post(urlconf.signup(), formData).then((response) => {
           if (response.code == 201) {
 //            注册成功
-            this.$http.get(urlconf.userinfo(token)).then((resp) =>{
-              if(resp.code == 200){
+            this.$http.get(urlconf.userinfo(token)).then((resp) => {
+              if (resp.code == 200) {
 //                token有效，返回用户信息
                 this.user = resp.body.user
               }
-              else if(resp.code == 404){
+              else if (resp.code == 404) {
 //                不存在token对应用户
                 alert("不存在token对应用户")
               }
 
-            },(resp) =>{
+            }, (resp) => {
 
             })
           }

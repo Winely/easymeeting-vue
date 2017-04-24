@@ -75,5 +75,4 @@ cd .
   .router-view
     width 80%
     margin-left 20%
-    max-height 100% !important
 </style>

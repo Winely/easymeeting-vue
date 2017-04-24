@@ -48,7 +48,7 @@
             username: this.user.username,
             token: this.user.token
           })
-          localtion.href = '/home.html'
+          location.href = '/home.html'
         }, resp => {
           this.loginPassword = ''
           this.wrong = true

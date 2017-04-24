@@ -4,9 +4,10 @@
     <div class="loginPageWrap">
       <div class="bgWrap"></div>
       <form class="login-box">
-        <input name="email" type="text" placeholder="登录名/邮箱名">
-        <input id="userPassword" name="password" type="password" placeholder="请输入密码">
-        <button class="submit-button" type="submit">登 录</button>
+        <input name="email" v-model="loginEmail" type="text" placeholder="登录名/邮箱名">
+        <input id="userPassword" v-model="loginPassword" name="password" type="password" placeholder="请输入密码">
+        <p v-if="wrong">用户名或密码错误，请查询</p>
+        <button class="submit-button" type="submit" @click.prevent="login">登 录</button>
       </form>
     </div>
     <v-footer></v-footer>
@@ -17,6 +18,7 @@
   require('../../assets/global.css')
   import header from 'components/header'
   import footer from 'components/footer'
+  import urlconf from 'assets/url.conf'
   export default {
     name: 'loginPage',
     components: {
@@ -25,7 +27,10 @@
     },
     data () {
       return {
-        user: null
+        user: null,
+        loginEmail: '',
+        loginPassword: '',
+        wrong: false
       }
     },
     methods: {
@@ -34,6 +39,20 @@
         localStorage.removeItem('user')
         sessionStorage.removeItem('user')
         location.href = '/login.html'
+      },
+      login () {
+        this.$http.post(urlconf.login(), {email: this.loginEmail, password: this.loginPassword}).then(resp => {
+          this.user = resp.body.user
+          sessionStorage.user = JSON.stringify(this.user)
+          localStorage.user = JSON.stringify({
+            username: this.user.username,
+            token: this.user.token
+          })
+          localtion.href = '/home.html'
+        }, resp => {
+          this.loginPassword = ''
+          this.wrong = true
+        })
       }
     },
     created () {
@@ -79,4 +98,9 @@
     justify-content: center;
     flex-direction: column;
   }
+
+  .login-box p
+    color #ff813d
+    margin 0 auto
+    font-size 12px
 </style>

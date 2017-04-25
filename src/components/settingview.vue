@@ -18,8 +18,10 @@
     </header>
     <div class="settings">
       <div>
-        <label for="avatar">头像</label>
-        <img id="avatar" class="avatar" src="http://donggu.me/img/avatar.jpg">
+        <label>头像</label>
+        <thumbnail :seed="user.email" class="avatar" width="128" height="128" alt="avatar" radius="0em"></thumbnail>
+        <!--<img id="avatar" class="avatar" src="http://donggu.me/img/avatar.jpg">-->
+        <i class="icon-pencil"></i>
       </div>
       <div>
         <label>昵称</label>
@@ -41,10 +43,10 @@
       </div>
       <div id="radio-form" class="radio-form">
         <label for="radio-form">性别</label>
-        <input v-model="gender" id="male" type="radio" name="gender" value="1">
+        <input id="male" type="radio" name="gender" value="1">
         <label for="male"></label>
         <label class="gender-label" for="male">男</label>
-        <input v-model="gender" id="female" type="radio" name="gender" value="0">
+        <input id="female" type="radio" name="gender" value="0">
         <label for="female"></label>
         <label class="gender-label" for="female">女</label>
       </div>
@@ -61,19 +63,26 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import thumbnail from './thumbnail'
   export default {
-    props: ['user'],
     data(){
       return {
         disabled: false,
-        user: [
-          {
-            username: '王大锤'
-          }
-        ]
+        user: null
       }
     },
-    methods: {}
+    created () {
+      if (sessionStorage.user) {
+        console.log("sessionStorage.user")
+//        this.user = sessionStorage.user
+        this.user = JSON.parse(sessionStorage.user)
+        console.log(this.user)
+      }
+    },
+    methods: {},
+    components:{
+      thumbnail
+    }
   }
 </script>
 

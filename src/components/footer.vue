@@ -14,7 +14,6 @@
     <section class="project">
       <h4>项目地址</h4>
       <p><a href="//github.com/Winely/easymeeting-vue">GitHub 仓库</a></p>
-      <p><a href="/home.html">个人主页</a></p>
     </section>
     <section class="details">
       <h4>开发人员</h4>

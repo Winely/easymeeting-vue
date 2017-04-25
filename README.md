@@ -37,15 +37,15 @@ import urlconf from 'assets/url.conf'
 
 // 然后随意调用，注意无论是否带参，都是函数
 this.$http.get(urlconf.exist(token)).then(resp=>{
-    if(resp.ok){
-        // do something
-    }
+    // success
+}, resp=>{
+    // error
 })
 
 this.$http.post(urlconf.signup(),data).then(resp=>{
-    if(resp.ok){
-        // do something
-    }
+    // success
+}, resp=>{
+    // error
 })
 ```
 这样当更换后端服务器地址和api时只需更改一个文件即可。  

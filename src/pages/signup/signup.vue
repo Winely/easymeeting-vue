@@ -1,13 +1,12 @@
 <template>
   <div id="signupPage">
     <v-header :user="user"></v-header>
-
     <div class="signPageWrap">
       <div class="bgWrap"></div>
-      <form class="signup-box" method="post" @submit.prevent="submit">
-        <input v-model="email" @change="checkEmail($event)" name="email" id="email" type="email" required
+      <form class="signup-box" @submit.prevent="submit">
+        <input v-model="email" @change.prevent="checkEmail($event)" name="email" id="email" type="email" required
                placeholder="登录名/邮箱名">
-        <input v-model="username" name="username" required type="text" placeholder="昵称">
+        <input v-model="username" id="username" name="username" required type="text" placeholder="昵称">
         <input v-model="password" id="userPassword1" name="password" required type="password"
                @change.prevent='checkPasswords'
                placeholder="密码">
@@ -47,7 +46,7 @@
         username: '',
         password: '',
         gender: '',
-        description: ''
+        description: '',
       }
     },
     methods: {
@@ -63,17 +62,18 @@
       },
       checkEmail: function (e) {
         if (!e.target.checkValidity()) {
-          e.target.setCustomValidity('邮箱格式错误')
+          e.target.setCustomValidity('邮箱格式错误!')
         }
-        this.$http.get(urlconf.exist(this.email)).then(resp => {
-          if (resp.code === 200) {
-            e.target.setCustomValidity('该邮箱已被注册！')
-          }
-          else if (resp.code == 404) {
-            //do nothing
-            console.log("ok,邮箱未被注册")
-          }
-        })
+        else {
+          e.target.setCustomValidity('')
+          this.$http.get(urlconf.exist(this.email)).then(response => {
+            if (response.body == 'OK') {
+              e.target.setCustomValidity('改邮箱已被注册过！')
+              this.email = ''
+            }
+          }, response => {
+          })
+        }
       },
       logout () {
         this.user = null
@@ -82,42 +82,21 @@
         location.href = '/login.html'
       },
       submit: function () {
-        var formData = {
-          email: this.email,
-          username: this.username,
-          password: this.password,
-          gender: this.gender,
-          description: this.description
-        }
-        console.log("formdata:" + formData)
-        this.$http.post(urlconf.signup(), formData).then((response) => {
-          if (response.code == 201) {
+        this.$http.post(urlconf.signup(), this.$data).then((response) => {
+          if (response.status == 201) {
 //            注册成功
-            this.$http.get(urlconf.userinfo(token)).then((resp) => {
-              if (resp.code == 200) {
-//                token有效，返回用户信息
-                this.user = resp.body.user
-              }
-              else if (resp.code == 404) {
-//                不存在token对应用户
-                alert("不存在token对应用户")
-              }
-
-            }, (resp) => {
-
+            this.$http.post(urlconf.login(), {email: this.email, password: this.password}).then(resp => {
+              this.user = resp.body.user
+              sessionStorage.user = JSON.stringify(this.user)
+              localStorage.user = JSON.stringify({
+                username: this.user.username,
+                token: this.user.token
+              })
+              location.href = '/home.html'
+            }, resp => {
             })
           }
-          else if (response.code == 401) {
-//            邮箱已注册（后端数据检查）
-            alert("邮箱已注册");
-          }
-          else if (response.code == 400) {
-//            某项必填信息缺失
-            alert("某项必填信息缺失");
-          }
         }, (response) => {
-          // error callback
-          alert("error!!!");
         });
       }
     }

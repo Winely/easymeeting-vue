@@ -68,10 +68,7 @@
         else {
           e.target.setCustomValidity('')
           this.$http.get(urlconf.exist(this.email)).then(response => {
-            if (response.status === 200) {
               e.target.setCustomValidity('该邮箱已被注册过！')
-              this.email = ''
-            }
           }, response => {
           })
         }

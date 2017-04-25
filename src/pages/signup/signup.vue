@@ -4,7 +4,8 @@
     <div class="signPageWrap">
       <div class="bgWrap"></div>
       <form class="signup-box" @submit.prevent="submit">
-        <input v-model="email" @change.prevent="checkEmail($event)" name="email" id="email" type="email" required
+        <input v-model="email" @input.prevent="checkEmail($event)" name="email"
+               id="email" type="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                placeholder="登录名/邮箱名">
         <input v-model="username" id="username" name="username" required type="text" placeholder="昵称">
         <input v-model="password" id="userPassword1" name="password" required type="password"
@@ -61,14 +62,14 @@
         }
       },
       checkEmail: function (e) {
-        if (!e.target.checkValidity()) {
+        if (e.target.validity.typeMismatch || e.target.validity.patternMismatch) {
           e.target.setCustomValidity('邮箱格式错误!')
         }
         else {
           e.target.setCustomValidity('')
           this.$http.get(urlconf.exist(this.email)).then(response => {
-            if (response.body == 'OK') {
-              e.target.setCustomValidity('改邮箱已被注册过！')
+            if (response.status === 200) {
+              e.target.setCustomValidity('该邮箱已被注册过！')
               this.email = ''
             }
           }, response => {
@@ -99,7 +100,7 @@
         }, (response) => {
         });
       }
-    }
+    },
   }
 </script>
 

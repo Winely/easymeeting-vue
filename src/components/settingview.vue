@@ -37,7 +37,7 @@
       </div>
       <div>
         <label for="description">个人简介</label>
-        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+        <textarea name="description" id="description"></textarea>
       </div>
       <div id="radio-form" class="radio-form">
         <label for="radio-form">性别</label>

@@ -50,7 +50,7 @@ cd .
           this.user = JSON.parse(localStorage.user)
           this.$http.get(urlconf.userinfo(this.user.token)).then(resp => {
               this.user = resp.body.user
-              sessionStorage.user = resp.body.user
+              sessionStorage.user = JSON.stringify(resp.body.user)
             },
             resp => {
               this.user = null

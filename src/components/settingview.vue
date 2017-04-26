@@ -17,70 +17,75 @@
       <h2>个人设置</h2>
     </header>
     <div class="settings">
-      <div>
-        <label>头像</label>
-        <thumbnail :seed="user.email" class="avatar" width="128" height="128" alt="avatar" radius="0em"></thumbnail>
-        <!--<img id="avatar" class="avatar" src="http://donggu.me/img/avatar.jpg">-->
-        <i class="icon-pencil"></i>
-      </div>
-      <div>
-        <label>昵称</label>
-        <input v-if="!disabled" class="edit-disabled" name="nickName" disabled type="text" value="xxx">
-        <input v-else name="nickName" type="text">
-      </div>
-      <div>
-        <label for="newPassword">新密码</label>
-        <input id="newPassword" name="newPassword" type="password">
-      </div>
-      <div>
-        <label for="newPassword2">确认密码</label>
-        <input id="newPassword2" type="password">
-
-      </div>
-      <div>
-        <label for="description">个人简介</label>
-        <textarea name="description" id="description"></textarea>
-      </div>
-      <div id="radio-form" class="radio-form">
-        <label for="radio-form">性别</label>
-        <input id="male" type="radio" name="gender" value="1">
-        <label for="male"></label>
-        <label class="gender-label" for="male">男</label>
-        <input id="female" type="radio" name="gender" value="0">
-        <label for="female"></label>
-        <label class="gender-label" for="female">女</label>
-      </div>
-      <div>
-        <label for="email">电子邮箱</label>
-        <input id="email" type="email">
-      </div>
-      <div>
-        <label for="calendar-email">日历邮箱</label>
-        <input id="calendar-email" type="email">
-      </div>
+      <form class="edit_form" @submit.prevent="submit">
+        <div>
+          <label>头像</label>
+          <thumbnail :seed="user.email" class="avatar" width="128" height="128" alt="avatar" radius="0em"></thumbnail>
+        </div>
+        <div>
+          <label>昵称</label>
+          <input :class="{'edit-disabled':!nickName_disabled}" name="nickName" :disabled="!nickName_disabled" type="text" :value="user.username">
+          <button v-show="!nickName_disabled" @click.prevent="nickName_disabled = true" class="edit_btn" id="username_btn"><i
+            class="icon-pencil"></i></button>
+        </div>
+        <div>
+          <label for="newPassword">新密码</label>
+          <input id="newPassword" name="newPassword" type="password">
+        </div>
+        <div>
+          <label for="newPassword2">确认密码</label>
+          <input id="newPassword2" type="password">
+        </div>
+        <div>
+          <label for="description">个人简介</label>
+          <textarea :class="{'edit-disabled':!description_disabled}" :disabled="!description_disabled" name="description" id="description" :value="user.description"></textarea>
+          <button v-show="!description_disabled" @click.prevent="description_disabled = true" class="edit_btn" id="description_btn"><i
+            class="icon-pencil"></i></button>
+        </div>
+        <div id="radio-form" class="radio-form">
+          <label for="radio-form">性别</label>
+          <input id="male" type="radio" name="gender" value="1">
+          <label for="male"></label>
+          <label class="gender-label" for="male">男</label>
+          <input id="female" type="radio" name="gender" value="0">
+          <label for="female"></label>
+          <label class="gender-label" for="female">女</label>
+        </div>
+        <div>
+          <label for="email">电子邮箱</label>
+          <input :class="{'edit-disabled':!email_disabled}" :disabled="!email_disabled" id="email" type="email" :value="user.email">
+          <button v-show="!email_disabled" @click.prevent="email_disabled = true" class="edit_btn" id="email_btn"><i class="icon-pencil"></i>
+          </button>
+        </div>
+        <button type="submit">确认修改</button>
+      </form>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+//  require('../assets/global.css')
   import thumbnail from './thumbnail'
   export default {
     data(){
       return {
-        disabled: false,
+        email_disabled: false,
+        nickName_disabled: false,
+        description_disabled: false,
         user: null
       }
     },
     created () {
       if (sessionStorage.user) {
-        console.log("sessionStorage.user")
-//        this.user = sessionStorage.user
         this.user = JSON.parse(sessionStorage.user)
-        console.log(this.user)
       }
     },
-    methods: {},
-    components:{
+    methods: {
+      submit: function () {
+
+      }
+    },
+    components: {
       thumbnail
     }
   }
@@ -89,6 +94,17 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   theme-color = #8ab537
   bg-color = rgba(255, 255, 255, 0.8)
+
+  input, textarea {
+    border-radius: 4px;
+    height: 22px;
+    width: 150px;
+    margin: 6px;
+    padding: 2px 6px;
+  }
+
+  textarea
+    height 150px
 
   .router-icon-s
     width 30px
@@ -118,7 +134,7 @@
         box-shadow 0 2px 6px rgba(0, 0, 0, 0.16)
 
   .edit-disabled {
-    border none
+    border-color transparent
   }
 
   .avatar {

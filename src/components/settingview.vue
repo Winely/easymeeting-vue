@@ -18,6 +18,7 @@
     </header>
     <div class="container settings">
       <form class="edit_form" @submit.prevent="submit">
+        <p>{{$data}}</p>
         <div class="form-group">
           <label class="setting_label">头像</label>
           <thumbnail :seed="user.email" class="avatar" width="128" height="128"
@@ -29,12 +30,12 @@
           <input v-model="user.username" :class="{'edit-disabled':!nickName_disabled}" name="nickName"
                  :disabled="!nickName_disabled"
                  type="text" :value="user.username">
-          <button v-show="!nickName_disabled" @click.prevent="nickName_disabled = true" class="edit_btn"
+          <button type="button" v-show="!nickName_disabled" @click.prevent="nickName_disabled = true" class="edit_btn"
                   id="username_btn"><i class="icon-pencil"></i></button>
         </div>
         <div class="form-group">
           <label class="setting_label" for="newPassword">新密码</label>
-          <input id="newPassword" type="password" @change.prevent="checkPasswords">
+          <input v-model="user.password" id="newPassword" type="password" @change.prevent="checkPasswords">
         </div>
         <div>
           <label class="setting_label" for="newPassword2">确认密码</label>
@@ -42,18 +43,20 @@
         </div>
         <div id="radio-form" class="radio-form">
           <label class="gender_label" for="radio-form">性别</label>
-          <input id="male" type="radio" name="gender" value="1" :checked="user.gender==1">
+          <input v-model="user.gender" id="male" type="radio" name="gender" value="1" :checked="user.gender===1">
           <label for="male"></label>
           <label for="male">男</label>
-          <input id="female" type="radio" name="gender" value="0" :checked="user.gender==0">
+          <input v-model="user.gender" id="female" type="radio" name="gender" value="0" :checked="user.gender===0">
           <label for="female"></label>
           <label class="gender-label" for="female">女</label>
         </div>
         <div>
           <label class="setting_label" for="email" @input.prevent="checkEmail($event)">电子邮箱</label>
-          <input :class="{'edit-disabled':!email_disabled}" :disabled="!email_disabled" id="email" type="email"
+          <input v-model="user.email" :class="{'edit-disabled':!email_disabled}" :disabled="!email_disabled" id="email"
+                 type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                  :value="user.email">
-          <button v-show="!email_disabled" @click.prevent="email_disabled = true" class="edit_btn" id="email_btn"><i
+          <button type="button" v-show="!email_disabled" @click.prevent="email_disabled = true" class="edit_btn"
+                  id="email_btn"><i
             class="icon-pencil"></i>
           </button>
         </div>
@@ -61,31 +64,34 @@
           <label class="setting_label" for="description">个人简介</label>
           <textarea :class="{'edit-disabled':!description_disabled}" :disabled="!description_disabled"
                     id="description" :value="user.description"></textarea>
-          <button v-show="!description_disabled" @click.prevent="description_disabled = true" class="edit_btn"
+          <button type="button" v-show="!description_disabled" @click.prevent="description_disabled = true"
+                  class="edit_btn"
                   id="description_btn"><i class="icon-pencil"></i></button>
         </div>
         <button class="submit-button" type="submit">确认修改</button>
-        <p>{{$data.user}}</p>
       </form>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  //  require('../assets/global.css')
+  require('../assets/global.css')
   import thumbnail from './thumbnail'
   export default {
+//    props: ['user'],
     data () {
       return {
         email_disabled: false,
         nickName_disabled: false,
         description_disabled: false,
-        user: null
+        user: this.user
       }
     },
     created () {
       if (sessionStorage.user) {
-        this.user = JSON.parse(sessionStorage.user)
+        var userinfomation = JSON.parse(sessionStorage.user)
+        userinfomation['password'] = ''
+        this.user = userinfomation
       }
     },
     methods: {
@@ -105,7 +111,7 @@
         }
         else {
           e.target.setCustomValidity('')
-          this.$http.get(urlconf.exist(this.email)).then(response => {
+          this.$http.get(urlconf.exist(this.user.email)).then(response => {
             e.target.setCustomValidity('该邮箱已被注册过！')
           }, response => {
           })
@@ -118,10 +124,10 @@
         location.href = '/login.html'
       },
       submit: function () {
-        this.$http.post(urlconf.signup(), this.$data).then((response) => {
+        this.$http.post(urlconf.setting(this.user.token), this.user).then((response) => {
           if (response.status == 201) {
-//            注册成功
-            this.$http.post(urlconf.login(), {email: this.email, password: this.password}).then(resp => {
+//            修改信息成功，重新登录
+            this.$http.post(urlconf.login(), {email: user.email, password: user.password}).then(resp => {
               this.user = resp.body.user
               sessionStorage.user = JSON.stringify(this.user)
               localStorage.user = JSON.stringify({

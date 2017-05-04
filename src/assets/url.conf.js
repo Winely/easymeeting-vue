@@ -23,9 +23,9 @@ export default {
     return this.root + 'user?token=' + this.encodeToken(token)
   },
   group(token) {
-    return this.root+'group?token='+this.encodeToken(token)
+    return this.root + 'group?token=' + this.encodeToken(token)
   },
   setting(token) {
-    return this.root + 'user'
+    return this.root + 'user?token=' + this.encodeToken(token)
   }
 }

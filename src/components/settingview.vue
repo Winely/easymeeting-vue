@@ -18,7 +18,6 @@
     </header>
     <div class="container settings">
       <form class="edit_form" @submit.prevent="submit">
-        <p>{{$data}}</p>
         <div class="form-group">
           <label class="setting_label">头像</label>
           <thumbnail :seed="user.email" class="avatar" width="128" height="128"
@@ -124,7 +123,7 @@
         location.href = '/login.html'
       },
       submit: function () {
-        this.$http.post(urlconf.setting(this.user.token), this.user).then((response) => {
+        this.$http.post(urlconf.setting(user.token), this.user).then((response) => {
           if (response.status == 201) {
 //            修改信息成功，重新登录
             this.$http.post(urlconf.login(), {email: user.email, password: user.password}).then(resp => {

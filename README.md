@@ -178,6 +178,36 @@ body: {
   - 200：token有效，返回用户信息  
   - 404：不存在token对应用户 
    
+### setting 修改用户信息
+```
+/api/user
+```
+- type: POST  
+- data:   
+  - email: 登录邮箱  
+  - username: 用户昵称  
+  - password: 密码（如果值为空说明密码未改变）  
+  - gender: 1为男性, 0为女性  
+  - description: 自我介绍 
+  - user_id: 用户ID
+  - token: 用户token
+- return:
+```json
+code: 201,
+body: {
+   "user": {
+      "username": "王大锤",
+      "email": "fewjiofa@rrjgeor.cn",
+      "gender": true,
+      "avatar": "dfaeiwofe.png",
+      "description": "dfwahefneklmd",
+      "token": "faweirhoiewnkdksl"
+   }
+}
+```
+- code   
+     
+   
 ### group 获取小组信息
 ```
   /api/group?token=xxxxxxxxxxxxxxxxxxxxxxx

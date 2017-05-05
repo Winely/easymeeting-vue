@@ -124,21 +124,15 @@
       },
       submit: function () {
         this.$http.post(urlconf.setting(user.token), this.user).then((response) => {
-          if (response.status == 201) {
-//            修改信息成功，重新登录
-            this.$http.post(urlconf.login(), {email: user.email, password: user.password}).then(resp => {
-              this.user = resp.body.user
+            if (response.status == 201) {
+//            修改信息成功,修改本地信息
+              this.user = response.body.user
               sessionStorage.user = JSON.stringify(this.user)
-              localStorage.user = JSON.stringify({
-                username: this.user.username,
-                token: this.user.token
-              })
-              location.href = '/home.html'
-            }, resp => {
-            })
+              localStorage.user = JSON.stringify(this.user)
+            }
+          }, (response) => {
           }
-        }, (response) => {
-        });
+        );
       }
     },
     components: {

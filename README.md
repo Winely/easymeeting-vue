@@ -180,7 +180,7 @@ body: {
    
 ### setting 修改用户信息
 ```
-/api/user
+/api/xxxxxxxxx
 ```
 - type: POST  
 - data:   
@@ -198,14 +198,15 @@ body: {
    "user": {
       "username": "王大锤",
       "email": "fewjiofa@rrjgeor.cn",
-      "gender": true,
-      "avatar": "dfaeiwofe.png",
+      "gender": 0,
       "description": "dfwahefneklmd",
-      "token": "faweirhoiewnkdksl"
+      "token": "faweirhoiewnkdksl"    
    }
 }
 ```
 - code   
+  - 200：修改信息成功，返回用户信息  
+  - 404：不存在token对应用户 
      
    
 ### group 获取小组信息

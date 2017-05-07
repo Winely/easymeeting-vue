@@ -16,60 +16,77 @@
       </svg>
       <h2>个人设置</h2>
     </header>
-    <div class="container settings">
+    <div class="settings">
       <form class="edit_form" @submit.prevent="submit">
-        <p>{{$data}}</p>
-        <div class="form-group">
-          <label class="setting_label">头像</label>
-          <thumbnail :seed="user.email" class="avatar" width="128" height="128"
+        <!--<p>{{$data}}</p>-->
+        <div class="avatar">
+          <thumbnail :seed="user.email" width="128" height="128"
                      alt="avatar" radius="64px"></thumbnail>
+        </div>
+        <div class="infobar info1">
+          <div>
+            <label class="infobar_label">点击修改邮箱及密码</label>
+            <button type="button" @click.prevent="info1disabled = true;info2disabled=false"
+                    class="edit_btn"
+                    id="info1_btn"><i class="icon-pencil"></i></button>
+          </div>
 
+          <div>
+            <label class="setting_label" for="email">电子邮箱</label>
+            <input v-model="user.email" @input.prevent="checkEmail($event)" :class="{'edit-disabled':!info1disabled}"
+                   :disabled="!info1disabled" :required="info1disabled" id="email" type="email"
+                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                   :value="user.email">
+          </div>
+          <div style="display: inline-block">
+            <label class="setting_label" for="oldPassword">旧密码</label>
+            <input v-model="oldpassword" :disabled="!info1disabled" :required="info1disabled" id="oldPassword"
+                   type="password">
+          </div>
+          <div style="display: inline-block">
+            <label class="setting_label" for="newPassword">新密码</label>
+            <input v-model="user.password" :disabled="!info1disabled" :required="info1disabled" id="newPassword"
+                   type="password"
+                   @change.prevent="checkPasswords">
+          </div>
+          <div>
+            <label class="setting_label" for="newPassword2">确认密码</label>
+            <input id="newPassword2" :disabled="!info1disabled" :required="info1disabled" type="password"
+                   @change.prevent="checkPasswords">
+          </div>
         </div>
-        <div class="form-group">
-          <label class="setting_label">昵称</label>
-          <input v-model="user.username" :class="{'edit-disabled':!nickName_disabled}" name="nickName"
-                 :disabled="!nickName_disabled" required
-                 type="text" :value="user.username">
-          <button type="button" v-show="!nickName_disabled" @click.prevent="nickName_disabled = true" class="edit_btn"
-                  id="username_btn"><i class="icon-pencil"></i></button>
+        <div class="infobar info2">
+          <div>
+            <label class="infobar_label">点击修改其他信息</label>
+            <button type="button" @click.prevent="info2disabled = true;info1disabled=false"
+                    class="edit_btn"
+                    id="info2_btn"><i class="icon-pencil"></i></button>
+          </div>
+          <div>
+            <label class="setting_label">昵称</label>
+            <input v-model="user.username" :class="{'edit-disabled':!info2disabled}" name="nickName"
+                   :disabled="!info2disabled" :required="info2disabled"
+                   type="text" :value="user.username">
+          </div>
+          <div id="radio-form" class="radio-form">
+            <label class="gender_label" for="radio-form">性别</label>
+            <input v-model="user.gender" :disabled="!info2disabled" id="male" type="radio" name="gender" value="1"
+                   :checked="user.gender===1">
+            <label for="male"></label>
+            <label for="male">男</label>
+            <input v-model="user.gender" :disabled="!info2disabled" id="female" type="radio" name="gender" value="0"
+                   :checked="user.gender===0">
+            <label for="female"></label>
+            <label class="gender-label" for="female">女</label>
+          </div>
+          <div style="">
+            <label class="setting_label" for="description">个人简介</label>
+            <textarea v-model="user.description" :class="{'edit-disabled':!info2disabled}"
+                      :disabled="!info2disabled"
+                      id="description" :value="user.description"></textarea>
+          </div>
         </div>
-        <div class="form-group">
-          <label class="setting_label" for="newPassword">新密码</label>
-          <input v-model="user.password" id="newPassword" type="password" @change.prevent="checkPasswords">
-        </div>
-        <div>
-          <label class="setting_label" for="newPassword2">确认密码</label>
-          <input id="newPassword2" type="password" @change.prevent="checkPasswords">
-        </div>
-        <div id="radio-form" class="radio-form">
-          <label class="gender_label" for="radio-form">性别</label>
-          <input v-model="user.gender" id="male" type="radio" name="gender" value="1" :checked="user.gender===1">
-          <label for="male"></label>
-          <label for="male">男</label>
-          <input v-model="user.gender" id="female" type="radio" name="gender" value="0" :checked="user.gender===0">
-          <label for="female"></label>
-          <label class="gender-label" for="female">女</label>
-        </div>
-        <div>
-          <label class="setting_label" for="email">电子邮箱</label>
-          <input v-model="user.email" @input.prevent="checkEmail($event)" :class="{'edit-disabled':!email_disabled}"
-                 :disabled="!email_disabled" id="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-                 :value="user.email">
-          <button type="button" v-show="!email_disabled" @click.prevent="email_disabled = true" class="edit_btn"
-                  id="email_btn"><i
-            class="icon-pencil"></i>
-          </button>
-        </div>
-        <div>
-          <label class="setting_label" for="description">个人简介</label>
-          <textarea v-model="user.description" :class="{'edit-disabled':!description_disabled}"
-                    :disabled="!description_disabled"
-                    id="description" :value="user.description"></textarea>
-          <button type="button" v-show="!description_disabled" @click.prevent="description_disabled = true"
-                  class="edit_btn"
-                  id="description_btn"><i class="icon-pencil"></i></button>
-        </div>
-        <button class="submit-button" type="submit">确认修改</button>
+        <button v-show="info1disabled||info2disabled" class="submit-button" type="submit">确认修改</button>
       </form>
     </div>
   </div>
@@ -79,14 +96,13 @@
   require('../assets/global.css')
   import thumbnail from './thumbnail'
   export default {
-//    props: ['user'],
     data () {
       return {
-        email_disabled: false,
-        nickName_disabled: false,
-        description_disabled: false,
+        info1disabled: false,
+        info2disabled: false,
         user: this.user,
-        oldinfo: null
+        oldinfo: null,
+        oldpassword: ''
       }
     },
     created () {
@@ -143,27 +159,27 @@
           delete newuserinfo.description
         }
         console.log(newuserinfo)
-        this.$http.post(urlconf.setting(user.token), {email: this.user.email, password: this.user.password}).then((response) => {
-            if (response.status == 200) {
-              this.user.token = response.body.token
-              sessionStorage.user = JSON.stringify(this.user)
-              localStorage.user = JSON.stringify(this.user)
-            }
-          }, (response) => {
-          }
-        );
-        this.$http.post(urlconf.setting(user.token), newuserinfo).then((response) => {
-            if (response.status == 200) {
-              this.user.token = response.body.user.token
-              this.user.username = response.body.user.username
-              this.user.gender = response.body.user.gender
-              this.user.description = response.body.user.description
-              sessionStorage.user = JSON.stringify(this.user)
-              localStorage.user = JSON.stringify(this.user)
-            }
-          }, (response) => {
-          }
-        );
+//        this.$http.post(urlconf.setting(), {email: this.user.email, password: this.user.password}).then((response) => {
+//            if (response.status == 200) {
+//              this.user.token = response.body.token
+//              sessionStorage.user = JSON.stringify(this.user)
+//              localStorage.user = JSON.stringify(this.user)
+//            }
+//          }, (response) => {
+//          }
+//        );
+//        this.$http.post(urlconf.setting(), newuserinfo).then((response) => {
+//            if (response.status == 200) {
+//              this.user.token = response.body.user.token
+//              this.user.username = response.body.user.username
+//              this.user.gender = response.body.user.gender
+//              this.user.description = response.body.user.description
+//              sessionStorage.user = JSON.stringify(this.user)
+//              localStorage.user = JSON.stringify(this.user)
+//            }
+//          }, (response) => {
+//          }
+//        );
       }
     },
     components: {
@@ -177,7 +193,16 @@
   bg-color = rgba(255, 255, 255, 0.8)
 
   .settingWrap
-    width: 70%;
+    width 80%
+
+  .infobar
+    width 49%
+    height 250px
+    display inline-block
+    vertical-align top
+
+  .info1
+    border-right 1px solid #e3e3e3
 
   .submit-button
     margin-left 100px
@@ -206,7 +231,16 @@
     line-height 30px
     margin 6px
     text-align right
-    width 100px
+    width 150px
+
+  .infobar_label
+    display inline-block
+    line-height 30px
+    margin 6px
+    text-align left
+    padding-left 85px
+    width 170px
+    vertical-align top
 
   input, textarea
     border-radius: 4px;
@@ -224,7 +258,7 @@
 
   .gender_label
     display inline-block
-    width 100px
+    width 150px
     margin 6px
     margin-right 16px
     text-align right
@@ -256,13 +290,16 @@
       &:hover
         box-shadow 0 2px 6px rgba(0, 0, 0, 0.16)
 
-  .avatar {
-    display inline-block
-    height 160px
-    width 160px
-  }
+  .avatar
+    width 100%
+    height 130px
+    display flex
+    margin-bottom 35px
+    flex-direction row
+    justify-content center
 
   .radio-form
+    display inline-block
     width 400px
     height 30px
     padding 6px 0

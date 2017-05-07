@@ -28,7 +28,7 @@
         <div class="form-group">
           <label class="setting_label">昵称</label>
           <input v-model="user.username" :class="{'edit-disabled':!nickName_disabled}" name="nickName"
-                 :disabled="!nickName_disabled"
+                 :disabled="!nickName_disabled" required
                  type="text" :value="user.username">
           <button type="button" v-show="!nickName_disabled" @click.prevent="nickName_disabled = true" class="edit_btn"
                   id="username_btn"><i class="icon-pencil"></i></button>
@@ -129,29 +129,41 @@
       submit: function () {
         var newuserinfo = {
           "token": this.user.token,
-          "email": this.user.email,
           "username": this.user.username,
-          "password": "",
           "gender": this.user.gender,
           "description": this.user.description
         }
-        if (!newuserinfo.username) {
+        if (!newuserinfo.username || newuserinfo.username === this.oldinfo.description) {
           delete newuserinfo.username
         }
-        if (!newuserinfo.description) {
+        if (!newuserinfo.description || newuserinfo.description === this.oldinfo.description) {
+          delete newuserinfo.description
+        }
+        if (!newuserinfo.description || newuserinfo.description === this.oldinfo.description) {
           delete newuserinfo.description
         }
         console.log(newuserinfo)
-//        this.$http.post(urlconf.setting(user.token), this.user).then((response) => {
-//            if (response.status == 201) {
-////            修改信息成功,修改本地信息
-//              this.user = response.body.user
-//              sessionStorage.user = JSON.stringify(this.user)
-//              localStorage.user = JSON.stringify(this.user)
-//            }
-//          }, (response) => {
-//          }
-//        );
+        this.$http.post(urlconf.setting(user.token), {email: this.user.email, password: this.user.password}).then((response) => {
+            if (response.status == 200) {
+              this.user.token = response.body.token
+              sessionStorage.user = JSON.stringify(this.user)
+              localStorage.user = JSON.stringify(this.user)
+            }
+          }, (response) => {
+          }
+        );
+        this.$http.post(urlconf.setting(user.token), newuserinfo).then((response) => {
+            if (response.status == 200) {
+              this.user.token = response.body.user.token
+              this.user.username = response.body.user.username
+              this.user.gender = response.body.user.gender
+              this.user.description = response.body.user.description
+              sessionStorage.user = JSON.stringify(this.user)
+              localStorage.user = JSON.stringify(this.user)
+            }
+          }, (response) => {
+          }
+        );
       }
     },
     components: {

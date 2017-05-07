@@ -18,6 +18,7 @@
     </header>
     <div class="container settings">
       <form class="edit_form" @submit.prevent="submit">
+        <p>{{$data}}</p>
         <div class="form-group">
           <label class="setting_label">头像</label>
           <thumbnail :seed="user.email" class="avatar" width="128" height="128"
@@ -50,9 +51,9 @@
           <label class="gender-label" for="female">女</label>
         </div>
         <div>
-          <label class="setting_label" for="email" @input.prevent="checkEmail($event)">电子邮箱</label>
-          <input v-model="user.email" :class="{'edit-disabled':!email_disabled}" :disabled="!email_disabled" id="email"
-                 type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+          <label class="setting_label" for="email">电子邮箱</label>
+          <input v-model="user.email" @input.prevent="checkEmail($event)" :class="{'edit-disabled':!email_disabled}"
+                 :disabled="!email_disabled" id="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                  :value="user.email">
           <button type="button" v-show="!email_disabled" @click.prevent="email_disabled = true" class="edit_btn"
                   id="email_btn"><i
@@ -61,7 +62,8 @@
         </div>
         <div>
           <label class="setting_label" for="description">个人简介</label>
-          <textarea :class="{'edit-disabled':!description_disabled}" :disabled="!description_disabled"
+          <textarea v-model="user.description" :class="{'edit-disabled':!description_disabled}"
+                    :disabled="!description_disabled"
                     id="description" :value="user.description"></textarea>
           <button type="button" v-show="!description_disabled" @click.prevent="description_disabled = true"
                   class="edit_btn"
@@ -83,13 +85,15 @@
         email_disabled: false,
         nickName_disabled: false,
         description_disabled: false,
-        user: this.user
+        user: this.user,
+        oldinfo: null
       }
     },
     created () {
       if (sessionStorage.user) {
         var userinfomation = JSON.parse(sessionStorage.user)
         userinfomation['password'] = ''
+        this.oldinfo = JSON.parse(sessionStorage.user)
         this.user = userinfomation
       }
     },
@@ -123,16 +127,31 @@
         location.href = '/login.html'
       },
       submit: function () {
-        this.$http.post(urlconf.setting(user.token), this.user).then((response) => {
-            if (response.status == 201) {
-//            修改信息成功,修改本地信息
-              this.user = response.body.user
-              sessionStorage.user = JSON.stringify(this.user)
-              localStorage.user = JSON.stringify(this.user)
-            }
-          }, (response) => {
-          }
-        );
+        var newuserinfo = {
+          "token": this.user.token,
+          "email": this.user.email,
+          "username": this.user.username,
+          "password": "",
+          "gender": this.user.gender,
+          "description": this.user.description
+        }
+        if (!newuserinfo.username) {
+          delete newuserinfo.username
+        }
+        if (!newuserinfo.description) {
+          delete newuserinfo.description
+        }
+        console.log(newuserinfo)
+//        this.$http.post(urlconf.setting(user.token), this.user).then((response) => {
+//            if (response.status == 201) {
+////            修改信息成功,修改本地信息
+//              this.user = response.body.user
+//              sessionStorage.user = JSON.stringify(this.user)
+//              localStorage.user = JSON.stringify(this.user)
+//            }
+//          }, (response) => {
+//          }
+//        );
       }
     },
     components: {

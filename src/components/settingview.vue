@@ -18,7 +18,7 @@
     </header>
     <div class="settings">
       <form class="edit_form" @submit.prevent="submit">
-        <!--<p>{{$data}}</p>-->
+        <p>{{$data}}</p>
         <div class="avatar">
           <thumbnail :seed="user.email" width="128" height="128"
                      alt="avatar" radius="64px"></thumbnail>
@@ -40,7 +40,7 @@
           </div>
           <div style="display: inline-block">
             <label class="setting_label" for="oldPassword">旧密码</label>
-            <input v-model="oldpassword" :disabled="!info1disabled" :required="info1disabled" id="oldPassword"
+            <input v-model="oldPassword" :disabled="!info1disabled" :required="info1disabled" id="oldPassword"
                    type="password">
           </div>
           <div style="display: inline-block">
@@ -102,7 +102,7 @@
         info2disabled: false,
         user: this.user,
         oldinfo: null,
-        oldpassword: ''
+        oldPassword: ''
       }
     },
     created () {
@@ -149,37 +149,43 @@
           "gender": this.user.gender,
           "description": this.user.description
         }
-        if (!newuserinfo.username || newuserinfo.username === this.oldinfo.description) {
-          delete newuserinfo.username
-        }
-        if (!newuserinfo.description || newuserinfo.description === this.oldinfo.description) {
-          delete newuserinfo.description
+//        if (!newuserinfo.username || newuserinfo.username === this.oldinfo.username) {
+//          delete newuserinfo.username
+//        }
+        if (!newuserinfo.gender || newuserinfo.gender === this.oldinfo.gender) {
+          delete newuserinfo.gender
         }
         if (!newuserinfo.description || newuserinfo.description === this.oldinfo.description) {
           delete newuserinfo.description
         }
         console.log(newuserinfo)
-//        this.$http.post(urlconf.setting(), {email: this.user.email, password: this.user.password}).then((response) => {
-//            if (response.status == 200) {
-//              this.user.token = response.body.token
-//              sessionStorage.user = JSON.stringify(this.user)
-//              localStorage.user = JSON.stringify(this.user)
+//        if (info1disabled) {
+//          this.$http.post(urlconf.setting(), {
+//            token: this.user.token,
+//            email: this.user.email,
+//            oldPassword: this.oldPassword,
+//            password: this.user.password
+//          }).then((response) => {
+//              if (response.status == 200) {
+//                this.user = response.body.user
+//                sessionStorage.user = JSON.stringify(this.user)
+//                localStorage.user = JSON.stringify(this.user)
+//              }
+//            }, (response) => {
 //            }
-//          }, (response) => {
-//          }
-//        );
-//        this.$http.post(urlconf.setting(), newuserinfo).then((response) => {
-//            if (response.status == 200) {
-//              this.user.token = response.body.user.token
-//              this.user.username = response.body.user.username
-//              this.user.gender = response.body.user.gender
-//              this.user.description = response.body.user.description
-//              sessionStorage.user = JSON.stringify(this.user)
-//              localStorage.user = JSON.stringify(this.user)
+//          );
+//        }
+//        else if (info2disabled) {
+//          this.$http.post(urlconf.setting(), newuserinfo).then((response) => {
+//              if (response.status == 200) {
+//                this.user = response.body.user
+//                sessionStorage.user = JSON.stringify(this.user)
+//                localStorage.user = JSON.stringify(this.user)
+//              }
+//            }, (response) => {
 //            }
-//          }, (response) => {
-//          }
-//        );
+//          );
+//        }
       }
     },
     components: {

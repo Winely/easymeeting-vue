@@ -25,7 +25,10 @@ export default {
   group(token) {
     return this.root + 'group?token=' + this.encodeToken(token)
   },
-  setting() {
+  settinginfo1() {
     return this.root + 'user'
+  },
+  settinginfo2() {
+    return this.root + 'userinfo'
   }
 }

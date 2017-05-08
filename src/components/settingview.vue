@@ -45,13 +45,13 @@
           </div>
           <div style="display: inline-block">
             <label class="setting_label" for="newPassword">新密码</label>
-            <input v-model="user.password" :disabled="!info1disabled" :required="info1disabled" id="newPassword"
+            <input v-model="user.password" :disabled="!info1disabled" id="newPassword"
                    type="password"
                    @change.prevent="checkPasswords">
           </div>
           <div>
             <label class="setting_label" for="newPassword2">确认密码</label>
-            <input id="newPassword2" :disabled="!info1disabled" :required="info1disabled" type="password"
+            <input v-model="password2" id="newPassword2" :disabled="!info1disabled" type="password"
                    @change.prevent="checkPasswords">
           </div>
         </div>
@@ -93,8 +93,9 @@
 </template>
 
 <script type="text/ecmascript-6">
-  require('../assets/global.css')
+  import urlconf from 'assets/url.conf'
   import thumbnail from './thumbnail'
+  require('../assets/global.css')
   export default {
     data () {
       return {
@@ -102,7 +103,8 @@
         info2disabled: false,
         user: this.user,
         oldinfo: null,
-        oldPassword: ''
+        oldPassword: '',
+        password2: ''
       }
     },
     created () {
@@ -159,33 +161,47 @@
           delete newuserinfo.description
         }
         console.log(newuserinfo)
-//        if (info1disabled) {
-//          this.$http.post(urlconf.setting(), {
-//            token: this.user.token,
-//            email: this.user.email,
-//            oldPassword: this.oldPassword,
-//            password: this.user.password
-//          }).then((response) => {
-//              if (response.status == 200) {
-//                this.user = response.body.user
-//                sessionStorage.user = JSON.stringify(this.user)
-//                localStorage.user = JSON.stringify(this.user)
-//              }
-//            }, (response) => {
-//            }
-//          );
-//        }
-//        else if (info2disabled) {
-//          this.$http.post(urlconf.setting(), newuserinfo).then((response) => {
-//              if (response.status == 200) {
-//                this.user = response.body.user
-//                sessionStorage.user = JSON.stringify(this.user)
-//                localStorage.user = JSON.stringify(this.user)
-//              }
-//            }, (response) => {
-//            }
-//          );
-//        }
+        var newpsw
+        if (this.info1disabled) {
+          if (!this.user.password) {
+            newpsw = this.oldPassword
+          }
+          else {
+            newpsw = this.user.password
+          }
+          this.$http.put(urlconf.settinginfo1(), {
+            token: this.user.token,
+            email: this.user.email,
+            oldPassword: this.oldPassword,
+            password: newpsw
+          }).then((response) => {
+              if (response.status == 200) {
+                this.user = response.body.user
+                var newinfo1 = response.body.user
+                sessionStorage.user = JSON.stringify(newinfo1)
+                localStorage.user = JSON.stringify(newinfo1)
+                this.oldinfo = newinfo1
+                this.oldPassword = ''
+                this.password2 = ''
+                this.user.password = ''
+              }
+            }, (response) => {
+            }
+          );
+        }
+        else if (this.info2disabled) {
+          this.$http.put(urlconf.settinginfo2(), newuserinfo).then((response) => {
+              if (response.status == 200) {
+                this.user = response.body.user
+                var newinfo2 = response.body.user
+                sessionStorage.user = JSON.stringify(newinfo2)
+                localStorage.user = JSON.stringify(newinfo2)
+                this.oldinfo = newinfo2
+              }
+            }, (response) => {
+            }
+          );
+        }
       }
     },
     components: {

@@ -89,11 +89,11 @@
       corner
     },
     created () {
-//      this.$http.get(urlconf.group(this.token)).then(resp => {
-//        this.groups = resp.body.groups
-//      },resp=>{
-//
-//      })
+      this.$http.get(urlconf.group(this.token)).then(resp => {
+        this.groups = resp.body.groups
+      },resp=>{
+
+      })
     }
   }
 </script>

@@ -23,7 +23,7 @@ export default {
     return this.root + 'user?token=' + this.encodeToken(token)
   },
   group(token) {
-    return this.root + 'group?token=' + this.encodeToken(token)
+    return this.root + 'team?token=' + this.encodeToken(token)
   },
   settinginfo1() {
     return this.root + 'user'

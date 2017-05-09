@@ -4,7 +4,6 @@
     <div class="group-wrap">
       <groupsidebar :user="user"></groupsidebar>
       <router-view class="router-view"></router-view>
-      <!--<groupmanagement></groupmanagement>-->
     </div>
   </div>
 </template>

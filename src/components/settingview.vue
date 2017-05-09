@@ -255,6 +255,16 @@
   .settingWrap
     width 80%
 
+  .mask {
+    position: fixed;
+    top: 0;
+    left: 20%;
+    width 80%;
+    height: 100%;
+    opacity: .75;
+    background-color: #000;
+    z-index: 100;
+  }
 
   .promptDialog {
     background-color: white;

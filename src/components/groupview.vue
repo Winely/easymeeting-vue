@@ -59,7 +59,6 @@
     },
     methods: {
       addMeetingFinish () {
-          this.$refs.newMeeting.closePopup()
         setTimeout(()=>{this.currentGroup=''}, 300)
       }
     },

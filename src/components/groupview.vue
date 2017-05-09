@@ -1,5 +1,6 @@
 <template>
   <div class="groupview">
+    <new-meeting :team="currentGroup" v-if="currentGroup & currentGroup.length>0"></new-meeting>
     <header>
       <svg class="router-icon-s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.89 28.89">
         <title>icon</title>
@@ -44,16 +45,19 @@
   import urlconf from 'assets/url.conf'
   import thumbnail from './thumbnail'
   import corner from './corner'
+  import newMeeting from './popupNewMeeting'
   export default {
     props: ['token'],
     data () {
       return {
         groups: [],
+        currentGroup: ''
       }
     },
     components: {
       thumbnail,
-      corner
+      corner,
+      newMeeting
     },
     created () {
       this.$http.get(urlconf.group(this.token)).then(resp => {

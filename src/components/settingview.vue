@@ -26,7 +26,7 @@
         <div class="infobar info1">
           <div>
             <label class="infobar_label">点击修改邮箱及密码</label>
-            <button type="button" @click.prevent="info1disabled = true;info2disabled=false"
+            <button type="button" @click.prevent="info1disabled = true;info2disabled=false;"
                     class="edit_btn"
                     id="info1_btn"><i class="icon-pencil"></i></button>
           </div>
@@ -40,7 +40,8 @@
           </div>
           <div style="display: inline-block">
             <label class="setting_label" for="oldPassword">旧密码</label>
-            <input v-model="oldPassword" :disabled="!info1disabled" :required="info1disabled" id="oldPassword"
+            <input v-model="oldPassword" @input.prevent="checkoldPassword($event)" :disabled="!info1disabled"
+                   :required="info1disabled" id="oldPassword"
                    type="password">
           </div>
           <div style="display: inline-block">
@@ -58,7 +59,7 @@
         <div class="infobar info2">
           <div>
             <label class="infobar_label">点击修改其他信息</label>
-            <button type="button" @click.prevent="info2disabled = true;info1disabled=false"
+            <button type="button" @click.prevent="info2disabled = true;info1disabled=false;"
                     class="edit_btn"
                     id="info2_btn"><i class="icon-pencil"></i></button>
           </div>
@@ -104,7 +105,8 @@
         user: this.user,
         oldinfo: null,
         oldPassword: '',
-        password2: ''
+        password2: '',
+        oldpswwrong: false
       }
     },
     created () {
@@ -138,6 +140,11 @@
           })
         }
       },
+      checkoldPassword: function (e) {
+        if (e.target.validity.badInput) {
+          e.target.setCustomValidity('旧密码输入错误！')
+        }
+      },
       logout () {
         this.user = null
         localStorage.removeItem('user')
@@ -151,16 +158,12 @@
           "gender": this.user.gender,
           "description": this.user.description
         }
-//        if (!newuserinfo.username || newuserinfo.username === this.oldinfo.username) {
-//          delete newuserinfo.username
-//        }
         if (!newuserinfo.gender || newuserinfo.gender === this.oldinfo.gender) {
           delete newuserinfo.gender
         }
         if (!newuserinfo.description || newuserinfo.description === this.oldinfo.description) {
           delete newuserinfo.description
         }
-        console.log(newuserinfo)
         var newpsw
         if (this.info1disabled) {
           if (!this.user.password) {
@@ -175,7 +178,8 @@
             oldPassword: this.oldPassword,
             password: newpsw
           }).then((response) => {
-              if (response.status == 200) {
+              if (response.status === 200) {
+                this.oldpswwrong = false
                 this.user = response.body.user
                 var newinfo1 = response.body.user
                 sessionStorage.user = JSON.stringify(newinfo1)
@@ -184,19 +188,28 @@
                 this.oldPassword = ''
                 this.password2 = ''
                 this.user.password = ''
+                location.href = '/home.html'
               }
             }, (response) => {
+              if (response.status === 401) { //旧密码不正确
+                this.oldpswwrong = true
+
+                var oldpsw = document.getElementById('oldPassword')
+//                oldpsw.setCustomValidity("旧密码输入错误！")
+                oldpsw.validity.badInput = true
+              }
             }
           );
         }
         else if (this.info2disabled) {
           this.$http.put(urlconf.settinginfo2(), newuserinfo).then((response) => {
-              if (response.status == 200) {
+              if (response.status === 200) {
                 this.user = response.body.user
                 var newinfo2 = response.body.user
                 sessionStorage.user = JSON.stringify(newinfo2)
                 localStorage.user = JSON.stringify(newinfo2)
                 this.oldinfo = newinfo2
+                location.href = '/home.html'
               }
             }, (response) => {
             }

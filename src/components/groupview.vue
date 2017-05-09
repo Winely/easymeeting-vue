@@ -20,7 +20,7 @@
     <div class="groups">
       <section v-for="group in groups">
         <div class="col">
-          <thumbnail :seed="group.id" width="72px" height="72px" radius="999em" :alt="group.name"></thumbnail>
+          <thumbnail :seed="group.team_id" width="72px" height="72px" radius="999em" :alt="group.name"></thumbnail>
         </div>
         <div class="col">
           <h3><a href="/">{{group.name}}</a></h3>
@@ -90,8 +90,9 @@
     },
     created () {
       this.$http.get(urlconf.group(this.token)).then(resp => {
-        this.groups = resp.body.groups
-      },resp=>{
+        console.log(resp.body)
+        this.groups = resp.body
+      }, resp => {
 
       })
     }
@@ -125,6 +126,7 @@
       transition-duration .3s
       &:hover
         box-shadow 0 2px 6px rgba(0, 0, 0, 0.16)
+
   .groups
     display flex
     flex-wrap wrap
@@ -173,6 +175,7 @@
         i
           color #A7C158
           margin-right 4px
+
   section.no-groups
     width 100%
     height 500px

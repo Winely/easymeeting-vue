@@ -89,16 +89,10 @@
         </div>
         <button v-show="info1disabled||info2disabled" class="submit-button" type="submit">确认修改</button>
       </form>
-      <div v-show="this.mask" class="mask"></div>
-      <div v-show="this.mask" class="promptDialog">
-        <div class="title">
-          <h3>提示</h3>
-          <a class="pop_closed" @click.prevent="closemask">关闭</a>
-        </div>
-        <div class="content">
-          <p>{{this.promptinfo}}</p>
-        </div>
-      </div>
+      <popup v-if="this.mask" align="center">
+        <p slot="popup-header">提示</p>
+        <p>{{this.promptinfo}}</p>
+      </popup>
     </div>
   </div>
 </template>
@@ -106,6 +100,7 @@
 <script type="text/ecmascript-6">
   import urlconf from 'assets/url.conf'
   import thumbnail from './thumbnail'
+  import popup from './popup'
   require('../assets/global.css')
   export default {
     data () {
@@ -247,7 +242,8 @@
       }
     },
     components: {
-      thumbnail
+      thumbnail,
+      popup
     }
   }
 </script>

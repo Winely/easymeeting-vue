@@ -16,24 +16,21 @@
 
 <script type="text/ecmascript-6">
   export default {
-    props: ['align', 'team'],
+    props: ['align'],
     methods: {
       closePopup (e) {
         // 渐隐窗口
-        this.$el.style.opacity=0
-        setTimeout(()=>{
-          this.$el.parentNode.removeChild(this.$el)
-        }, 300)
-
-        // 必要时需要emit一些事件交给父组件处理
-        this.$emit('cancel')
+        this.$el.style.opacity = 0
+        setTimeout(() => {this.$emit('cancel')}, 300)
       },
       finish () {
         this.$emit('finish')
       }
     },
     mounted () {
-       setTimeout(()=>{this.$el.style.opacity=1}, 0)
+      setTimeout(() => {
+        this.$el.style.opacity = 1
+      }, 0)
     }
   }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <popup ref="popup" align="center" @finish="nextStep">
+  <popup ref="popup" align="center" @finish="nextStep" @cancel="$emit('finish')">
     <input slot="popup-head" v-model="meeting.title" placeholder="输入会议主题……"/>
     <div slot="popup-body">
       <span>从</span>
@@ -38,6 +38,7 @@
         this.meeting.fromTime = this.$refs.from.time
         this.meeting.toTime = this.$refs.to.time
         this.$refs.popup.closePopup()
+        this.$emit('finish')
       }
     },
     created () {

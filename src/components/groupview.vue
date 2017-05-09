@@ -1,6 +1,8 @@
 <template>
   <div class="groupview">
-    <new-meeting :team="currentGroup" v-if="currentGroup & currentGroup.length>0"></new-meeting>
+    <new-meeting :team="currentGroup"
+                 @finish="currentGroup=''"
+                 v-if="currentGroup & currentGroup.toString().length>0"></new-meeting>
     <header>
       <svg class="router-icon-s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.89 28.89">
         <title>icon</title>
@@ -29,7 +31,7 @@
           <ul class="btn-list">
             <li><a><i class="icon-play"></i>进入会议</a></li>
             <li><a><i class="icon-conf"></i>小组管理</a></li>
-            <li><a><i class="icon-add"></i>新建预约</a></li>
+            <li><a @click.prevent="currentGroup=group.team_id"><i class="icon-add"></i>新建预约</a></li>
           </ul>
         </div>
         <corner v-if="group.corner" :content="group.corner"></corner>

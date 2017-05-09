@@ -90,7 +90,6 @@
     },
     created () {
       this.$http.get(urlconf.group(this.token)).then(resp => {
-        console.log(resp.body)
         this.groups = resp.body
       }, resp => {
 

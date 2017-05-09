@@ -18,7 +18,7 @@
     </header>
     <div class="settings">
       <form class="edit_form" @submit.prevent="submit">
-        <p>{{$data}}</p>
+        <!--<p>{{$data}}</p>-->
         <div class="avatar">
           <thumbnail :seed="user.email" width="128" height="128"
                      alt="avatar" radius="64px"></thumbnail>
@@ -26,7 +26,7 @@
         <div class="infobar info1">
           <div>
             <label class="infobar_label">点击修改邮箱及密码</label>
-            <button type="button" @click.prevent="info1disabled = true;info2disabled=false;"
+            <button type="button" @click.prevent="click1"
                     class="edit_btn"
                     id="info1_btn"><i class="icon-pencil"></i></button>
           </div>
@@ -59,7 +59,7 @@
         <div class="infobar info2">
           <div>
             <label class="infobar_label">点击修改其他信息</label>
-            <button type="button" @click.prevent="info2disabled = true;info1disabled=false;"
+            <button type="button" @click.prevent="click2"
                     class="edit_btn"
                     id="info2_btn"><i class="icon-pencil"></i></button>
           </div>
@@ -89,6 +89,16 @@
         </div>
         <button v-show="info1disabled||info2disabled" class="submit-button" type="submit">确认修改</button>
       </form>
+      <div v-show="this.mask" class="mask"></div>
+      <div v-show="this.mask" class="promptDialog">
+        <div class="title">
+          <h3>提示</h3>
+          <a class="pop_closed" @click.prevent="closemask">关闭</a>
+        </div>
+        <div class="content">
+          <p>{{this.promptinfo}}</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -106,7 +116,8 @@
         oldinfo: null,
         oldPassword: '',
         password2: '',
-        oldpswwrong: false
+        mask: false,
+        promptinfo: ''
       }
     },
     created () {
@@ -145,6 +156,27 @@
           e.target.setCustomValidity('旧密码输入错误！')
         }
       },
+      click1: function () {
+        this.info1disabled = true;
+        this.info2disabled = false;
+        if (sessionStorage.user) {
+          var userinfomation = JSON.parse(sessionStorage.user)
+          userinfomation['password'] = ''
+          this.user = userinfomation
+        }
+      },
+      click2: function () {
+        this.info2disabled = true;
+        this.info1disabled = false;
+        if (sessionStorage.user) {
+          var userinfomation = JSON.parse(sessionStorage.user)
+          userinfomation['password'] = ''
+          this.user = userinfomation
+        }
+      },
+      closemask: function () {
+        this.mask = false
+      },
       logout () {
         this.user = null
         localStorage.removeItem('user')
@@ -179,7 +211,6 @@
             password: newpsw
           }).then((response) => {
               if (response.status === 200) {
-                this.oldpswwrong = false
                 this.user = response.body.user
                 var newinfo1 = response.body.user
                 sessionStorage.user = JSON.stringify(newinfo1)
@@ -188,28 +219,26 @@
                 this.oldPassword = ''
                 this.password2 = ''
                 this.user.password = ''
-                location.href = '/home.html'
+                location.href = ''
               }
             }, (response) => {
               if (response.status === 401) { //旧密码不正确
-                this.oldpswwrong = true
-
-                var oldpsw = document.getElementById('oldPassword')
-//                oldpsw.setCustomValidity("旧密码输入错误！")
-                oldpsw.validity.badInput = true
+                this.promptinfo = '旧密码输入错误'
+                this.mask = true
               }
             }
           );
         }
         else if (this.info2disabled) {
           this.$http.put(urlconf.settinginfo2(), newuserinfo).then((response) => {
+              this.mask = false
               if (response.status === 200) {
                 this.user = response.body.user
                 var newinfo2 = response.body.user
                 sessionStorage.user = JSON.stringify(newinfo2)
                 localStorage.user = JSON.stringify(newinfo2)
                 this.oldinfo = newinfo2
-                location.href = '/home.html'
+                location.href = ''
               }
             }, (response) => {
             }
@@ -229,6 +258,75 @@
 
   .settingWrap
     width 80%
+
+  .mask {
+    position: fixed;
+    top: 0;
+    left: 20%;
+    width 80%;
+    height: 100%;
+    opacity: .75;
+    background-color: #000;
+    z-index: 100;
+  }
+
+  .promptDialog {
+    background-color: white;
+    position: fixed;
+    left 40%
+    top 40%
+    width: 40%
+    min-width: 250px;
+    z-index: 111;
+    border 1px solid transparent
+    border-radius 5px
+  }
+
+  .promptDialog .title {
+    position: relative;
+    margin: 0;
+    display: block;
+    height: 52px;
+    background-color: #f1f4e4;
+    padding: 0 20px;
+    border-bottom: 1px solid #e7e7eb;
+    text-align: left;
+  }
+
+  .promptDialog .title h3 {
+    margin: 0;
+    position: absolute;
+    line-height: 52px;
+    font-weight: normal;
+    font-style: normal;
+    color: theme-color;
+  }
+
+  .pop_closed {
+    background: url(../images/pic1.png) 0 -2833px no-repeat;
+    position: absolute;
+    top: 50%;
+    margin-top: -8px;
+    right: 20px;
+    width: 16px;
+    height: 16px;
+    line-height: 999em;
+    overflow: hidden;
+    color black
+    cursor pointer
+  }
+
+  .pop_closed:hover {
+    background-position-y: -2859px;
+  }
+
+  .promptDialog .content {
+    text-align: left;
+    padding: 10px;
+    height: auto;
+    margin: 10px;
+    display: block;
+  }
 
   .infobar
     width 49%

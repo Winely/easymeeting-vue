@@ -48,72 +48,7 @@
     props: ['token'],
     data () {
       return {
-        groups: [
-          {
-            id: '1111111111qrqer',
-            name: '滚滚长江东逝水1',
-            description: '是非成败转头空，青山依旧在，惯看秋月春风。是非成败转头空，青山依旧在，惯看秋月春风。是非成败转头空，青山依旧在，惯看秋月春风。',
-            isLeader: false,
-            avatar: 'http://donggu.me/img/avatar.jpg',
-            corner: false
-          },
-          {
-            id: 'dfrew9qr3432qer',
-            name: '滚滚长江东逝水2',
-            description: '是非成败转头空，青山依旧在，惯看秋月春风。',
-            isLeader: false,
-            avatar: 'http://donggu.me/img/avatar.jpg',
-            corner: '开会中'
-          },
-          {
-            id: 'vrjytjqer',
-            name: '滚滚长江东逝水3',
-            description: '是非成败转头空，青山依旧在，惯看秋月春风。',
-            isLeader: false,
-            avatar: 'http://donggu.me/img/avatar.jpg',
-            corner: '59"'
-          },
-          {
-            id: 'rt9823u4henfe',
-            name: '滚滚长江东逝水4',
-            description: '是非成败转头空，青山依旧在，惯看秋月春风。',
-            isLeader: false,
-            avatar: 'http://donggu.me/img/avatar.jpg',
-            corner: '23h'
-          },
-          {
-            id: '1111111111qrqer',
-            name: '滚滚长江东逝水1',
-            description: '是非成败转头空，青山依旧在，惯看秋月春风。是非成败转头空，青山依旧在，惯看秋月春风。是非成败转头空，青山依旧在，惯看秋月春风。',
-            isLeader: false,
-            avatar: 'http://donggu.me/img/avatar.jpg',
-            corner: false
-          },
-          {
-            id: 'dfrew9qr3432qer',
-            name: '滚滚长江东逝水2',
-            description: '是非成败转头空，青山依旧在，惯看秋月春风。',
-            isLeader: false,
-            avatar: 'http://donggu.me/img/avatar.jpg',
-            corner: '开会中'
-          },
-          {
-            id: 'vrjytjqer',
-            name: '滚滚长江东逝水3',
-            description: '是非成败转头空，青山依旧在，惯看秋月春风。',
-            isLeader: false,
-            avatar: 'http://donggu.me/img/avatar.jpg',
-            corner: '59"'
-          },
-          {
-            id: 'rt9823u4henfe',
-            name: '滚滚长江东逝水4',
-            description: '是非成败转头空，青山依旧在，惯看秋月春风。',
-            isLeader: false,
-            avatar: 'http://donggu.me/img/avatar.jpg',
-            corner: '23h'
-          }
-        ],
+        groups: [],
       }
     },
     components: {
@@ -161,7 +96,6 @@
   .groups
     display flex
     flex-wrap wrap
-    justify-content space-around
     padding-left 24px
     section
       display flex

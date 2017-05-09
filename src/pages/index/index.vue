@@ -11,14 +11,10 @@
       <h2>我是首页</h2>
       <h2>我是广告</h2>
     </div>
-    <popup>
-      <h3 slot="popup-head">fienfoiwnef</h3>
-      <h4 slot="popup-body">fienfoiwnef</h4>
-    </popup>
     <v-footer></v-footer>
   </div>
 </template>
-cd .
+
 <script>
   require('../../assets/global.css')
   import urlconf from 'assets/url.conf'
@@ -36,19 +32,23 @@ cd .
     },
     data () {
       return {
-        user: null
+        user: null,
+        time: ''
       }
     },
     methods: {
+      updateTime(val){
+        this.datetime = val
+      },
       test () {
-          var opt = {
-            format: 'svg',
-            size: 420
-          }
-          var data = new Identicon(md5(new Date().getTime()),opt).toString()
+        var opt = {
+          format: 'svg',
+          size: 420
+        }
+        var data = new Identicon(md5(new Date().getTime()), opt).toString()
         console.log(data.length)
         document.getElementById('index-wrapper')
-          .innerHTML='<img width=420 height=420 src="data:image/svg+xml;base64,' + data + '">';
+          .innerHTML = '<img width=420 height=420 src="data:image/svg+xml;base64,' + data + '">';
       },
       logout () {
         this.user = null

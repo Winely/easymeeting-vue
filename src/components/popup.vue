@@ -2,7 +2,7 @@
   <div class="popup">
     <div class="mask"></div>
     <div class="popup-win">
-      <button class="close" @click.prevent="closePopup"><i class="iconfont">x</i></button>
+      <button class="close" @click.prevent="cancel"><i class="iconfont">x</i></button>
       <header>
         <slot name="popup-head"></slot>
       </header>
@@ -18,13 +18,17 @@
   export default {
     props: ['align'],
     methods: {
-      closePopup (e) {
+      closePopup () {
         // 渐隐窗口
         this.$el.style.opacity = 0
+      },
+      cancel () {
+        this.closePopup()
         setTimeout(() => {this.$emit('cancel')}, 300)
       },
       finish () {
         this.$emit('finish')
+        // 是否把弹框关闭由父组件决定
       }
     },
     mounted () {

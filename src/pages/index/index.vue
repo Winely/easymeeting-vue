@@ -11,6 +11,10 @@
       <h2>我是首页</h2>
       <h2>我是广告</h2>
     </div>
+    <popup>
+      <h3 slot="popup-head">fienfoiwnef</h3>
+      <h4 slot="popup-body">fienfoiwnef</h4>
+    </popup>
     <v-footer></v-footer>
   </div>
 </template>
@@ -22,11 +26,13 @@ cd .
   import footer from 'components/footer'
   import Identicon from 'identicon.js'
   import md5 from 'blueimp-md5'
+  import popup from 'components/popup'
   export default {
     name: 'app',
     components: {
       'v-header': header,
-      'v-footer': footer
+      'v-footer': footer,
+      popup
     },
     data () {
       return {

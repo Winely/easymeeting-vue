@@ -90,7 +90,7 @@
                 username: this.user.username,
                 token: this.user.token
               })
-              location.href = '/home.html'
+              location.href = '/group.html'
             }, resp => {
             })
           }

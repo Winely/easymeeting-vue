@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <v-header :user="user" @logout="logout"></v-header>
-    <div class="home-wrap">
-      <sidebar :user="user"></sidebar>
-      <router-view class="router-view" :token="user.token"></router-view>
+    <div class="group-wrap">
+      <groupsidebar :user="user"></groupsidebar>
+      <router-view class="router-view"></router-view>
+      <!--<groupmanagement></groupmanagement>-->
     </div>
   </div>
 </template>
@@ -13,24 +14,19 @@
 
   import urlconf from 'assets/url.conf'
   import header from 'components/header'
-  import sidebar from 'components/sidebar'
+  import groupsidebar from 'components/groupsidebar'
+  import groupmanagement from 'components/groupmanagement'
 
   export default {
     name: 'app',
     components: {
       'v-header': header,
-      sidebar
+      groupsidebar,
+      groupmanagement
     },
     data () {
       return {
-        user: {
-          token: 'fweifjowiefeiowr',
-          username: '王大锤',
-          email: '3243423@qq.com',
-          gender: true,
-          avatar: 'http://donggu.me/img/avatar.jpg',
-          description: '是非成败转头空，青山依旧在，惯看秋月春风。一壶浊酒喜相逢，古今多少事，滚滚长江东逝水，浪花淘尽英雄。 几度夕阳红。白发渔樵江渚上，都付笑谈中。'
-        }
+        user: null
       }
     },
     methods: {
@@ -67,7 +63,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  .home-wrap
+  .group-wrap
     width 100%
     height 100%
     margin-top 50px

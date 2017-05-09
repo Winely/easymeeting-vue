@@ -30,5 +30,8 @@ export default {
   },
   settinginfo2() {
     return this.root + 'userinfo'
+  },
+  getMeetings(id, token){
+    return this.root + 'team/' + id + '/meeting?token=' + this.encodeToken(token)
   }
 }

@@ -4,6 +4,8 @@
                  @finish="addMeetingFinish"
                  @cancel="currentGroup=''" ref="newMeeting"
                  v-if="currentGroup & currentGroup.toString().length>0"></new-meeting>
+    <new-group v-if="addNewGroup" ref="newGroup"
+               @finishGroup="addGroupFinish" @cancel="addNewGroup=false"></new-group>
     <header>
       <svg class="router-icon-s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.89 28.89">
         <title>icon</title>
@@ -19,7 +21,7 @@
         </g>
       </svg>
       <h2>我的小组</h2>
-      <button type="button">+ 添加小组</button>
+      <button type="button" @click="addNewGroup=true">+ 添加小组</button>
     </header>
     <div class="groups">
       <section v-for="group in groups">
@@ -31,7 +33,7 @@
           <p>{{group.description.length < 45 ? group.description : (group.description.substr(0, 44) + '……')}}</p>
           <ul class="btn-list">
             <li><a><i class="icon-play"></i>进入会议</a></li>
-            <li><a @click="enterGroup(group.team_id)"><i class="icon-conf"></i>小组管理</a></li>
+            <li><a href="/group.html"><i class="icon-conf"></i>小组管理</a></li>
             <li><a @click="currentGroup=group.team_id"><i class="icon-add"></i>新建预约</a></li>
           </ul>
         </div>
@@ -49,28 +51,29 @@
   import thumbnail from './thumbnail'
   import corner from './corner'
   import newMeeting from './popupNewMeeting'
+  import newGroup from './popupNewGroup'
   export default {
     props: ['token'],
     data () {
       return {
         groups: [],
-        currentGroup: ''
+        currentGroup: '',
+        addNewGroup: false
       }
     },
     methods: {
       addMeetingFinish () {
-        setTimeout(() => {
-          this.currentGroup = ''
-        }, 300)
+        this.currentGroup=''
       },
-      enterGroup: function (team_id) {
-        location.href = "/group.html#/groupmanagement/"+team_id
+      addGroupFinish () {
+        this.addNewGroup=false
       }
     },
     components: {
       thumbnail,
       corner,
-      newMeeting
+      newMeeting,
+      newGroup
     },
     created () {
       this.$http.get(urlconf.group(this.token)).then(resp => {

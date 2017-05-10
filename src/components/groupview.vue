@@ -33,7 +33,7 @@
           <p>{{group.description.length < 45 ? group.description : (group.description.substr(0, 44) + '……')}}</p>
           <ul class="btn-list">
             <li><a><i class="icon-play"></i>进入会议</a></li>
-            <li><a href="/group.html"><i class="icon-conf"></i>小组管理</a></li>
+            <li><a @click="enterGroup(group.team_id)"><i class="icon-conf"></i>小组管理</a></li>
             <li><a @click="currentGroup=group.team_id"><i class="icon-add"></i>新建预约</a></li>
           </ul>
         </div>
@@ -63,10 +63,13 @@
     },
     methods: {
       addMeetingFinish () {
-        this.currentGroup=''
+        this.currentGroup = ''
       },
       addGroupFinish () {
-        this.addNewGroup=false
+        this.addNewGroup = false
+      },
+      enterGroup: function (team_id) {
+        location.href = "/group.html#/groupmanagement/" + team_id
       }
     },
     components: {

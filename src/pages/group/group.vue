@@ -2,7 +2,7 @@
   <div id="app">
     <v-header :user="user" @logout="logout"></v-header>
     <div class="group-wrap">
-      <groupsidebar :user="user"></groupsidebar>
+      <groupSidebar :user="user"></groupSidebar>
       <router-view class="router-view" :token="user.token"></router-view>
     </div>
   </div>
@@ -12,15 +12,15 @@
   require('../../assets/global.css')
   import urlconf from 'assets/url.conf'
   import header from 'components/header'
-  import groupsidebar from 'components/groupsidebar'
-  import groupmanagement from 'components/groupmanagement'
+  import groupSidebar from 'components/groupSidebar'
+  import groupManagement from 'components/groupManagement'
 
   export default {
     name: 'app',
     components: {
       'v-header': header,
-      groupsidebar,
-      groupmanagement
+      groupSidebar,
+      groupManagement
     },
     data () {
       return {

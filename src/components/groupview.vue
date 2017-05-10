@@ -64,8 +64,7 @@
         }, 300)
       },
       enterGroup: function (team_id) {
-        this.$emit('selectGroup',team_id)
-        location.href = "/group.html"
+        location.href = "/group.html#/groupmanagement/"+team_id
       }
     },
     components: {

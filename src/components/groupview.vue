@@ -2,8 +2,9 @@
   <div class="groupview">
     <new-meeting :team="currentGroup"
                  @finish="addMeetingFinish"
-                 @cancel="currentGroup=''" ref="newMeeting"
+                 @cancel="currentGroup=''"
                  v-if="currentGroup & currentGroup.toString().length>0"></new-meeting>
+    <new-group v-if="addNewGroup" @finishGroup="addGroupFinish" @cancel="addNewGroup=false"></new-group>
     <header>
       <svg class="router-icon-s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.89 28.89">
         <title>icon</title>
@@ -19,7 +20,7 @@
         </g>
       </svg>
       <h2>我的小组</h2>
-      <button type="button">+ 添加小组</button>
+      <button type="button" @click.prevent="addNewGroup=true">+ 添加小组</button>
     </header>
     <div class="groups">
       <section v-for="group in groups">
@@ -49,23 +50,29 @@
   import thumbnail from './thumbnail'
   import corner from './corner'
   import newMeeting from './popupNewMeeting'
+  import newGroup from './popupNewGroup'
   export default {
     props: ['token'],
     data () {
       return {
         groups: [],
-        currentGroup: ''
+        currentGroup: '',
+        addNewGroup: false
       }
     },
     methods: {
       addMeetingFinish () {
-        setTimeout(()=>{this.currentGroup=''}, 300)
+        this.currentGroup=''
+      },
+      addGroupFinish () {
+        this.addNewGroup=false
       }
     },
     components: {
       thumbnail,
       corner,
-      newMeeting
+      newMeeting,
+      newGroup
     },
     created () {
       this.$http.get(urlconf.group(this.token)).then(resp => {

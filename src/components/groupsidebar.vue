@@ -3,18 +3,18 @@
     <a class="active" href="/home.html">< -- 我的小组</a>
     <div class="groupList">
       <ul>
-        <li v-for="item in groups" @click="chooseGroup(item)" :class="{ 'active': item.team_id == selected }">
+        <li v-for="item in groups" @click="chooseGroup(item)" :class="{ 'active': item.team_id == selectedGroup }">
           {{ item.name }}
         </li>
       </ul>
     </div>
-    <div class="meetingList">
-      <ul>
-        <li v-for="mt in meetings">
-          {{ mt.meeting_id }}
-        </li>
-      </ul>
-    </div>
+    <!--<div class="meetingList">-->
+    <!--<ul>-->
+    <!--<li v-for="mt in meetings">-->
+    <!--{{ mt.meeting_id }}-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</div>-->
   </div>
 </template>
 
@@ -24,10 +24,9 @@
 //    props: ['user'],
     data () {
       return {
-        selected: null,
+        selectedGroup: null,
         user: null,
-        groups: [],
-        meetings: []
+        groups: null,
       }
     },
     created() {
@@ -37,6 +36,7 @@
       if (this.user.token) {
         this.$http.get(urlconf.group(this.user.token)).then((response) => {
             this.groups = response.body
+//            this.selectedGroup = this.groups[0].team_id
           },
           (response) => {
           })
@@ -44,25 +44,21 @@
       else {
         alert("token undefined")
       }
-      this.selected = this.groups[0].team_id
-      console.log(this.selected)
+
     },
     components: {},
     methods: {
       chooseGroup: function (t) {
-        this.selected = t.team_id
-        if (this.selected && this.user.token) {
-          this.$http.get(urlconf.getMeetings(this.selected, this.user.token)).then((response) => {
+        this.selectedGroup = t.team_id
+        if (this.selectedGroup && this.user.token) {
+          this.$http.get(urlconf.getMeetings(this.selectedGroup, this.user.token)).then((response) => {
             this.meetings = response.body
           }, (response) => {
           })
         }
         else {
-          alert("token || selected undefined")
+          alert("token || selectedGroup undefined")
         }
-      },
-      getMeeting: function () {
-
       }
     }
   }

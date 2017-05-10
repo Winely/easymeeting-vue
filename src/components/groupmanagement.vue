@@ -1,6 +1,6 @@
 <template>
   <div class="groupManagement-wrap">
-    xxxxxxxxxxxxxxxxxxx
+    <p>{{$data}}</p>
   </div>
 </template>
 
@@ -20,11 +20,15 @@
       corner
     },
     created () {
-      this.$http.get(urlconf.group(this.token)).then(resp => {
-        this.groups = resp.body
-      }, resp => {
-
-      })
+      if (this.token) {
+        this.$http.get(urlconf.group(this.token)).then(resp => {
+          this.groups = resp.body
+        }, resp => {
+        })
+      }
+      else {
+        alert("token undefined!")
+      }
     }
   }
 </script>

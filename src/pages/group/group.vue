@@ -3,14 +3,13 @@
     <v-header :user="user" @logout="logout"></v-header>
     <div class="group-wrap">
       <groupsidebar :user="user"></groupsidebar>
-      <router-view class="router-view"></router-view>
+      <router-view class="router-view" :token="user.token"></router-view>
     </div>
   </div>
 </template>
 
 <script>
   require('../../assets/global.css')
-
   import urlconf from 'assets/url.conf'
   import header from 'components/header'
   import groupsidebar from 'components/groupsidebar'
@@ -25,7 +24,8 @@
     },
     data () {
       return {
-        user: null
+        user: null,
+        selected:''
       }
     },
     methods: {

@@ -26,7 +26,7 @@
         <div class="infobar info1">
           <div>
             <label class="infobar_label">点击修改邮箱及密码</label>
-            <button type="button" @click.prevent="click1"
+            <button type="button" @click.prevent="settingInfoLeft"
                     class="edit_btn"
                     id="info1_btn"><i class="icon-pencil"></i></button>
           </div>
@@ -40,26 +40,27 @@
           </div>
           <div style="display: inline-block">
             <label class="setting_label" for="oldPassword">旧密码</label>
-            <input v-model="oldPassword" @input.prevent="checkoldPassword($event)" :disabled="!info1disabled"
-                   :required="info1disabled" id="oldPassword"
+            <input v-model="oldPassword" @input.prevent="checkOldPassword($event)" :disabled="!info1disabled"
+                   :required="info1disabled" id="oldPassword" :class="{'edit-disabled':!info1disabled}"
                    type="password">
           </div>
           <div style="display: inline-block">
             <label class="setting_label" for="newPassword">新密码</label>
             <input v-model="user.password" :disabled="!info1disabled" id="newPassword"
-                   type="password"
+                   type="password" :class="{'edit-disabled':!info1disabled}"
                    @change.prevent="checkPasswords">
           </div>
           <div>
             <label class="setting_label" for="newPassword2">确认密码</label>
             <input v-model="password2" id="newPassword2" :disabled="!info1disabled" type="password"
+                   :class="{'edit-disabled':!info1disabled}"
                    @change.prevent="checkPasswords">
           </div>
         </div>
         <div class="infobar info2">
           <div>
             <label class="infobar_label">点击修改其他信息</label>
-            <button type="button" @click.prevent="click2"
+            <button type="button" @click.prevent="settingInfoRight"
                     class="edit_btn"
                     id="info2_btn"><i class="icon-pencil"></i></button>
           </div>
@@ -89,9 +90,9 @@
         </div>
         <button v-show="info1disabled||info2disabled" class="submit-button" type="submit">确认修改</button>
       </form>
-      <popup v-if="this.mask" align="center">
-        <p slot="popup-header">提示</p>
-        <p>{{this.promptinfo}}</p>
+      <popup @finish="mask=false" @cancel="mask=false" v-if="this.mask" align="center">
+        <p slot="popup-head">提示</p>
+        <p slot="popup-body">{{this.promptinfo}}</p>
       </popup>
     </div>
   </div>
@@ -117,10 +118,10 @@
     },
     created () {
       if (sessionStorage.user) {
-        var userinfomation = JSON.parse(sessionStorage.user)
-        userinfomation['password'] = ''
+        var userInfomation = JSON.parse(sessionStorage.user)
+        userInfomation['password'] = ''
         this.oldinfo = JSON.parse(sessionStorage.user)
-        this.user = userinfomation
+        this.user = userInfomation
       }
     },
     methods: {
@@ -146,31 +147,28 @@
           })
         }
       },
-      checkoldPassword: function (e) {
+      checkOldPassword: function (e) {
         if (e.target.validity.badInput) {
           e.target.setCustomValidity('旧密码输入错误！')
         }
       },
-      click1: function () {
+      settingInfoLeft: function () {
         this.info1disabled = true;
         this.info2disabled = false;
         if (sessionStorage.user) {
-          var userinfomation = JSON.parse(sessionStorage.user)
-          userinfomation['password'] = ''
-          this.user = userinfomation
+          var userInformation = JSON.parse(sessionStorage.user)
+          userInformation['password'] = ''
+          this.user = userInformation
         }
       },
-      click2: function () {
+      settingInfoRight: function () {
         this.info2disabled = true;
         this.info1disabled = false;
         if (sessionStorage.user) {
-          var userinfomation = JSON.parse(sessionStorage.user)
-          userinfomation['password'] = ''
-          this.user = userinfomation
+          var userInformation = JSON.parse(sessionStorage.user)
+          userInformation['password'] = ''
+          this.user = userInformation
         }
-      },
-      closemask: function () {
-        this.mask = false
       },
       logout () {
         this.user = null
@@ -179,17 +177,17 @@
         location.href = '/login.html'
       },
       submit: function () {
-        var newuserinfo = {
+        var newUserInfo = {
           "token": this.user.token,
           "username": this.user.username,
           "gender": this.user.gender,
           "description": this.user.description
         }
-        if (!newuserinfo.gender || newuserinfo.gender === this.oldinfo.gender) {
-          delete newuserinfo.gender
+        if (!newUserInfo.gender || newUserInfo.gender === this.oldinfo.gender) {
+          delete newUserInfo.gender
         }
-        if (!newuserinfo.description || newuserinfo.description === this.oldinfo.description) {
-          delete newuserinfo.description
+        if (!newUserInfo.description || newUserInfo.description === this.oldinfo.description) {
+          delete newUserInfo.description
         }
         var newpsw
         if (this.info1disabled) {
@@ -225,7 +223,7 @@
           );
         }
         else if (this.info2disabled) {
-          this.$http.put(urlconf.settinginfo2(), newuserinfo).then((response) => {
+          this.$http.put(urlconf.settinginfo2(), newUserInfo).then((response) => {
               this.mask = false
               if (response.status === 200) {
                 this.user = response.body.user

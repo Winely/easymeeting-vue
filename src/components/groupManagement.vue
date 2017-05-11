@@ -21,8 +21,8 @@
             <a class="right"></a>
           </div>
           <div v-show="item.show" class="meetingDetail">
-            <div class="description"></div>
-            <div class="outline"></div>
+            <div class="description">{{item.introduction}}</div>
+            <div class="outline">{{item.outline}}</div>
           </div>
         </li>
         <p>{{meetings}}</p>
@@ -31,6 +31,9 @@
     </div>
     <div class="members-wrap">
       <div class="members-title">小组成员</div>
+      <ul>
+        <li v-for="item in members">{{item.username}}</li>
+      </ul>
     </div>
   </div>
 </template>
@@ -134,13 +137,6 @@
     ul
       margin 0
       li
-        .meetingDetail
-          display flex
-          flex-wrap wrap
-          flex-direction row
-          justify-content flex-start
-          border 1px solid #F2F2F2
-          background-color #F2F2F2
         .meeting
           box-shadow 0px 3px 3px #bbbbbb
           padding 15px 30px
@@ -149,45 +145,63 @@
           flex-wrap wrap
           flex-direction row
           justify-content flex-start
-        a
-          cursor pointer
-        .left
-          width 85%
+          a
+            cursor pointer
+          .left
+            width 85%
+            display flex
+            flex-wrap wrap
+            flex-direction row
+            justify-content flex-start
+            .row
+              display flex
+              flex-wrap nowrap
+              width 100%
+              margin auto
+            p
+              height 20px
+              margin 0
+              font-size 18px
+            .meetingInfo
+              color #95989A
+              p
+                font-size 14px
+              .icon-user
+                margin-right 8px
+              .leader-name
+                margin-right 30px
+              .meeting-time
+                margin 0 5px
+            .meeting-color
+              height 20px
+              width 20px
+              border-radius 10px
+              background-color red
+              margin-right 10px
+          .right
+            background-color #BBD176
+            height 30px
+            width 30px
+            border-radius 15px
+            margin auto
+        .meetingDetail
           display flex
           flex-wrap wrap
           flex-direction row
           justify-content flex-start
-          .row
-            display flex
-            flex-wrap nowrap
-            width 100%
-            margin auto
-          p
-            height 20px
-            margin 0
-            font-size 18px
-          .meetingInfo
-            color #95989A
-            p
-              font-size 14px
-            .icon-user
-              margin-right 8px
-            .leader-name
-              margin-right 30px
-            .meeting-time
-              margin 0 5px
-          .meeting-color
-            height 20px
-            width 20px
-            border-radius 10px
-            background-color red
-            margin-right 10px
-        .right
-          background-color #BBD176
-          height 30px
-          width 30px
-          border-radius 15px
-          margin auto
+          border 1px solid #F2F2F2
+          background-color #F2F2F2
+          .description
+            padding 0 4.9%
+            margin 20px 0
+            width 40%
+            height 100px
+            border-right 2px solid #DDDDDD
+          .outline
+            padding 0 4.9%
+            margin 20px 0
+            width 40%
+            height 100px
 
   .members-wrap
     display inline-block
@@ -198,6 +212,10 @@
       padding 14px
       text-align center
       background-color #fafafa
+    ul
+      margin 0
+      li
+        height 100px
 
 
 </style>

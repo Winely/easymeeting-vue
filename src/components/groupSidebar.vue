@@ -3,9 +3,6 @@
     <a class="active" href="/home.html">< -- 我的小组</a>
     <div class="groupList">
       <ul>
-        <!--<li v-for="item in groups" @click="chooseGroup(item)" :class="{ 'active': item.team_id == selectedGroup }">-->
-        <!--{{ item.name }}-->
-        <!--</li>-->
         <router-link v-for="item in groups" @click="chooseGroup(item)" :to="'/groupmanagement/'+item.team_id"
                      :key="item.team_id">{{ item.name }}
         </router-link>

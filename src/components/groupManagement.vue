@@ -37,7 +37,7 @@
       </div>
       <ul>
         <li v-for="item in members">
-          <i class="icon-conf" style=""></i>
+          <div class="deleteMember">×</div>
           <div class="avatar">
             <thumbnail :seed="item.email" width="46" height="46"
                        alt="avatar" radius="23px"></thumbnail>
@@ -170,9 +170,10 @@
         flex-direction row
         justify-content flex-start
         align-items center
-        i
+        .deleteMember
           margin 0 10px
           margin-right 5px
+          font-size 28px
         .avatar
           margin 0 5px
         .email

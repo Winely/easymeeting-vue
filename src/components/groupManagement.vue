@@ -25,6 +25,7 @@
             <div class="outline">{{item.outline}}</div>
           </div>
         </li>
+        <p>{{thisGroup}}</p>
         <p>{{meetings}}</p>
         <p>{{members}}</p>
       </ul>
@@ -32,7 +33,20 @@
     <div class="members-wrap">
       <div class="members-title">小组成员</div>
       <ul>
-        <li v-for="item in members">{{item.username}}</li>
+        <li v-for="item in members">
+          <i class="icon-conf" style=""></i>
+          <div class="avatar">
+            <thumbnail :seed="item.email" width="46" height="46"
+                       alt="avatar" radius="23px"></thumbnail>
+          </div>
+          <div>
+            <div class="row">
+              <div class="username">{{item.username}}</div>
+              <div v-show="true ? item.user_id === thisGroup.leader : false" class="leader">组长</div>
+            </div>
+            <div class="email">{{item.email}}</div>
+          </div>
+        </li>
       </ul>
     </div>
   </div>
@@ -46,7 +60,7 @@
     props: ['token'],
     data () {
       return {
-        groups: [],
+        thisGroup: null,
         meetings: null,
         members: null
       }
@@ -59,16 +73,11 @@
       '$route': 'fetchDate'
     },
     created () {
-      if (this.token) {
-        this.$http.get(urlconf.group(this.token)).then(resp => {
-          this.groups = resp.body
+      if (this.$route.params.id && this.token) {
+        this.$http.get(urlconf.getOneGroup(this.$route.params.id, this.token)).then(resp => {
+          this.thisGroup = resp.body
         }, resp => {
         })
-      }
-      else {
-        alert("token undefined!")
-      }
-      if (this.$route.params.id && this.token) {
         this.$http.get(urlconf.getMeetings(this.$route.params.id, this.token)).then((response) => {
           var res = response.body
           for (var i = 0; i < res.length; i++) {
@@ -89,6 +98,10 @@
     methods: {
       fetchDate: function () {
         if (this.$route.params.id && this.token) {
+          this.$http.get(urlconf.getOneGroup(this.$route.params.id, this.token)).then(resp => {
+            this.thisGroup = resp.body
+          }, resp => {
+          })
           this.$http.get(urlconf.getMeetings(this.$route.params.id, this.token)).then((response) => {
             var res = response.body
             for (var i = 0; i < res.length; i++) {
@@ -119,15 +132,69 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .groupManagement-wrap
     display flex
+    flex-direction row
+    justify-content flex-start
+    align-items flex-start
     flex-wrap wrap
     width: 80%
     margin-left 20%
 
+  .members-wrap
+    width 25%
+    min-width 200px
+    margin 20px 0
+    box-shadow 0 0 8px #000000
+    border none
+    border-radius 10px
+    .members-title
+      padding 14px
+      text-align center
+      background-color #fafafa
+      border-bottom 1px solid #676767
+    ul
+      margin 0
+      background-color #fafafa
+      li
+        height 80px
+        display flex
+        flex-direction row
+        justify-content flex-start
+        align-items center
+        i
+          margin 0 10px
+          margin-right 5px
+        .avatar
+          margin 0 5px
+        .email
+          font-size 14px
+          color #DEDEDE
+          display flex
+          flex-direction row
+          justify-content flex-start
+          flex-wrap wrap
+        .row
+          display flex
+          flex-wrap nowrap
+          width 100%
+          .username
+            font-size 16px
+          .leader
+            background-color #D83333
+            color white
+            border-radius 8px
+            font-size 11px
+            height 16px
+            line-height 16px
+            padding 1px 10px
+            vertical-align middle
+            margin auto
+            margin-left 8px
+
   .meetings-wrap
-    display inline-block
     width 60%
     min-width 500px
-    margin 20px 3%
+    margin 20px 5%
+    box-shadow 0px 3px 3px #bbbbbb
     .meeting-title
       padding 14px
       text-align center
@@ -153,11 +220,11 @@
             flex-wrap wrap
             flex-direction row
             justify-content flex-start
+            align-items center
             .row
               display flex
               flex-wrap nowrap
               width 100%
-              margin auto
             p
               height 20px
               margin 0
@@ -202,20 +269,6 @@
             margin 20px 0
             width 40%
             height 100px
-
-  .members-wrap
-    display inline-block
-    width 25%
-    min-width 200px
-    margin 20px 0
-    .members-title
-      padding 14px
-      text-align center
-      background-color #fafafa
-    ul
-      margin 0
-      li
-        height 100px
 
 
 </style>

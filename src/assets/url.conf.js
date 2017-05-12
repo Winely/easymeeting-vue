@@ -39,5 +39,8 @@ export default {
   },
   inviteMember(id){
     return this.root + 'team/' + id + '/member'
+  },
+  getOneGroup(id, token){
+    return this.root + 'team/' + id + '?token=' + this.encodeToken(token)
   }
 }

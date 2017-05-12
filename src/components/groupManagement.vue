@@ -25,13 +25,16 @@
             <div class="outline">{{item.outline}}</div>
           </div>
         </li>
-        <p>{{thisGroup}}</p>
-        <p>{{meetings}}</p>
-        <p>{{members}}</p>
+        <!--<p>{{thisGroup}}</p>-->
+        <!--<p>{{meetings}}</p>-->
+        <!--<p>{{members}}</p>-->
       </ul>
     </div>
     <div class="members-wrap">
-      <div class="members-title">小组成员</div>
+      <div class="members-title" style="position: relative">
+        小组成员
+        <i class="icon-add"></i>
+      </div>
       <ul>
         <li v-for="item in members">
           <i class="icon-conf" style=""></i>
@@ -144,13 +147,20 @@
     min-width 200px
     margin 20px 0
     box-shadow 0 0 8px #000000
-    border none
-    border-radius 10px
     .members-title
-      padding 14px
       text-align center
       background-color #fafafa
       border-bottom 1px solid #676767
+      padding 14px
+      display flex
+      flex-direction row
+      justify-content center
+      align-items center
+      .icon-add
+        top 50%
+        margin-top -8px
+        right 15%
+        position: absolute
     ul
       margin 0
       background-color #fafafa

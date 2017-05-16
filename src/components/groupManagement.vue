@@ -146,7 +146,7 @@
     width 25%
     min-width 200px
     margin 20px 0
-    box-shadow 0 0 8px #000000
+    box-shadow 0 0 8px rgba(0,0,0,16%)
     .members-title
       text-align center
       background-color #fafafa
@@ -205,18 +205,18 @@
     width 60%
     min-width 500px
     margin 20px 5%
-    box-shadow 0px 3px 3px #bbbbbb
+    box-shadow 0px 3px 6px rgba(187,187,187,16%)
     .meeting-title
       padding 14px
       text-align center
       background-color #373737
       color white
-      box-shadow 0px 3px 3px #bbbbbb
+      box-shadow 0px 3px 6px rgba(187,187,187,16%)
     ul
       margin 0
       li
         .meeting
-          box-shadow 0px 3px 3px #bbbbbb
+          box-shadow 0px 3px 6px rgba(187,187,187,16%)
           padding 15px 30px
           height 60px
           display flex

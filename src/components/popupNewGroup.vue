@@ -12,6 +12,7 @@
 <script type="text/ecmascript-6">
   import popup from './popup'
   import inputs from './inputGroup'
+  import urlconf from 'assets/url.conf'
   export default {
     data () {
       return {
@@ -20,8 +21,14 @@
         member: ''
       }
     },
+    props: ['token'],
     methods: {
       finish () {
+        this.$http.post(urlconf.newGroup(),
+          {name: this.name, description: this.description, token: this.token}
+          ).then(resp=>{
+            // do something
+        })
         this.$refs.popup.closePopup()
         setTimeout(()=>{this.$emit('finishGroup')}, 300)
       }

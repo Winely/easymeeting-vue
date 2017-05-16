@@ -3,7 +3,7 @@
     <new-meeting :team="currentGroup"
                  @finish="addMeetingFinish"
                  @cancel="currentGroup=''" ref="newMeeting"
-                 v-if="currentGroup & currentGroup.toString().length>0"></new-meeting>
+                 v-if="currentGroup && currentGroup.toString().length>0"></new-meeting>
     <new-group v-if="addNewGroup" ref="newGroup"
                @finishGroup="addGroupFinish" @cancel="addNewGroup=false"></new-group>
     <header>

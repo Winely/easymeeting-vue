@@ -20,12 +20,12 @@
             </div>
             <a class="right"></a>
           </div>
-          <div v-show="item.show" class="meetingDetail">
+          <div :class="['meetingDetail',{'showDetail':item.show}]">
             <div class="description">{{item.introduction}}</div>
             <div class="outline">{{item.outline}}</div>
           </div>
         </li>
-        <li v-if="meetings.length===0" class="noMeeting">当前小组尚未预约会议</li>
+        <li v-if="meetings.length===0||!meetings" class="noMeeting">当前小组尚未预约会议</li>
       </ul>
     </div>
     <div class="members-wrap">
@@ -243,12 +243,14 @@
               width 100%
             p
               height 20px
+              line-height 20px
               margin 0
-              font-size 18px
+              font-size 20px
             .meetingInfo
               color #95989A
               p
                 font-size 14px
+                line-height 20px
               .icon-user
                 margin-right 8px
               .leader-name
@@ -274,6 +276,11 @@
           justify-content flex-start
           border 1px solid #F2F2F2
           background-color #F2F2F2
+          height 0px
+          transition .6s
+          overflow hidden
+        .showDetail
+          height 140px
           .description
             padding 0 4.9%
             margin 20px 0

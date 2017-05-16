@@ -71,6 +71,7 @@
     width 20%
     position fixed
     height 100%
+    overflow scroll
     .avatar
       border-radius 999em
       margin auto

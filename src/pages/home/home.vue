@@ -67,6 +67,9 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  ::-webkit-scrollbar
+    width 0px
+
   .home-wrap
     width 100%
     height 100%

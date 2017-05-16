@@ -25,7 +25,7 @@
     data () {
       return {
         user: null,
-        selected:''
+        selected: ''
       }
     },
     methods: {

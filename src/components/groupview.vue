@@ -1,10 +1,10 @@
 <template>
   <div class="groupview">
-    <new-meeting :team="currentGroup"
+    <new-meeting :team="currentGroup" :token="token"
                  @finish="addMeetingFinish"
                  @cancel="currentGroup=''" ref="newMeeting"
                  v-if="currentGroup && currentGroup.toString().length>0"></new-meeting>
-    <new-group v-if="addNewGroup" ref="newGroup"
+    <new-group v-if="addNewGroup" ref="newGroup" :token="token"
                @finishGroup="addGroupFinish" @cancel="addNewGroup=false"></new-group>
     <header>
       <svg class="router-icon-s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.89 28.89">
@@ -66,6 +66,11 @@
         this.currentGroup = ''
       },
       addGroupFinish () {
+        this.$http.get(urlconf.group(this.token)).then(resp => {
+          this.groups = resp.body
+        }, resp => {
+
+        })
         this.addNewGroup = false
       }
     },
@@ -145,6 +150,7 @@
         font-weight 200
         color #939880
         margin 6px auto
+        width 100%
       ul
         display flex
         flex-wrap wrap

@@ -3,15 +3,14 @@
  */
 import Vue from 'vue'
 import Router from 'vue-router'
-import groupmanagement from 'components/groupmanagement'
+import groupManagement from 'components/groupManagement'
 
 Vue.use(Router)
 
 var router = new Router({
   routes: [
-    {path: '/groupmanagement', component: groupmanagement}
+    {path: '/groupManagement/:id', component: groupManagement}
   ]
 })
 
-router.replace('/groupmanagement')
 export default router

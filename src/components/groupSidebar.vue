@@ -3,18 +3,11 @@
     <a class="active" href="/home.html">< -- 我的小组</a>
     <div class="groupList">
       <ul>
-        <li v-for="item in groups" @click="chooseGroup(item)" :class="{ 'active': item.team_id == selectedGroup }">
-          {{ item.name }}
-        </li>
+        <router-link v-for="item in groups" @click="chooseGroup(item)" :to="'/groupmanagement/'+item.team_id"
+                     :key="item.team_id">{{ item.name }}
+        </router-link>
       </ul>
     </div>
-    <!--<div class="meetingList">-->
-    <!--<ul>-->
-    <!--<li v-for="mt in meetings">-->
-    <!--{{ mt.meeting_id }}-->
-    <!--</li>-->
-    <!--</ul>-->
-    <!--</div>-->
   </div>
 </template>
 
@@ -49,9 +42,10 @@
     components: {},
     methods: {
       chooseGroup: function (t) {
-        this.selectedGroup = t.team_id
-        if (this.selectedGroup && this.user.token) {
-          this.$http.get(urlconf.getMeetings(this.selectedGroup, this.user.token)).then((response) => {
+        alert(t)
+//        this.selectedGroup = t.team_id
+        if (t.team_id && this.user.token) {
+          this.$http.get(urlconf.getMeetings(t.team_id, this.user.token)).then((response) => {
             this.meetings = response.body
           }, (response) => {
           })
@@ -105,16 +99,19 @@
     a.active
       background theme-color!important
       color #fff
+    .router-link-active, a:active
+      background btn-bg!important
+      color #fff
 
-  .groupList
-    li
-      line-height 30px
-      padding 8px 6px
-      color #95989A
-      cursor pointer
-    li.active
-      background-color #F5FCDC
-      color #4D6309
-      font-weight 700
+  /*.groupList*/
+  /*li*/
+  /*line-height 30px*/
+  /*padding 8px 6px*/
+  /*color #95989A*/
+  /*cursor pointer*/
+  /*li.active*/
+  /*background-color #F5FCDC*/
+  /*color #4D6309*/
+  /*font-weight 700*/
 
 </style>

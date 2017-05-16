@@ -33,5 +33,14 @@ export default {
   },
   getMeetings(id, token){
     return this.root + 'team/' + id + '/meeting?token=' + this.encodeToken(token)
+  },
+  getTeamMember(id, token){
+    return this.root + 'team/' + id + '/member?token=' + this.encodeToken(token)
+  },
+  inviteMember(id){
+    return this.root + 'team/' + id + '/member'
+  },
+  getOneGroup(id, token){
+    return this.root + 'team/' + id + '?token=' + this.encodeToken(token)
   }
 }

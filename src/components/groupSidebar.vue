@@ -65,13 +65,19 @@
   link-color = #6E794A
   bg-color = #F1F4E4
 
+  /*滚动条设为不可见*/
+  ::-webkit-scrollbar
+    width 0px
+
   .groupSidebar
     background bg-color
     text-align center
     width 20%
     position fixed
     height 100%
-    overflow scroll
+    .groupList
+      height 100%
+      overflow scroll
     .avatar
       border-radius 999em
       margin auto

@@ -29,11 +29,11 @@
           <thumbnail :seed="group.team_id" width="72px" height="72px" radius="999em" :alt="group.name"></thumbnail>
         </div>
         <div class="col">
-          <h3><a href="/">{{group.name}}</a></h3>
+          <h3><a :href='"/group.html#/groupmanagement/" + team_id'>{{group.name}}</a></h3>
           <p>{{group.description.length < 45 ? group.description : (group.description.substr(0, 44) + '……')}}</p>
           <ul class="btn-list">
             <li><a><i class="icon-play"></i>进入会议</a></li>
-            <li><a @click="enterGroup(group.team_id)"><i class="icon-conf"></i>小组管理</a></li>
+            <li><a :href='"/group.html#/groupmanagement/" + team_id'><i class="icon-conf"></i>小组管理</a></li>
             <li><a @click="currentGroup=group.team_id"><i class="icon-add"></i>新建预约</a></li>
           </ul>
         </div>
@@ -67,9 +67,6 @@
       },
       addGroupFinish () {
         this.addNewGroup = false
-      },
-      enterGroup: function (team_id) {
-        location.href = "/group.html#/groupmanagement/" + team_id
       }
     },
     components: {

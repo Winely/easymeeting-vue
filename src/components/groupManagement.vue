@@ -13,16 +13,16 @@
               <div class="row meetingInfo">
                 <i class="icon-user"></i>
                 <p class="leader-name">{{thisGroup.leader}}</p>
-                <p class="meeting-time">{{item.start_time.replace('T',' ').replace('.000Z','')}}</p>
+                <p class="meeting-time">{{item.start_time.replace('T', ' ').replace('.000Z', '')}}</p>
                 <p>~</p>
-                <p class="meeting-time">{{item.end_time.replace('T',' ').replace('.000Z','')}}</p>
+                <p class="meeting-time">{{item.end_time.replace('T', ' ').replace('.000Z', '')}}</p>
               </div>
             </div>
             <a class="right"></a>
           </div>
           <div :class="['meetingDetail',{'showDetail':item.show}]">
-            <div class="description">{{item.introduction}}</div>
-            <div class="outline">{{item.outline}}</div>
+            <div :class="['description']">{{item.introduction}}</div>
+            <div :class="['outline']">{{item.outline}}</div>
           </div>
         </li>
         <li v-if="meetings.length===0||!meetings" class="noMeeting">当前小组尚未预约会议</li>
@@ -131,6 +131,7 @@
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
+
   .groupManagement-wrap
     display flex
     flex-direction row
@@ -144,7 +145,7 @@
     width 25%
     min-width 200px
     margin 20px 0
-    box-shadow 0 0 8px rgba(0,0,0,16%)
+    box-shadow 0 0 8px rgba(0, 0, 0, 16%)
     .members-title
       text-align center
       background-color #fafafa
@@ -203,13 +204,13 @@
     width 60%
     min-width 500px
     margin 20px 5%
-    box-shadow 0px 3px 6px rgba(187,187,187,16%)
+    box-shadow 0px 3px 6px rgba(187, 187, 187, 16%)
     .meeting-title
       padding 14px
       text-align center
       background-color #373737
       color white
-      box-shadow 0px 3px 6px rgba(187,187,187,16%)
+      box-shadow 0px 3px 6px rgba(187, 187, 187, 16%)
     ul
       margin 0
       .noMeeting
@@ -221,7 +222,7 @@
         color #939880
       li
         .meeting
-          box-shadow 0px 3px 6px rgba(187,187,187,16%)
+          box-shadow 0px 3px 6px rgba(187, 187, 187, 16%)
           padding 15px 30px
           height 60px
           display flex
@@ -277,21 +278,22 @@
           border 1px solid #F2F2F2
           background-color #F2F2F2
           height 0px
-          transition .6s
           overflow hidden
+          transition .3s
         .showDetail
           height 140px
-          .description
-            padding 0 4.9%
-            margin 20px 0
-            width 40%
-            height 100px
-            border-right 2px solid #DDDDDD
-          .outline
-            padding 0 4.9%
-            margin 20px 0
-            width 40%
-            height 100px
+          transition .3s
+        .description
+          padding 0 4.9%
+          margin 20px 0
+          width 40%
+          height 100px
+          border-right 2px solid #DDDDDD
+        .outline
+          padding 0 4.9%
+          margin 20px 0
+          width 40%
+          height 100px
 
 
 </style>

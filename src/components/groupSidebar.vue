@@ -101,17 +101,7 @@
       color #fff
     .router-link-active, a:active
       background btn-bg!important
+      font-weight bold
       color #fff
-
-  /*.groupList*/
-  /*li*/
-  /*line-height 30px*/
-  /*padding 8px 6px*/
-  /*color #95989A*/
-  /*cursor pointer*/
-  /*li.active*/
-  /*background-color #F5FCDC*/
-  /*color #4D6309*/
-  /*font-weight 700*/
 
 </style>

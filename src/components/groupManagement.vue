@@ -12,10 +12,10 @@
               </div>
               <div class="row meetingInfo">
                 <i class="icon-user"></i>
-                <p class="leader-name">王大锤</p>
-                <p class="meeting-time">2017-06-05 00:00:00</p>
+                <p class="leader-name">{{thisGroup.leader}}</p>
+                <p class="meeting-time">{{item.start_time.replace('T',' ').replace('.000Z','')}}</p>
                 <p>~</p>
-                <p class="meeting-time">2017-06-05 00:00:00</p>
+                <p class="meeting-time">{{item.end_time.replace('T',' ').replace('.000Z','')}}</p>
               </div>
             </div>
             <a class="right"></a>
@@ -25,9 +25,7 @@
             <div class="outline">{{item.outline}}</div>
           </div>
         </li>
-        <!--<p>{{thisGroup}}</p>-->
-        <!--<p>{{meetings}}</p>-->
-        <!--<p>{{members}}</p>-->
+        <li v-if="meetings.length===0" class="noMeeting">当前小组尚未预约会议</li>
       </ul>
     </div>
     <div class="members-wrap">
@@ -214,6 +212,13 @@
       box-shadow 0px 3px 6px rgba(187,187,187,16%)
     ul
       margin 0
+      .noMeeting
+        font-size 24px
+        height 400px
+        background-color #f2f2f2
+        text-align center
+        line-height 400px
+        color #939880
       li
         .meeting
           box-shadow 0px 3px 6px rgba(187,187,187,16%)

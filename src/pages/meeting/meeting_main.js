@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './meeting'
 import Resource from 'vue-resource'
+import router from '../../router/meeting'
 
 Vue.use(Resource)
 Vue.config.productionTip = false
@@ -10,6 +11,7 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  router,
   template: '<App/>',
   components: {App}
 })

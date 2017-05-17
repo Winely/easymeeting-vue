@@ -3,7 +3,6 @@
   $.fn.pad = function( options ) {
     var settings = {
       'host'              : 'http://123.206.123.213:9001',
-//            'host'              : 'http://beta.etherpad.org',
       'baseUrl'           : '/p/',
       'showControls'      : true,
       'showChat'          : false,
@@ -15,8 +14,8 @@
       'userColor'         : false,
       'hideQRCode'        : false,
       'alwaysShowChat'    : false,
-      'width'             : 100,
-      'height'            : 100,
+      'width'             : '100%',
+      'height'            : '100%',
       'border'            : 0,
       'borderStyle'       : 'solid',
       'toggleTextOn'      : 'Disable Rich-text',

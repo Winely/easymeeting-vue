@@ -1,34 +1,67 @@
 <template>
   <div id="app">
-    <div id="docpad"></div>
+    <div class="sidebar">
+      <ul>
+        <li ></li>
+      </ul>
+    </div>
+    <router-view :user="user" class="etherpad"></router-view>
   </div>
 </template>
 
 <script>
   require('../../assets/global.css')
-  require('../../assets/ether-pad')
   import urlconf from 'assets/url.conf'
+  import etherpad from 'components/etherpad'
 
   export default {
     name: 'app',
-    components: {},
-    mounted () {
-      $('#docpad').pad({'padId': 'test','showChat':true, 'plugins':{'pageview':'true'}})
+    data () {
+      return {
+        user: {}
+      }
+    },
+    created () {
+      if (sessionStorage.user) {
+        this.user = JSON.parse(sessionStorage.user)
+      }
+      else {
+        if (localStorage.user) {
+          this.user = JSON.parse(localStorage.user)
+          this.$http.get(urlconf.userinfo(this.user.token)).then(resp => {
+              this.user = resp.body.user
+              sessionStorage.user = JSON.stringify(resp.body.user)
+            },
+            resp => {
+              this.user = null
+              localStorage.removeItem('user')
+              location.href = '/login.html'
+            })
+        }
+        else {
+          location.href = '/login.html'
+        }
+      }
     }
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  html
+    height 100vh
+    overflow hidden
   #app
-    width: 90vw
-    height: 90vh
+    background #F2F2F2
+    height 100vh
+    display flex
+    margin-bottom -24px
+  .sidebar
+    flex 1
+    background #F2F2F2
+    box-shadow 0 0 16px #aaa
+    z-index 2
+  .etherpad
+    flex 4
+    float right
 
-  #docpad
-    width 100%
-    height 100%
-    box-shadow 0 3px 20px #eee
-
-  #epframedocpad
-    height: 100%
-    width: 100%
 </style>

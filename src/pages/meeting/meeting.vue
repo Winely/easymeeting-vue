@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <div class="sidebar">
-      <ul>
-        <li ></li>
-      </ul>
+      {{$data.meetinginfo.outline}}
     </div>
     <router-view :user="user" class="etherpad"></router-view>
   </div>
@@ -18,7 +16,18 @@
     name: 'app',
     data () {
       return {
-        user: {}
+        user: {},
+        meetinginfo: {},
+        groupinfo: {},
+        meeting_id: 0
+      }
+    },
+    watch: {
+      meeting_id (val) {
+        this.$http.get(urlconf.meetinginfo(val, this.user.token))
+          .then(resp=>{
+              this.groupinfo = resp.body
+          })
       }
     },
     created () {
@@ -42,6 +51,26 @@
           location.href = '/login.html'
         }
       }
+
+      if (this.$route.params.groupid) {
+        this.$http.get(urlconf.groupinfo(this.$route.params.groupid, this.user.token))
+          .then(resp => {
+            this.groupinfo = resp.body
+            document.title = `会易-${this.groupinfo.name}-开会中`
+          })
+
+        this.$http.get(urlconf.getMeetings(this.$route.params.groupid, this.user.token))
+          .then(resp => {
+            var id = resp.body[0].meeting_id
+            for (var i in resp.body) {
+              if (resp.body[i].state === 1) {
+                id = resp.body[i].meeting_id
+                break
+              }
+            }
+            this.meeting_id = id
+          })
+      }
     }
   }
 </script>
@@ -50,16 +79,19 @@
   html
     height 100vh
     overflow hidden
+
   #app
     background #F2F2F2
     height 100vh
     display flex
     margin-bottom -24px
+
   .sidebar
     flex 1
     background #F2F2F2
     box-shadow 0 0 16px #aaa
     z-index 2
+
   .etherpad
     flex 4
     float right

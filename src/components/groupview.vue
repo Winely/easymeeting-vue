@@ -32,7 +32,7 @@
           <h3><a :href='"/group.html#/groupmanagement/" + group.team_id'>{{group.name}}</a></h3>
           <p>{{group.description.length < 45 ? group.description : (group.description.substr(0, 44) + '……')}}</p>
           <ul class="btn-list">
-            <li><a :href="'/meeting.html#/' + group.team_id"><i class="icon-play"></i>进入会议</a></li>
+            <li><a :href="'/meeting.html#/' + group.team_id" target="_blank"><i class="icon-play"></i>进入会议</a></li>
             <li><a :href='"/group.html#/groupmanagement/" + group.team_id'><i class="icon-conf"></i>小组管理</a></li>
             <li><a @click="currentGroup=group.team_id"><i class="icon-add"></i>新建预约</a></li>
           </ul>
@@ -171,6 +171,7 @@
   section.no-groups
     width 100%
     height 500px
+    text-align center
     &:hover
       box-shadow none
     p

@@ -25,6 +25,12 @@ export default {
   group(token) {
     return this.root + 'team?token=' + this.encodeToken(token)
   },
+  groupinfo(id, token){
+    return `${this.root}team/${id}?token=${this.encodeToken(token)}`
+  },
+  meetinginfo(meetingid, token){
+    return `${this.root}team/meeting/${meetingid}?token=${this.encodeToken(token)}`
+  },
   newGroup(){
     return this.root + 'team'
   },

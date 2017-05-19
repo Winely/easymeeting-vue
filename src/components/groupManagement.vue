@@ -67,8 +67,7 @@
       }
     },
     components: {
-      thumbnail,
-      corner
+      thumbnail
     },
     watch: {
       '$route': 'fetchDate'

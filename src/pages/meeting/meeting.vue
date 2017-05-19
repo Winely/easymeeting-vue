@@ -25,8 +25,9 @@
     watch: {
       meeting_id (val) {
         this.$http.get(urlconf.meetinginfo(val, this.user.token))
-          .then(resp=>{
-              this.groupinfo = resp.body
+          .then(resp => {
+            console.log(resp.body)
+            this.meetinginfo = resp.body
           })
       }
     },
@@ -61,6 +62,7 @@
 
         this.$http.get(urlconf.getMeetings(this.$route.params.groupid, this.user.token))
           .then(resp => {
+              console.log(resp.body)
             var id = resp.body[0].meeting_id
             for (var i in resp.body) {
               if (resp.body[i].state === 1) {

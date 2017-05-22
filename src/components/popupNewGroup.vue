@@ -6,6 +6,13 @@
 
     <inputs slot="popup-body" label="项目成员" name="member"
             v-model="member" id="popup-invite"></inputs>
+    <ul slot="popup-body">
+      <li v-for="member in members">
+        {{ member.name }} {{ mamber.email }}
+        <i class="iconfont">x</i>
+      </li>
+    </ul>
+    <p v-if="this.nameError" style="color:red">请输入小组名称</p>
   </popup>
 </template>
 
@@ -18,19 +25,27 @@
       return {
         name: '',
         description: '',
-        member: ''
+        member: '',
+        nameError: false,
+        members: []
       }
     },
     props: ['token'],
     methods: {
       finish () {
+        if (this.name.length === 0) {
+          this.nameError = true
+          return
+        }
         this.$http.post(urlconf.newGroup(),
           {name: this.name, description: this.description, token: this.token}
-          ).then(resp=>{
-            // do something
+        ).then(resp => {
+          // do something
         })
         this.$refs.popup.closePopup()
-        setTimeout(()=>{this.$emit('finishGroup')}, 300)
+        setTimeout(() => {
+          this.$emit('finishGroup')
+        }, 300)
       }
     },
     components: {

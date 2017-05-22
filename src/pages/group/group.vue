@@ -57,6 +57,11 @@
           location.href = '/login.html'
         }
       }
+
+//      this.$http.get(urlconf.getOneGroup(this.$route.params.id, this.user.token))
+//        .then(resp=>{
+//            document.title = `会易-${resp.body.name}`
+//        })
     }
   }
 </script>

@@ -12,7 +12,7 @@
         'padId': this.$route.params.groupid,
         'userName': this.user.username,
         'showChat': true,
-        'plugins': {'pageview': 'true', 'getContents': 'welcome'}
+        'plugins': {'pageview': 'true', 'getContents': 'outlines'}
       })
     }
   }

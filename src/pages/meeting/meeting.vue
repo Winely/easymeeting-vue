@@ -2,7 +2,7 @@
   <div id="app">
     <div class="sidebar">
       <h4>会议结构</h4>
-      <outline :items="meetinginfo.outline" :layer="1"></outline>
+      <outline id="outlines" :items="meetinginfo.outline" :layer="1"></outline>
     </div>
     <div class="mainwindow">
       <tabs type="card" v-model="tabIndex" @tab-click="changeTab">
@@ -116,11 +116,16 @@
     display flex
     margin-bottom -24px
 
+  ::-webkit-scrollbar
+    display none
+
   .sidebar
     flex 1
     background #F2F2F2
     box-shadow 0 0 16px #aaa
     z-index 2
+    overflow scroll
+
     h4
       text-align center
       background #8ab537

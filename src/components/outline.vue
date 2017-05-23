@@ -1,8 +1,9 @@
 <template>
   <ul>
-    <li v-for="(item, index) in items" :style="style">
-      <p>{{ index }}</p>
-      <outline v-if="typeof(item)=='object'" :items="item" :layer="layer+1"></outline>
+    <li v-for="item in items" :style="style">
+      <p v-if="typeof(item)==='string'">{{ item }}</p>
+      <p v-else>{{ Object.keys(item)[0] }}</p>
+      <outline v-if="typeof(item)=='object'" :items="Object.values(item)[0]" :layer="layer+1"></outline>
     </li>
   </ul>
 </template>

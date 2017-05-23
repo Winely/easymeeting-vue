@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <div class="sidebar">
-      {{meetinginfo.outline}}
+      <h4>会议结构</h4>
+      <outline :items="meetinginfo.outline" :layer="1"></outline>
     </div>
     <div class="mainwindow">
       <tabs type="card" v-model="tabIndex" @tab-click="changeTab">
@@ -21,6 +22,7 @@
   import urlconf from 'assets/url.conf'
   import etherpad from 'components/etherpad'
   import sharescreen from 'components/shareScreen'
+  import outline from 'components/outline'
   import {Tabs, TabPane} from 'element-ui'
 
   export default {
@@ -42,7 +44,8 @@
       Tabs,
       TabPane,
       etherpad,
-      sharescreen
+      sharescreen,
+      outline
     },
     watch: {
       meeting_id (val) {
@@ -50,6 +53,7 @@
           .then(resp => {
             console.log(resp.body)
             this.meetinginfo = resp.body
+            this.meetinginfo.outline = JSON.parse(this.meetinginfo.outline)
           })
       }
     },
@@ -117,6 +121,13 @@
     background #F2F2F2
     box-shadow 0 0 16px #aaa
     z-index 2
+    h4
+      text-align center
+      background #8ab537
+      color #fff
+      margin 0
+      line-height 3em
+      font-weight 600
 
   .mainwindow
     flex 4

@@ -1,5 +1,5 @@
 <template>
-  <div id="etherpad-container"></div>
+    <div id="etherpad-container"></div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -12,14 +12,14 @@
         'padId': this.$route.params.groupid,
         'userName': this.user.username,
         'showChat': true,
-        'plugins': {'pageview': 'true'}
+        'plugins': {'pageview': 'true', 'getContents': 'welcome'}
       })
     }
   }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  #epframeetherpad-container
+  #etherpad-container
     height: 100%
     width: 100%
 </style>

@@ -1,9 +1,18 @@
 <template>
   <div id="app">
     <div class="sidebar">
-      {{$data.meetinginfo.outline}}
+      {{meetinginfo.outline}}
     </div>
-    <router-view :user="user" class="etherpad"></router-view>
+    <div class="mainwindow">
+      <tabs type="card" v-model="tabIndex" @tab-click="changeTab">
+        <tab-pane label="会议文档" name="pad">
+          <etherpad :user="user"></etherpad>
+        </tab-pane>
+        <tab-pane label="会议屏幕" name="screen">
+          <sharescreen></sharescreen>
+        </tab-pane>
+      </tabs>
+    </div>
   </div>
 </template>
 
@@ -11,6 +20,8 @@
   require('../../assets/global.css')
   import urlconf from 'assets/url.conf'
   import etherpad from 'components/etherpad'
+  import sharescreen from 'components/shareScreen'
+  import {Tabs, TabPane} from 'element-ui'
 
   export default {
     name: 'app',
@@ -19,8 +30,19 @@
         user: {},
         meetinginfo: {},
         groupinfo: {},
-        meeting_id: 0
+        meeting_id: 0,
+        tabIndex: 'pad'
       }
+    },
+    methods: {
+        changeTab (tab, event){
+        }
+    },
+    components: {
+      Tabs,
+      TabPane,
+      etherpad,
+      sharescreen
     },
     watch: {
       meeting_id (val) {
@@ -62,7 +84,7 @@
 
         this.$http.get(urlconf.getMeetings(this.$route.params.groupid, this.user.token))
           .then(resp => {
-              console.log(resp.body)
+            console.log(resp.body)
             var id = resp.body[0].meeting_id
             for (var i in resp.body) {
               if (resp.body[i].state === 1) {
@@ -78,6 +100,8 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  @import "https://unpkg.com/element-ui/lib/theme-default/index.css"
+
   html
     height 100vh
     overflow hidden
@@ -94,8 +118,19 @@
     box-shadow 0 0 16px #aaa
     z-index 2
 
-  .etherpad
+  .mainwindow
     flex 4
     float right
 
+  .el-tabs
+    display flex
+    flex-direction column
+    height 100%
+    .el-tabs__content
+      flex 100
+  .el-tab-pane
+    height 100%
+  .el-tabs--card>.el-tabs__header .el-tabs__item.is-active
+    color #8ab537
+    border-bottom-color #F2F2F2
 </style>

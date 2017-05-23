@@ -5,12 +5,15 @@
       <outline id="outlines" :items="meetinginfo.outline" :layer="1"></outline>
     </div>
     <div class="mainwindow">
-      <tabs type="card" v-model="tabIndex" @tab-click="changeTab">
+      <tabs type="card" v-model="tabIndex" @tab-click="shareScreen">
         <tab-pane label="会议文档" name="pad">
           <etherpad :user="user"></etherpad>
         </tab-pane>
         <tab-pane label="会议屏幕" name="screen">
-          <sharescreen></sharescreen>
+          <screenview></screenview>
+        </tab-pane>
+        <tab-pane label="分享屏幕" name="share">
+          <video id="share"></video>
         </tab-pane>
       </tabs>
     </div>
@@ -21,7 +24,7 @@
   require('../../assets/global.css')
   import urlconf from 'assets/url.conf'
   import etherpad from 'components/etherpad'
-  import sharescreen from 'components/shareScreen'
+  import screenview from 'components/screenView'
   import outline from 'components/outline'
   import {Tabs, TabPane} from 'element-ui'
 
@@ -37,14 +40,39 @@
       }
     },
     methods: {
-        changeTab (tab, event){
+        shareScreen (tab, e) {
+          if(tab.name != 'share') return
+          var path = "123.206.123.213:3001";
+          var target = $('#share')[0]
+//          path = "localhost:3001";
+          var socket = io.connect(path);
+          var options = {video: { mediaSource:"screen", width: window.innerWidth, height: window.innerHeight }};
+          var getUserMedia = navigator.mediaDevices.getUserMedia(options);
+          var canvas = document.createElement("canvas");
+          canvas.setAttribute("width",window.innerWidth);
+          canvas.setAttribute("height",window.innerHeight);
+          var ctx=canvas.getContext('2d');
+          if(getUserMedia) {
+            getUserMedia.then(function (stream) {
+              target.src = URL.createObjectURL(stream);
+              target.play();
+              window.setInterval(upload,10);
+            })
+          }
+          function upload() {
+            ctx.drawImage(target, 0, 0, window.innerWidth, window.innerHeight);
+            socket.emit("upload_success",{
+              data:canvas.toDataURL('image/png'),
+              id:socket.id
+            });
+          }
         }
     },
     components: {
       Tabs,
       TabPane,
       etherpad,
-      sharescreen,
+      screenview,
       outline
     },
     watch: {

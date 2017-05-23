@@ -1,6 +1,6 @@
 <template>
-  <div class="share">
-    <div id="share-screen"></div>
+  <div class="screen-view">
+    <div id="screen-view"></div>
   </div>
 </template>
 
@@ -43,5 +43,4 @@
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-
 </style>

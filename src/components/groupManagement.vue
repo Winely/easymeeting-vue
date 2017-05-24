@@ -22,7 +22,9 @@
           </div>
           <div :class="['meetingDetail',{'showDetail':item.show}]">
             <div :class="['description']">{{item.introduction}}</div>
-            <div :class="['outline']">{{item.outline}}</div>
+            <div :class="['outline']">
+              <outline id="outlines" :items="meetinginfo.outline" :layer="1"></outline>
+            </div>
           </div>
         </li>
         <li v-if="meetings.length===0||!meetings" class="noMeeting">当前小组尚未预约会议</li>
@@ -57,17 +59,20 @@
   import urlconf from 'assets/url.conf'
   import thumbnail from './thumbnail'
   import corner from './corner'
+  import outline from 'components/outline'
   export default {
     props: ['token'],
     data () {
       return {
         thisGroup: null,
         meetings: null,
-        members: null
+        members: null,
+        meetinginfo: []
       }
     },
     components: {
-      thumbnail
+      thumbnail,
+      outline
     },
     watch: {
       '$route': 'fetchDate'
@@ -123,6 +128,11 @@
         for (var i = 0; i < this.meetings.length; i++) {
           this.meetings[i].show = false
         }
+        this.$http.get(urlconf.meetinginfo(item.meeting_id, this.token)).then((response) => {
+          this.meetinginfo = response.body
+          this.meetinginfo.outline = JSON.parse(this.meetinginfo.outline)
+        }, (response) => {
+        })
         item.show = true
       }
     }
@@ -280,19 +290,20 @@
           overflow hidden
           transition .3s
         .showDetail
-          height 140px
+          height 240px
           transition .3s
         .description
           padding 0 4.9%
           margin 20px 0
           width 40%
-          height 100px
+          height 200px
           border-right 2px solid #DDDDDD
         .outline
           padding 0 4.9%
           margin 20px 0
           width 40%
-          height 100px
+          height 200px
+          overflow scroll
 
 
 </style>

@@ -7,7 +7,7 @@
 <script type="text/ecmascript-6">
   export default {
     created () {
-      var path = "123.206.123.213:3001";
+      var path = "123.206.123.213:3000";
 //      path = "localhost:3001";//这里是服务器地址
       var socket = io.connect(path);
       socket.on('broadcast', function (data) {

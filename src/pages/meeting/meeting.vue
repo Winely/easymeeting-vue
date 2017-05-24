@@ -42,7 +42,7 @@
     methods: {
         shareScreen (tab, e) {
           if(tab.name != 'share') return
-          var path = "123.206.123.213:3001";
+          var path = "123.206.123.213:3000";
           var target = $('#share')[0]
 //          path = "localhost:3001";
           var socket = io.connect(path);

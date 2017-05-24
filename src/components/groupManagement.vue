@@ -23,7 +23,7 @@
           <div :class="['meetingDetail',{'showDetail':item.show}]">
             <div :class="['description']">{{item.introduction}}</div>
             <div :class="['outline']">
-              <outline id="outlines" :items="meetinginfo.outline" :layer="1"></outline>
+              <outline :items="item.outline" :layer="1"></outline>
             </div>
           </div>
         </li>
@@ -37,7 +37,7 @@
       </div>
       <ul>
         <li v-for="item in members">
-          <div class="deleteMember">×</div>
+          <div class="deleteMember" @click="removeMember(item)">×</div>
           <div class="avatar">
             <thumbnail :seed="item.email" width="46" height="46"
                        alt="avatar" radius="23px"></thumbnail>
@@ -66,8 +66,7 @@
       return {
         thisGroup: null,
         meetings: null,
-        members: null,
-        meetinginfo: []
+        members: null
       }
     },
     components: {
@@ -87,6 +86,7 @@
           var res = response.body
           for (var i = 0; i < res.length; i++) {
             res[i]['show'] = false
+            res[i].outline = JSON.parse(res[i].outline)
           }
           this.meetings = res
         }, (response) => {
@@ -102,19 +102,17 @@
         if (this.$route.params.id && this.token) {
           this.$http.get(urlconf.getOneGroup(this.$route.params.id, this.token)).then(resp => {
             this.thisGroup = resp.body
-          }, resp => {
           })
           this.$http.get(urlconf.getMeetings(this.$route.params.id, this.token)).then((response) => {
             var res = response.body
             for (var i = 0; i < res.length; i++) {
               res[i]['show'] = false
+              res[i].outline = JSON.parse(res[i].outline)
             }
             this.meetings = res
-          }, (response) => {
           })
           this.$http.get(urlconf.getTeamMember(this.$route.params.id, this.token)).then((response) => {
             this.members = response.body
-          }, (response) => {
           })
         }
       },
@@ -122,12 +120,14 @@
         for (var i = 0; i < this.meetings.length; i++) {
           this.meetings[i].show = false
         }
-        this.$http.get(urlconf.meetinginfo(item.meeting_id, this.token)).then((response) => {
-          this.meetinginfo = response.body
-          this.meetinginfo.outline = JSON.parse(this.meetinginfo.outline)
-        }, (response) => {
-        })
         item.show = true
+      },
+      removeMember: function (item) {
+        if (this.$route.params.id && item.user_id && this.token) {
+          this.$http.delete(urlconf.removeMember(this.$route.params.id, item.user_id), {body: {token: this.token}}).then((response) => {
+            console.log("删除成功")
+          })
+        }
       }
     }
   }
@@ -298,6 +298,15 @@
           width 40%
           height 200px
           overflow scroll
+          ul
+            font-size 14px
+            p
+              transition .3s
+              margin 20px
+              color #5bc0de !important
+              &:hover
+                background red
+                color green
 
 
 </style>

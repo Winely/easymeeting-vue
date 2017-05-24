@@ -96,9 +96,6 @@
         }, (response) => {
         })
       }
-      else {
-        alert("token || selectedGroup undefined")
-      }
     },
     methods: {
       fetchDate: function () {
@@ -119,9 +116,6 @@
             this.members = response.body
           }, (response) => {
           })
-        }
-        else {
-          alert("token || selectedGroup undefined")
         }
       },
       detail: function (item) {

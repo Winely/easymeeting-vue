@@ -131,7 +131,11 @@
         item.show = true
       },
       removeMember: function (item) {
-        if (this.$route.params.id && item.user_id && this.user.token) {
+        if (item.user_id === this.thisGroup.leader) {
+          this.promptinfo = "组长不可退出小组！"
+          this.mask = true
+        }
+        else {
           this.$http.delete(urlconf.removeMember(this.$route.params.id, item.user_id), {body: {token: this.user.token}}).then((response) => {
             this.promptinfo = "成员删除成功！"
             this.mask = true

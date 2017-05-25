@@ -133,6 +133,9 @@
           this.$http.delete(urlconf.removeMember(this.$route.params.id, item.user_id), {body: {token: this.user.token}}).then((response) => {
             this.promptinfo = "成员删除成功！"
             this.mask = true
+            this.$http.get(urlconf.getTeamMember(this.$route.params.id, this.user.token)).then((response) => {
+              this.members = response.body
+            })
           })
         }
       }

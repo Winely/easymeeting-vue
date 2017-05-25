@@ -37,7 +37,8 @@
       </div>
       <ul>
         <li v-for="item in members">
-          <div class="deleteMember" @click="removeMember(item)">×</div>
+          <div v-if="thisGroup.leader === user.user_id" class="deleteMember" @click="removeMember(item)">×</div>
+          <div v-else class="deleteMember"></div>
           <div class="avatar">
             <thumbnail :seed="item.email" width="46" height="46"
                        alt="avatar" radius="23px"></thumbnail>
@@ -45,13 +46,17 @@
           <div>
             <div class="row">
               <div class="username">{{item.username}}</div>
-              <div v-show="true ? item.user_id === thisGroup.leader : false" class="leader">组长</div>
+              <div v-if="item.user_id === thisGroup.leader" class="leader">组长</div>
             </div>
             <div class="email">{{item.email}}</div>
           </div>
         </li>
       </ul>
     </div>
+    <popup @finish="mask=false" @cancel="mask=false" v-if="this.mask" align="center">
+      <p slot="popup-head">提示</p>
+      <p slot="popup-body">{{this.promptinfo}}</p>
+    </popup>
   </div>
 </template>
 
@@ -60,50 +65,51 @@
   import thumbnail from './thumbnail'
   import corner from './corner'
   import outline from 'components/outline'
+  import popup from './popup'
   export default {
-    props: ['token'],
+    props: ['user'],
     data () {
       return {
         thisGroup: null,
         meetings: null,
-        members: null
+        members: null,
+        mask: false,
+        promptinfo: ""
       }
     },
     components: {
       thumbnail,
-      outline
+      outline,
+      popup
     },
     watch: {
       '$route': 'fetchDate'
     },
     created () {
-      if (this.$route.params.id && this.token) {
-        this.$http.get(urlconf.getOneGroup(this.$route.params.id, this.token)).then(resp => {
+      if (this.$route.params.id && this.user.token) {
+        this.$http.get(urlconf.getOneGroup(this.$route.params.id, this.user.token)).then(resp => {
           this.thisGroup = resp.body
-        }, resp => {
         })
-        this.$http.get(urlconf.getMeetings(this.$route.params.id, this.token)).then((response) => {
+        this.$http.get(urlconf.getMeetings(this.$route.params.id, this.user.token)).then((response) => {
           var res = response.body
           for (var i = 0; i < res.length; i++) {
             res[i]['show'] = false
             res[i].outline = JSON.parse(res[i].outline)
           }
           this.meetings = res
-        }, (response) => {
         })
-        this.$http.get(urlconf.getTeamMember(this.$route.params.id, this.token)).then((response) => {
+        this.$http.get(urlconf.getTeamMember(this.$route.params.id, this.user.token)).then((response) => {
           this.members = response.body
-        }, (response) => {
         })
       }
     },
     methods: {
       fetchDate: function () {
-        if (this.$route.params.id && this.token) {
-          this.$http.get(urlconf.getOneGroup(this.$route.params.id, this.token)).then(resp => {
+        if (this.$route.params.id && this.user.token) {
+          this.$http.get(urlconf.getOneGroup(this.$route.params.id, this.user.token)).then(resp => {
             this.thisGroup = resp.body
           })
-          this.$http.get(urlconf.getMeetings(this.$route.params.id, this.token)).then((response) => {
+          this.$http.get(urlconf.getMeetings(this.$route.params.id, this.user.token)).then((response) => {
             var res = response.body
             for (var i = 0; i < res.length; i++) {
               res[i]['show'] = false
@@ -111,7 +117,7 @@
             }
             this.meetings = res
           })
-          this.$http.get(urlconf.getTeamMember(this.$route.params.id, this.token)).then((response) => {
+          this.$http.get(urlconf.getTeamMember(this.$route.params.id, this.user.token)).then((response) => {
             this.members = response.body
           })
         }
@@ -123,9 +129,10 @@
         item.show = true
       },
       removeMember: function (item) {
-        if (this.$route.params.id && item.user_id && this.token) {
-          this.$http.delete(urlconf.removeMember(this.$route.params.id, item.user_id), {body: {token: this.token}}).then((response) => {
-            console.log("删除成功")
+        if (this.$route.params.id && item.user_id && this.user.token) {
+          this.$http.delete(urlconf.removeMember(this.$route.params.id, item.user_id), {body: {token: this.user.token}}).then((response) => {
+            this.promptinfo = "成员删除成功！"
+            this.mask = true
           })
         }
       }
@@ -176,6 +183,7 @@
           margin 0 10px
           margin-right 5px
           font-size 28px
+          cursor pointer
         .avatar
           margin 0 5px
         .email

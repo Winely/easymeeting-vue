@@ -3,7 +3,7 @@
     <v-header :user="user" @logout="logout"></v-header>
     <div class="group-wrap">
       <groupSidebar :user="user"></groupSidebar>
-      <router-view class="router-view" :token="user.token"></router-view>
+      <router-view class="router-view" :user="user"></router-view>
     </div>
   </div>
 </template>

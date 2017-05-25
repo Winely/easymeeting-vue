@@ -37,7 +37,9 @@
       </div>
       <ul>
         <li v-for="item in members">
-          <div v-if="thisGroup.leader === user.user_id" class="deleteMember" @click="removeMember(item)">×</div>
+          <div v-if="thisGroup.leader === user.user_id" class="deleteMember"
+               @click="removeMember(item)">×
+          </div>
           <div v-else class="deleteMember"></div>
           <div class="avatar">
             <thumbnail :seed="item.email" width="46" height="46"
@@ -48,7 +50,7 @@
               <div class="username">{{item.username}}</div>
               <div v-if="item.user_id === thisGroup.leader" class="leader">组长</div>
             </div>
-            <div class="email">{{item.email}}</div>
+            <div class="email">{{item.email.length < 18 ? item.email : (item.email.substr(0, 17) + '…')}}</div>
           </div>
         </li>
       </ul>

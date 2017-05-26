@@ -37,10 +37,10 @@
       </div>
       <ul>
         <li v-for="item in members">
-          <div v-if="thisGroup.leader === user.user_id" class="deleteMember"
+          <div v-if="thisGroup.leader === user.user_id && thisGroup.leader!==item.user_id" class="deleteMember"
                @click="removeMember(item)">×
           </div>
-          <div v-else class="deleteMember"></div>
+          <div v-else class="cantDelete"></div>
           <div class="avatar">
             <thumbnail :seed="item.email" width="46" height="46"
                        alt="avatar" radius="23px"></thumbnail>
@@ -131,19 +131,13 @@
         item.show = true
       },
       removeMember: function (item) {
-        if (item.user_id === this.thisGroup.leader) {
-          this.promptinfo = "组长不可退出小组！"
+        this.$http.delete(urlconf.removeMember(this.$route.params.id, item.user_id), {body: {token: this.user.token}}).then((response) => {
+          this.promptinfo = "成员删除成功！"
           this.mask = true
-        }
-        else {
-          this.$http.delete(urlconf.removeMember(this.$route.params.id, item.user_id), {body: {token: this.user.token}}).then((response) => {
-            this.promptinfo = "成员删除成功！"
-            this.mask = true
-            this.$http.get(urlconf.getTeamMember(this.$route.params.id, this.user.token)).then((response) => {
-              this.members = response.body
-            })
+          this.$http.get(urlconf.getTeamMember(this.$route.params.id, this.user.token)).then((response) => {
+            this.members = response.body
           })
-        }
+        })
       }
     }
   }
@@ -193,6 +187,9 @@
           margin-right 5px
           font-size 28px
           cursor pointer
+        .cantDelete
+          margin 0 10px
+          margin-right 25px
         .avatar
           margin 0 5px
         .email

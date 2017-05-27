@@ -51,5 +51,8 @@ export default {
   },
   getOneGroup(id, token){
     return this.root + 'team/' + id + '?token=' + this.encodeToken(token)
+  },
+  removeMember(teamID, memberID){
+    return this.root + 'team/' + teamID + '/member/' + memberID
   }
 }

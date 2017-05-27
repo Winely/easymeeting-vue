@@ -14,7 +14,6 @@
 <script type="text/ecmascript-6">
   import urlconf from 'assets/url.conf'
   export default {
-//    props: ['user'],
     data () {
       return {
         selectedGroup: null,
@@ -29,21 +28,18 @@
       if (this.user.token) {
         this.$http.get(urlconf.group(this.user.token)).then((response) => {
             this.groups = response.body
-//            this.selectedGroup = this.groups[0].team_id
           },
           (response) => {
           })
       }
       else {
-        alert("token undefined")
+        console.log("token undefined")
       }
 
     },
     components: {},
     methods: {
       chooseGroup: function (t) {
-        alert(t)
-//        this.selectedGroup = t.team_id
         if (t.team_id && this.user.token) {
           this.$http.get(urlconf.getMeetings(t.team_id, this.user.token)).then((response) => {
             this.meetings = response.body
@@ -51,7 +47,7 @@
           })
         }
         else {
-          alert("token || selectedGroup undefined")
+          console.log("token || selectedGroup undefined")
         }
       }
     }
@@ -75,9 +71,11 @@
     width 20%
     position fixed
     height 100%
+    display flex
+    flex-direction column
     .groupList
-      height 100%
       overflow scroll
+      margin-bottom 30px
     .avatar
       border-radius 999em
       margin auto

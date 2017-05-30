@@ -1,44 +1,26 @@
 <template>
   <div class="screen-view">
-    <div id="screen-view"></div>
+    <section id="main-section">
+      <div id="settings-container">
+        <input class="btn" type="button" id="call_but" value="Call" disabled><br><!----这个button是发起视频的---->
+      </div>
+      <div id="video-container">
+        <video id="self_view" class="shadow owr-overlay-video" autoplay muted></video>
+        <video id="remote_view" class="shadow owr-overlay-video" autoplay></video>
+      </div><!----这个地方是放视频的---->
+      <div id="chat_div"></div>
+      <div id="chat-container">
+        <input type="sendtext" id="chat_txt" disable placeholder="Type here">
+        <input type="button" class="btn" id="chat_but" value="Send">
+      </div><!----这个地方是放聊天窗口的---->
+      <div id="log_div"></div>
+    </section>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import 'assets/main'
   export default {
-    created () {
-      var path = "123.206.123.213:3000";
-//      path = "localhost:3001";//这里是服务器地址
-      var socket = io.connect(path);
-      socket.on('broadcast', function (data) {
-        if (data.id != socket.id) {
-          var image = new Image();
-          image.onload = function () {
-            //样式请在这里改
-            var newVideo = document.getElementById("other-" + data.id);
-            if (newVideo == null) {
-              newVideo = document.createElement("canvas");
-              newVideo.setAttribute("id", "other-" + data.id);
-              newVideo.setAttribute("width", '100%');
-              newVideo.setAttribute("height", '100%');
-            }
-            newVideo.setAttribute("class", "other");
-            newVideo.getContext('2d').drawImage(image, 0, 0, '100%', '100%');
-            this.$el.appendChild(newVideo);
-          };
-          image.src = data.data;
-          if (data.data == null) {
-            image.src = url("这里放一张穿透服务器错误的图片");
-          }
-        }
-      });
-      socket.on('user disconnected', function (data) {
-        var e = document.getElementById('other-' + data);
-        if (e) {
-          e.parentNode.removeChild(e);
-        }
-      });
-    }
   }
 </script>
 

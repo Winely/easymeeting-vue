@@ -42,7 +42,7 @@ export default function (room_id) {
     remoteView = document.getElementById("remote_view");
     callButton = document.getElementById("call_but");
     //var joinButton = document.getElementById("join_but");
-    audioCheckBox = false;
+    audioCheckBox = true;
     videoCheckBox = true;
     audioOnlyView = document.getElementById("audio-only-container");
     chatText = document.getElementById("chat_txt");

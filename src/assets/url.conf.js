@@ -3,8 +3,8 @@
  */
 export default {
   // api的根目录地址
-  root: '//heibe.imwork.net:39881/api/',
-  // root: '//123.206.123.213:3000/api/',
+  // root: '//heibe.imwork.net:39881/api/',
+  root: '//123.206.123.213:3000/api/',
   encodeToken (token) {
     return token.replace(/\+/g, '%2B')
   },

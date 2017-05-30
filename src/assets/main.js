@@ -4,6 +4,7 @@ if (!window.RTCPeerConnection) {
 }
 import SignalingChannel from './signaling_channel'
 import SDP from './sdp'
+
 var selfView;
 var remoteView;
 var callButton;
@@ -22,18 +23,18 @@ var channel;
 var sessionId = "123";
 
 if (!window.hasOwnProperty("orientation"))
-    window.orientation = -90;
+  window.orientation = -90;
 
 var configuration = {
   "iceServers": [
-  {
-    "urls": "stun:mmt-stun.verkstad.net"
-  },
-  {
-    "urls": "turn:mmt-turn.verkstad.net",
-    "username": "webrtc",
-    "credential": "secret"
-  }
+    {
+      "urls": "stun:mmt-stun.verkstad.net"
+    },
+    {
+      "urls": "turn:mmt-turn.verkstad.net",
+      "username": "webrtc",
+      "credential": "secret"
+    }
   ]
 };
 export default function (room_id) {

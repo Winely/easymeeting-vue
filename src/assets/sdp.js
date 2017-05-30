@@ -540,5 +540,7 @@ if (typeof(SDP) == "undefined")
     };
 })();
 
+export default SDP
+
 if (typeof(module) != "undefined" && typeof(exports) != "undefined")
     module.exports = SDP;

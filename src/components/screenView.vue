@@ -11,7 +11,8 @@
         <button type="button" class="btn" id="chat_but">Send</button>
       </div><!----这个地方是放聊天窗口的---->
       <div id="settings-container">
-        <button class="btn" type="button" id="call_but" @click="run(groupId)">Call</button><br><!----这个button是发起视频的---->
+        <!--<button  @click="run(groupId)">加入房间</button>-->
+        <button class="btn" type="button" id="call_but">Call</button><br><!----这个button是发起视频的---->
       </div>
       <div id="log_div"></div>
     </section>
@@ -22,9 +23,9 @@
   import run from 'assets/main'
   export default {
     props: ['groupId'],
-//    mounted () {
-//      run(groupId)
-//    }
+    mounted () {
+      run(this.groupId)
+    },
     methods: {
         run
     }
@@ -32,4 +33,8 @@
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
+  #video-container
+    display flex
+    video
+      width 320px
 </style>

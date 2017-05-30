@@ -36,13 +36,13 @@ var configuration = {
   }
   ]
 };
-window.onload = function () {
+export default function (room_id) {
     selfView = document.getElementById("self_view");
     remoteView = document.getElementById("remote_view");
     callButton = document.getElementById("call_but");
     //var joinButton = document.getElementById("join_but");
     audioCheckBox = false;
-    videoCheckBox = false;
+    videoCheckBox = true;
     audioOnlyView = document.getElementById("audio-only-container");
     chatText = document.getElementById("chat_txt");
     chatButton = document.getElementById("chat_but");
@@ -108,7 +108,7 @@ window.onload = function () {
         }
     };
     //joinButton.onclick = joinFunc;
-    joinFunc("123");
+    joinFunc(room_id);
 };
 
 // handle signaling messages received from the other peer

@@ -2,7 +2,7 @@
   <div class="screen-view">
     <section id="main-section">
       <div id="settings-container">
-        <input class="btn" type="button" id="call_but" value="Call" disabled><br><!----这个button是发起视频的---->
+        <button class="btn" type="button" id="call_but" @click="run(groupId)">Call</button><br><!----这个button是发起视频的---->
       </div>
       <div id="video-container">
         <video id="self_view" class="shadow owr-overlay-video" autoplay muted></video>
@@ -19,8 +19,15 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import 'assets/main'
+  import run from 'assets/main'
   export default {
+    props: ['groupId'],
+//    mounted () {
+//      run(groupId)
+//    }
+    methods: {
+        run
+    }
   }
 </script>
 

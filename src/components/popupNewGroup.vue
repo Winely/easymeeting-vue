@@ -5,10 +5,10 @@
             v-model="description" id="popup-description"></inputs>
 
     <inputs slot="popup-body" label="项目成员" name="member"
-            v-model="member" id="popup-invite"></inputs>
+            v-model="member" id="popup-invite" @input="searchUser"></inputs>
     <ul slot="popup-body">
       <li v-for="member in members">
-        {{ member.name }} {{ mamber.email }}
+        {{ member.name }} {{ member.email }}
         <i class="iconfont">x</i>
       </li>
     </ul>
@@ -20,6 +20,7 @@
   import popup from './popup'
   import inputs from './inputGroup'
   import urlconf from 'assets/url.conf'
+  import memberInvite from './memberInvite'
   export default {
     data () {
       return {
@@ -32,6 +33,13 @@
     },
     props: ['token'],
     methods: {
+      searchUser (val) {
+        this.$http.get(urlconf.exist(val)).then(resp=>{
+            this.members.push({name: resp.body.user_id, email: val})
+        }, resp=>{
+
+        })
+      },
       finish () {
         if (this.name.length === 0) {
           this.nameError = true
@@ -50,7 +58,8 @@
     },
     components: {
       popup,
-      inputs
+      inputs,
+      memberInvite
     }
   }
 </script>

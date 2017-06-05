@@ -114,7 +114,7 @@
             document.title = `会易-${this.groupinfo.name}-开会中`
           })
 
-        this.$http.get(urlconf.getMeetings(this.$route.params.groupid, this.user.token))
+        this.$http.get(urlconf.getGroupMeetings(this.$route.params.groupid, this.user.token))
           .then(resp => {
             console.log(resp.body)
             var id = resp.body[0].meeting_id

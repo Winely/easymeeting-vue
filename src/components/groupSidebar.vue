@@ -41,7 +41,7 @@
     methods: {
       chooseGroup: function (t) {
         if (t.team_id && this.user.token) {
-          this.$http.get(urlconf.getMeetings(t.team_id, this.user.token)).then((response) => {
+          this.$http.get(urlconf.getGroupMeetings(t.team_id, this.user.token)).then((response) => {
             this.meetings = response.body
           }, (response) => {
           })

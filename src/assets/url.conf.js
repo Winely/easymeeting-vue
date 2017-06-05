@@ -3,8 +3,8 @@
  */
 export default {
   // api的根目录地址
-  root: '//heibe.imwork.net:39881/api/',
-  // root: '//123.206.123.213:3000/api/',
+  // root: '//heibe.imwork.net:39881/api/',
+  root: '//123.206.123.213:3000/api/',
   encodeToken (token) {
     return token.replace(/\+/g, '%2B')
   },
@@ -41,8 +41,11 @@ export default {
   settinginfo2() {
     return this.root + 'userinfo'
   },
-  getMeetings(id, token){
+  getGroupMeetings(id, token){
     return this.root + 'team/' + id + '/meeting?token=' + this.encodeToken(token)
+  },
+  getUserMeetings(token){
+    return this.root + 'user/' + 'meeting?token=' + this.encodeToken(token)
   },
   getTeamMember(id, token){
     return this.root + 'team/' + id + '/member?token=' + this.encodeToken(token)

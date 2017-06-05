@@ -92,7 +92,7 @@
         this.$http.get(urlconf.getOneGroup(this.$route.params.id, this.user.token)).then(resp => {
           this.thisGroup = resp.body
         })
-        this.$http.get(urlconf.getMeetings(this.$route.params.id, this.user.token)).then((response) => {
+        this.$http.get(urlconf.getGroupMeetings(this.$route.params.id, this.user.token)).then((response) => {
           var res = response.body
           for (var i = 0; i < res.length; i++) {
             res[i]['show'] = false
@@ -111,7 +111,7 @@
           this.$http.get(urlconf.getOneGroup(this.$route.params.id, this.user.token)).then(resp => {
             this.thisGroup = resp.body
           })
-          this.$http.get(urlconf.getMeetings(this.$route.params.id, this.user.token)).then((response) => {
+          this.$http.get(urlconf.getGroupMeetings(this.$route.params.id, this.user.token)).then((response) => {
             var res = response.body
             for (var i = 0; i < res.length; i++) {
               res[i]['show'] = false

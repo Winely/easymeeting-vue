@@ -1,5 +1,5 @@
 <template>
-  <date-picker type="datetime" :option="pickerOptions" v-model="time"></date-picker>
+  <date-picker type="datetime" :option="pickerOptions" v-model="time" format="yyyy-MM-dd HH:mm:ss"></date-picker>
 </template>
 
 <script type="text/ecmascript-6">

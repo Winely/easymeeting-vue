@@ -50,8 +50,8 @@ export default {
   getTeamMember(id, token){
     return this.root + 'team/' + id + '/member?token=' + this.encodeToken(token)
   },
-  inviteMember(id){
-    return this.root + 'team/' + id + '/member'
+  inviteMember(groupid){
+    return this.root + 'team/' + groupid + '/member'
   },
   getOneGroup(id, token){
     return this.root + 'team/' + id + '?token=' + this.encodeToken(token)

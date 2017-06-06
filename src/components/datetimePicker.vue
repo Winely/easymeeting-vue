@@ -5,12 +5,18 @@
 <script type="text/ecmascript-6">
   import {DatePicker} from 'element-ui'
   export default {
+    props: ['value'],
     components: {
       DatePicker
     },
+    watch: {
+      time (v) {
+          this.$emit('input', v)
+      }
+    },
     data () {
       return {
-        time: '',
+        time: this.value,
         pickerOptions: {
           shortcuts: [{
             text: 'Today',
@@ -39,6 +45,5 @@
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  @import "https://unpkg.com/element-ui/lib/theme-default/index.css"
 
 </style>

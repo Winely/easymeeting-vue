@@ -71,4 +71,5 @@
   .router-view
     width 80%
     margin-left 20%
+
 </style>

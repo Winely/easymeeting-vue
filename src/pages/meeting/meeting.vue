@@ -133,6 +133,7 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "https://unpkg.com/element-ui/lib/theme-default/index.css"
+  /*@import "https://cdn.bootcss.com/element-ui/1.3.4/theme-default/index.css"*/
 
   html
     height 100vh

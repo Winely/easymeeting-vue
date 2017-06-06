@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  require('../../assets/global.css')
+//  require('../../assets/global.css')
 
   import urlconf from 'assets/url.conf'
   import header from 'components/header'

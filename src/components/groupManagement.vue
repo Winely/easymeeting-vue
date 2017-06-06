@@ -33,7 +33,7 @@
     <div class="members-wrap">
       <div class="members-title" style="position: relative">
         小组成员
-        <i class="icon-add"></i>
+        <i class="icon-add" @click="invite=true"></i>
       </div>
       <ul>
         <li v-for="item in members">
@@ -59,6 +59,18 @@
       <p slot="popup-head">提示</p>
       <p slot="popup-body">{{this.promptinfo}}</p>
     </popup>
+    <popup @finish="inviteFinish" @cancel="invite=false" v-if="this.invite" align="none" class="invite-mem">
+      <p slot="popup-head">邀请组员</p>
+      <inputs slot="popup-body" label="项目成员" name="member" class="invite"
+              v-model="newMember" @input="searchUser"></inputs>
+      <ul slot="popup-body">
+        <li v-for="mem,index in newMembers">
+          <span class="invite-username">{{ mem.name }}</span>
+          <span class="invite-email">{{ mem.email }}</span>
+          <i class="iconfont" @click="newMembers.splice(index, 1)">×</i>
+        </li>
+      </ul>
+    </popup>
   </div>
 </template>
 
@@ -68,6 +80,7 @@
   import corner from './corner'
   import outline from 'components/outline'
   import popup from './popup'
+  import inputs from './inputGroup'
   export default {
     props: ['user'],
     data () {
@@ -76,13 +89,17 @@
         meetings: null,
         members: null,
         mask: false,
-        promptinfo: ""
+        promptinfo: "",
+        invite: false,
+        newMembers: [],
+        newMember: ''
       }
     },
     components: {
       thumbnail,
       outline,
-      popup
+      popup,
+      inputs
     },
     watch: {
       '$route': 'fetchDate'
@@ -106,6 +123,27 @@
       }
     },
     methods: {
+      searchUser (val) {
+        this.$http.get(urlconf.exist(val)).then(resp => {
+          this.newMembers.push({name: resp.body.username, email: val, id: resp.body.user_id})
+        }, resp => {
+
+        })
+      },
+      inviteFinish(){
+        var list = []
+        for (let i in this.newMembers){
+            list.push(this.newMembers[i].id)
+        }
+        this.$http.post(urlconf.inviteMember(this.thisGroup.team_id), {token: this.user.token, memberId: list})
+          .then(()=>{
+              return this.$http.get(urlconf.getTeamMember(this.$route.params.id, this.user.token))
+          })
+          .then(resp=>{
+            this.members = resp.body
+            this.invite=false
+          })
+      },
       fetchDate: function () {
         if (this.$route.params.id && this.user.token) {
           this.$http.get(urlconf.getOneGroup(this.$route.params.id, this.user.token)).then(resp => {
@@ -173,6 +211,7 @@
         margin-top -8px
         right 15%
         position: absolute
+        cursor: pointer
     ul
       margin 0
       background-color #fafafa
@@ -322,5 +361,32 @@
                 background red
                 color green
 
-
+  .invite-mem
+    .invite
+      margin-bottom 5px !important
+    ul
+      margin 0
+    li
+      vertical-align middle
+      line-height 24px
+      padding 4px 28px
+      margin 0
+      cursor pointer
+      &:hover
+        background #eee
+      i
+        float right
+        margin-right 10px
+        font-size larger
+        border-radius 99em
+        padding 0 8px
+        color #8AB537
+        transition .3s
+        &:hover
+          background #fff
+    .invite-username
+      font-weight 600
+    .invite-email
+      font-size 14px
+      color #999
 </style>

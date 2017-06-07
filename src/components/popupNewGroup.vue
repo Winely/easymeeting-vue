@@ -56,7 +56,6 @@
           return {id: resp.body.team_id, members: member_list}
         }, resp=>{})
           .then(resp=>{
-              console.log('hi')
             return this.$http.post(urlconf.inviteMember(resp.id), {token: this.token, memberId: resp.members})
           })
           .then(resp=>{

@@ -50,12 +50,13 @@
           {name: this.name, description: this.description, token: this.token}
         ).then(resp => {
           let member_list = []
-          for(let i in members){
-              member_list.push(members[i].id)
+          for(let i in this.members){
+              member_list.push(this.members[i].id)
           }
           return {id: resp.body.team_id, members: member_list}
         }, resp=>{})
           .then(resp=>{
+              console.log('hi')
             return this.$http.post(urlconf.inviteMember(resp.id), {token: this.token, memberId: resp.members})
           })
           .then(resp=>{

@@ -77,6 +77,9 @@
         else {
           this.meeting.start_time = this.formatDateTime(this.meeting.start_time)
           this.meeting.end_time = this.formatDateTime(this.meeting.end_time)
+          if(this.meeting.outline.length===0){
+              this.meeting.outline='[]'
+          }
           this.$http.post(urlconf.newMeeting(this.team), this.meeting).then(resp => {
             console.log('ok')
           })

@@ -20,7 +20,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import run from 'assets/main'
+  import run from 'assets/main2'
   export default {
     props: ['groupId'],
     mounted () {

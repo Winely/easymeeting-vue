@@ -22,12 +22,12 @@
 <script type="text/ecmascript-6">
   import run from 'assets/main2'
   export default {
-    props: ['groupId'],
+    props: ['groupId', 'userId'],
     mounted () {
-      run(this.groupId)
+      setTimeout(()=>{run(this.groupId, this.userId)}, 3000)
     },
     methods: {
-        run
+//        run
     }
   }
 </script>

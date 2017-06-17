@@ -2,10 +2,14 @@
 if (!window.RTCPeerConnection) {
     window.RTCPeerConnection = window.webkitRTCPeerConnection;
 }
+import Vue from 'vue'
+import Resource from 'vue-resource'
+Vue.use(Resource)
 
 import SignalingChannel from './signaling_channel2'
 import SDP from './sdp'
-
+// var root = 'http://212c9220.ngrok.donggu.me:8088/'
+var root = 'http://100.64.18.85:3000/'
 var selfView;
 var remoteView;
 var viewContainer;
@@ -24,7 +28,7 @@ var chatButton;
 var chatCheckBox;
 var channels = {};
 var sessionId = "123";
-
+var UserId='';
 if (!window.hasOwnProperty("orientation"))
     window.orientation = -90;
 
@@ -40,7 +44,7 @@ var configuration = {
   }
   ]
 };
-export default function (id) {
+export default function (teamid, userid) {
     selfView = document.getElementById("self_view");
     viewContainer = document.getElementById("video-container");
     callButton = document.getElementById("call_but");
@@ -52,7 +56,7 @@ export default function (id) {
     chatButton = document.getElementById("chat_but");
     chatDiv = document.getElementById("chat_div");
     chatCheckBox = true;
-
+    UserId = userid;
 
 
     //joinButton.disabled = !navigator.mediaDevices.getUserMedia;
@@ -64,10 +68,10 @@ export default function (id) {
         function peerJoin() {
             //这里是会议室id
             var sessionId = session_id;
-            signalingChannel = new SignalingChannel(sessionId);
+            signalingChannel = new SignalingChannel(sessionId, userid);
             callButton.onclick = function () {
-                axios.post('http://100.64.7.190:3000/call',{
-                    peerUserId:UserId
+                Vue.http.post(root+'call',{
+                    peerUserId: userid
                 })
                     .then(function(res){
 
@@ -84,6 +88,7 @@ export default function (id) {
 
             // another peer has joined our session
             signalingChannel.onpeer = function (evt) {
+              // debugger;
                 callButton.disabled = false;
                 peers[evt.peerUserId] = evt.peer;
                 peers[evt.peerUserId].onmessage = handleMessage;
@@ -120,7 +125,7 @@ export default function (id) {
         }
     };
     //joinButton.onclick = joinFunc;
-    joinFunc(id);
+    joinFunc(teamid);
 };
 
 // handle signaling messages received from the other peer
@@ -129,7 +134,7 @@ function handleMessage(evt) {
 
     if (!pcs[evt.peerUserId] && (message.sessionDescription || message.candidate)) {
         start(false, evt.peerUserId);
-        axios.post('http://100.64.7.190:3000/getPeer',{
+        Vue.http.post(root+'getPeer',{
             peerUserId:UserId
         })
             .then(function(res){
@@ -210,7 +215,7 @@ function start(isInitiator,peerUserId) {
     // once the remote stream arrives, show it in the remote video element
     pcs[peerUserId].onaddstream = function (evt) {
         remoteView = document.getElementById("video-" + peerUserId);
-        if(remoteView == null) {
+        if(remoteView === null) {
             remoteView = document.createElement("video");
             remoteView.setAttribute("class", "shadow owr-overlay-video");
             remoteView.setAttribute("autoplay", "true");
@@ -222,7 +227,7 @@ function start(isInitiator,peerUserId) {
             remoteView.style.visibility = "visible";
         else if (audioCheckBox && !(chatCheckBox))
             audioOnlyView.style.visibility = "visible";
-        sendOrientationUpdate();
+        sendOrientationUpdate(peers[peerUserId]);
     };
 
     if (audioCheckBox || videoCheckBox) {

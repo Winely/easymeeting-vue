@@ -10,7 +10,7 @@
           <etherpad :user="user"></etherpad>
         </tab-pane>
         <tab-pane label="会议屏幕" name="screen">
-          <screenview :groupId="groupinfo.team_id"></screenview>
+          <screenview :groupId="groupinfo.team_id" :userId="user.user_id"></screenview>
         </tab-pane>
       </tabs>
     </div>

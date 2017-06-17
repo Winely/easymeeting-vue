@@ -1,14 +1,15 @@
 /*
  * Simple signaling channel for WebRTC (use with channel_server.js).
  */
-var UserId;
-var path = 'http://212c9220.ngrok.donggu.me:8088'
-export default function SignalingChannel(sessionId) {
-  console.log('session id='+sessionId)
+// var UserId;
+var user_id;
+// var path = 'http://212c9220.ngrok.donggu.me:8088'
+var path = 'http://100.64.18.85:3000'
+export default function SignalingChannel(sessionId, userId) {
     if (!sessionId)
         sessionId = "123";
-    var userId = createId();
-    UserId = userId;
+    // var userId = createId();
+    user_id = userId;
     var channels = {};
 
     var listeners = {

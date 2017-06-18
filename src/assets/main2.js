@@ -9,7 +9,10 @@ Vue.use(Resource)
 import SignalingChannel from './signaling_channel2'
 import SDP from './sdp'
 // var root = 'http://212c9220.ngrok.donggu.me:8088/'
-var root = 'http://100.64.18.85:3000/'
+var onPostMessage = function () {
+
+};
+var root = 'http://www.easymeeting.com/';
 var selfView;
 var remoteView;
 var viewContainer;
@@ -49,8 +52,8 @@ export default function (teamid, userid) {
     viewContainer = document.getElementById("video-container");
     callButton = document.getElementById("call_but");
     //var joinButton = document.getElementById("join_but");
-    audioCheckBox = false;
-    videoCheckBox = false;
+    audioCheckBox = true;
+    videoCheckBox = true;
     audioOnlyView = document.getElementById("audio-only-container");
     chatText = document.getElementById("chat_txt");
     chatButton = document.getElementById("chat_but");
@@ -81,7 +84,9 @@ export default function (teamid, userid) {
                     });
                 for(var i in peers) {
                     if(peers.hasOwnProperty(i)) {
+                      console.log(1);
                         start(true,i);
+                      console.log(3);
                     }
                 }
             };
@@ -181,9 +186,12 @@ function handleMessage(evt) {
 
 // call start() to initiate
 function start(isInitiator,peerUserId) {
-    //callButton.disabled = true;
-    pcs[peerUserId] = new RTCPeerConnection(configuration);
 
+    callButton.innerHTML = "disconnect";
+    callButton.onclick = function () {
+      window.close();
+    };
+    pcs[peerUserId] = new RTCPeerConnection(configuration);
     // send any ice candidates to the other peer
     pcs[peerUserId].onicecandidate = function (evt) {
         if (evt.candidate) {
@@ -220,7 +228,7 @@ function start(isInitiator,peerUserId) {
             remoteView.setAttribute("class", "shadow owr-overlay-video");
             remoteView.setAttribute("autoplay", "true");
             remoteView.id = "video-" + peerUserId;
-            remoteView.parentNode = viewContainer;
+            viewContainer.appendChild(remoteView);
         }
         remoteView.srcObject = evt.stream;
         if (videoCheckBox)
@@ -247,7 +255,9 @@ function start(isInitiator,peerUserId) {
     };
     if (isInitiator) {
         pcs[peerUserId].createOffer(localDescCreateds[peerUserId], logError);
+
     }
+
 }
 
 function localDescCreated(desc) {
@@ -295,6 +305,24 @@ function log(msg) {
     log.div.appendChild(document.createElement("br"));
 }
 
+function postChatMessage(msg, author,peerUserId) {
+
+  onPostMessage(peerUserId);
+  var messageNode = document.createElement('div');
+  var messageContent = document.createElement('div');
+  messageNode.classList.add('chatMessage');
+  messageContent.textContent = msg;
+  messageNode.appendChild(messageContent);
+
+  if (author) {
+    messageNode.classList.add('selfMessage');
+  } else {
+    messageNode.classList.add('remoteMessage-' + peerUserId);
+  }
+
+  chatDiv.appendChild(messageNode);
+  chatDiv.scrollTop = chatDiv.scrollHeight;
+}
 // setup chat
 function setupChat() {
     chatButton.onclick = function () {
@@ -311,7 +339,7 @@ function setupChat() {
     };
     for(var i in channels) {
         if (channels.hasOwnProperty(i)) {
-            peerUserId = i;
+            var peerUserId = i;
             channels[peerUserId].onopen = function () {
                 chatDiv.style.visibility = "visible";
                 chatText.style.visibility = "visible";
@@ -330,25 +358,10 @@ function setupChat() {
 
             // recieve data from remote user
             channels[peerUserId].onmessage = function (evt) {
-                postChatMessage(evt.data);
+                postChatMessage(evt.data,peerUserId);
             };
 
-            function postChatMessage(msg, author) {
-                var messageNode = document.createElement('div');
-                var messageContent = document.createElement('div');
-                messageNode.classList.add('chatMessage');
-                messageContent.textContent = msg;
-                messageNode.appendChild(messageContent);
 
-                if (author) {
-                    messageNode.classList.add('selfMessage');
-                } else {
-                    messageNode.classList.add('remoteMessage');
-                }
-
-                chatDiv.appendChild(messageNode);
-                chatDiv.scrollTop = chatDiv.scrollHeight;
-            }
         }
     }
 }

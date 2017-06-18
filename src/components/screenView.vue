@@ -3,7 +3,6 @@
     <section id="main-section">
       <div id="video-container">
         <video id="self_view" class="shadow owr-overlay-video" autoplay muted></video>
-        <video id="remote_view" class="shadow owr-overlay-video" autoplay></video>
       </div><!----这个地方是放视频的---->
       <div id="chat_div"></div>
       <div id="chat-container">
@@ -32,7 +31,7 @@
   }
 </script>
 
-<style scoped lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus">
   #video-container
     display flex
     video

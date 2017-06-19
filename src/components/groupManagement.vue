@@ -18,7 +18,8 @@
                 <p class="meeting-time">{{item.end_time.replace('T', ' ').replace('.000Z', '')}}</p>
               </div>
             </div>
-            <a class="right"></a>
+            <a class="right" target="_blank"
+               :href="'http://easymeeting.donggu.me/meeting.html#/'+thisGroup.team_id"><i class="icon-play"></i></a>
           </div>
           <div :class="['meetingDetail',{'showDetail':item.show}]">
             <div :class="['description']">{{item.introduction}}</div>
@@ -182,7 +183,10 @@
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-
+  .right
+    color #fff
+    line-height 30px
+    text-align: center
   .groupManagement-wrap
     display flex
     flex-direction row

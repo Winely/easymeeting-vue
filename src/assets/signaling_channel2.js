@@ -3,8 +3,8 @@
  */
 // var UserId;
 var user_id;
-// var path = 'http://212c9220.ngrok.donggu.me:8088'
-var path = 'http://www.easymeeting.com/';
+// var path = 'http://em.ngrok.donggu.me';
+var path = 'http://123.206.123.213:3000'
 export default function SignalingChannel(sessionId, userId) {
     if (!sessionId)
         sessionId = "123";

@@ -9,10 +9,10 @@ Vue.use(Resource)
 import SignalingChannel from './signaling_channel2'
 import SDP from './sdp'
 // var root = 'http://212c9220.ngrok.donggu.me:8088/'
+var root = 'http://123.206.123.213:3000/'
 var onPostMessage = function () {
 
 };
-var root = 'http://www.easymeeting.com/';
 var selfView;
 var remoteView;
 var viewContainer;
@@ -41,9 +41,9 @@ var configuration = {
     "urls": "stun:mmt-stun.verkstad.net"
   },
   {
-    "urls": "turn:mmt-turn.verkstad.net",
-    "username": "webrtc",
-    "credential": "secret"
+    "urls": "turn:numb.viagenie.ca",
+    "username": "webrtc@live.com",
+    "credential": "muackh"
   }
   ]
 };

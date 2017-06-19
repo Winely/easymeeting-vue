@@ -1,15 +1,11 @@
 <template>
   <div id="app">
     <v-header :user="user" @logout="logout"></v-header>
-    <div id="index-wrapper" @click="test">
-      <h2>我是首页</h2>
-      <h2>我是广告</h2>
-      <h2>我是首页</h2>
-      <h2>我是广告</h2>
-      <h2>我是首页</h2>
-      <h2>我是广告</h2>
-      <h2>我是首页</h2>
-      <h2>我是广告</h2>
+    <div id="index-wrapper">
+      <div class="main">
+        <h1>EasyMeeting 会易</h1>
+        <h2>小组在线会议系统</h2>
+      </div>
     </div>
     <v-footer></v-footer>
   </div>
@@ -32,24 +28,10 @@
     },
     data () {
       return {
-        user: null,
-        time: ''
+        user: null
       }
     },
     methods: {
-      updateTime(val){
-        this.datetime = val
-      },
-      test () {
-        var opt = {
-          format: 'svg',
-          size: 420
-        }
-        var data = new Identicon(md5(new Date().getTime()), opt).toString()
-        console.log(data.length)
-        document.getElementById('index-wrapper')
-          .innerHTML = '<img width=420 height=420 src="data:image/svg+xml;base64,' + data + '">';
-      },
       logout () {
         this.user = null
         localStorage.removeItem('user')
@@ -72,6 +54,22 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   #index-wrapper
+    background-image: url("../../images/bg0.jpg")
     margin-top 50px
     text-align center
+    height 450px
+    .main
+      background rgba(#fff, 0.7)
+      height 100%
+      width 80%
+      margin 0 10%
+      display flex
+      flex-direction column
+      justify-content center
+      h1
+        font-size 64px
+        margin 0
+      h2
+        color #6e794a
+        font-weight 400
 </style>

@@ -78,7 +78,7 @@
           this.meeting.start_time = this.formatDateTime(this.meeting.start_time)
           this.meeting.end_time = this.formatDateTime(this.meeting.end_time)
           if(this.meeting.outline.length===0){
-              this.meeting.outline='[]'
+              this.meeting.outline='[\"开头\", {\"第一部分\":[\"介绍人员\", {\"领导讲话\": [\"领导A讲话\", \"领导B讲话\"]}, \"签到打卡\"]},{\"第二部分：上周工作总结\": [\"部门A\", \"部门B\"]}, {\"第三部分： 本周工作计划\": [\"部门A\", \"部门B\"]}, \"结尾\"]'
           }
           this.$http.post(urlconf.newMeeting(this.team), this.meeting).then(resp => {
             console.log('ok')

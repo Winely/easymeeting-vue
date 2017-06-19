@@ -3,8 +3,7 @@
  */
 export default {
   // api的根目录地址
-  root: 'http://100.64.18.85:3000/api/',
-  // root: '//123.206.123.213:3000/api/',
+  root: '//123.206.123.213:3000/api/',
   // root: '//localhost:3000/api/',
   encodeToken (token) {
     return token.replace(/\+/g, '%2B')

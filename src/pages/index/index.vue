@@ -57,7 +57,7 @@
     background-image: url("../../images/bg0.jpg")
     margin-top 50px
     text-align center
-    height 450px
+    height 500px
     .main
       background rgba(#fff, 0.7)
       height 100%
